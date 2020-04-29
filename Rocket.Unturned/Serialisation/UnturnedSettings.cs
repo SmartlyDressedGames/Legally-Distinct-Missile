@@ -1,8 +1,5 @@
 ﻿using Rocket.API;
 using System.Xml.Serialization;
-using Rocket.Unturned.Items;
-using System.Collections.Generic;
-using System;
 
 namespace Rocket.Unturned.Serialisation
 {
@@ -12,7 +9,7 @@ namespace Rocket.Unturned.Serialisation
         public bool Enabled = true;
 
         [XmlAttribute]
-        public int Interval = 1800;
+        public uint Interval = 1800;
     }
 
     public sealed class RocketModObservatorySettings

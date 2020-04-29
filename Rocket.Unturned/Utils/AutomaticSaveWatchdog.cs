@@ -1,62 +1,112 @@
-﻿using Rocket.Core.Logging;
-using SDG.Unturned;
+﻿#region
+
 using System;
+using System.Collections;
+using SDG.Unturned;
 using UnityEngine;
+using Logger = Rocket.Core.Logging.Logger;
+
+#endregion
+
 
 namespace Rocket.Unturned.Utils
 {
     internal class AutomaticSaveWatchdog : MonoBehaviour
     {
-        private void FixedUpdate()
+        private const uint MinInterval = 30;
+
+
+        public static AutomaticSaveWatchdog Instance { get; private set; }
+        public Coroutine AutoSaveCoroutine { get; private set; }
+
+
+        private uint _interval = MinInterval;
+        public uint Interval
         {
-            checkTimer();
+            get => _interval;
+            set
+            {
+                StopAutoSave();
+                _interval = CheckInterval(value) ? value : MinInterval;
+                StartAutoSave();
+            }
         }
 
-        private DateTime? nextSaveTime = null;
-        public static AutomaticSaveWatchdog Instance;
-        private int interval = 30;
+
+        #region Coroutines
+
+        private IEnumerator AutoSave()
+        {
+            var duration = Interval * 60;
+            {
+                yield return new WaitForSeconds(duration);
+
+
+                try
+                {
+                    Logger.Log("Saving server");
+                    SaveManager.save();
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogException(ex, "Error during auto-save");
+                }
+            }
+            while (true) ;
+        }
+
+        #endregion
+
+
+        #region Start_Stop
 
         private void Start()
         {
             Instance = this;
-            if (U.Settings.Instance.AutomaticSave.Enabled)
-            {
-                if(U.Settings.Instance.AutomaticSave.Interval < interval)
-                {
-                    Core.Logging.Logger.LogError("AutomaticSave interval must be atleast 30 seconds, changed to 30 seconds");
-                }
-                else
-                {
-                    interval = U.Settings.Instance.AutomaticSave.Interval;
-                }
-                Core.Logging.Logger.Log(String.Format("This server will automatically save every {0} seconds", interval));
-                restartTimer();
-            }
+            if (!U.Settings.Instance.AutomaticSave.Enabled)
+                return;
+
+
+            var value = U.Settings.Instance.AutomaticSave.Interval;
+            _interval = CheckInterval(value) ? value : MinInterval;
+            Logger.Log($"This server will automatically save every {Interval} seconds");
+            StartAutoSave();
         }
 
-        private void restartTimer ()
+        private void OnDisable()
         {
-            nextSaveTime = DateTime.Now.AddSeconds(interval);
+            StopAutoSave();
+            Instance = null;
         }
 
-        private void checkTimer()
+        #endregion
+
+
+        #region Functions
+
+        private static bool CheckInterval(uint value)
         {
-            try
-            {
-                if (nextSaveTime != null)
-                {
-                    if (nextSaveTime.Value < DateTime.Now)
-                    {
-                        Core.Logging.Logger.Log("Saving server");
-                        restartTimer();
-                        SaveManager.save();
-                    }
-                }
-            }
-            catch (Exception er)
-            {
-                Core.Logging.Logger.LogException(er);
-            }
+            if (value >= MinInterval)
+                return true;
+
+
+            Logger.LogError("AutomaticSave interval must be at least 30 seconds, changed to 30 seconds");
+            return false;
         }
+
+        private void StartAutoSave()
+        {
+            AutoSaveCoroutine = StartCoroutine(AutoSave());
+            if (AutoSaveCoroutine != null)
+                StopCoroutine(AutoSaveCoroutine);
+        }
+
+        private void StopAutoSave()
+        {
+            if (AutoSaveCoroutine != null)
+                StopCoroutine(AutoSaveCoroutine);
+        }
+
+        #endregion
     }
 }

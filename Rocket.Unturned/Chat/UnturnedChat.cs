@@ -112,7 +112,7 @@ namespace Rocket.Unturned.Chat
             }
             else
             {
-                Say(new CSteamID(ulong.Parse(player.Id)), message, color);
+                Say(new CSteamID(ulong.Parse(player.Id)), message, color, rich);
             }
         }
 

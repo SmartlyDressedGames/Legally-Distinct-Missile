@@ -272,7 +272,12 @@ namespace Rocket.Unturned.Player
 
         public void Ban(string reason, uint duration)
         {
-            Provider.ban(this.CSteamID, reason, duration);
+            Ban(reason, duration, CSteamID.Nil);
+        }
+
+        public void Ban(string reason, uint duration, CSteamID instigator)
+        {
+            Provider.requestBanPlayer(instigator, this.CSteamID, Parser.getUInt32FromIP(this.IP), reason, duration);
         }
 
         public void Admin(bool admin)

@@ -110,17 +110,29 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        public bool Equals(UnturnedPlayer p)
+        public bool Equals(UnturnedPlayer otherPlayer)
         {
-            if ((object)p == null)
-            {
-                return false;
-            }
-
-            return (this.CSteamID.ToString() == p.CSteamID.ToString());
+			if(ReferenceEquals(otherPlayer, null))
+			{
+				return false;
+			}
+			else
+			{
+				return this.CSteamID == otherPlayer.CSteamID;
+			}
         }
 
-        public T GetComponent<T>()
+		public override bool Equals(object obj)
+		{
+			return Equals(obj as UnturnedPlayer);
+		}
+
+		public override int GetHashCode()
+		{
+			return this.CSteamID.GetHashCode();
+		}
+
+		public T GetComponent<T>()
         {
             return (T)(object)Player.GetComponent(typeof(T));
         }

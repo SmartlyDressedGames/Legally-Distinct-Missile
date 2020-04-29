@@ -94,14 +94,29 @@ namespace Rocket.Unturned.Chat
             Say(message, Palette.SERVER, rich);
         }
 
+        public static void Say(string message, string iconURL, bool rich)
+        {
+            Say(message, Palette.SERVER, iconURL, rich);
+        }
+
         public static void Say(string message)
         {
             Say(message, false);
         }
 
+        public static void Say(string message, string iconURL)
+        {
+            Say(message, iconURL, false);
+        }
+
         public static void Say(IRocketPlayer player, string message)
         {
             Say(player, message, false);
+        }
+
+        public static void Say(IRocketPlayer player, string message, string iconURL)
+        {
+            Say(player, message, iconURL, false);
         }
 
         public static void Say(IRocketPlayer player, string message, Color color, bool rich)
@@ -116,9 +131,26 @@ namespace Rocket.Unturned.Chat
             }
         }
 
+        public static void Say(IRocketPlayer player, string message, Color color, string iconURL, bool rich)
+        {
+            if (player is ConsolePlayer)
+            {
+                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+            }
+            else
+            {
+                Say(new CSteamID(ulong.Parse(player.Id)), message, color, iconURL);
+            }
+        }
+
         public static void Say(IRocketPlayer player, string message, Color color)
         {
             Say(player, message, color, false);
+        }
+
+        public static void Say(IRocketPlayer player, string message, Color color, string iconURL)
+        {
+            Say(player, message, color, iconURL, false);
         }
 
         public static void Say(string message, Color color, bool rich)
@@ -129,15 +161,34 @@ namespace Rocket.Unturned.Chat
                 ChatManager.instance.channel.send("tellChat", ESteamCall.OTHERS, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { CSteamID.Nil, string.Empty, (byte)EChatMode.GLOBAL, color, rich, m });
             }
         }
-        
+
+        public static void Say(string message, Color color, string iconURL, bool rich)
+        {
+            Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
+            foreach (string m in wrapMessage(message))
+            {
+                ChatManager.instance.channel.send("tellChat", ESteamCall.OTHERS, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { CSteamID.Nil, iconURL, (byte)EChatMode.GLOBAL, color, rich, m });
+            }
+        }
+
         public static void Say(string message, Color color)
         {
             Say(message, color, false);
         }
-        
+
+        public static void Say(string message, Color color, string iconURL)
+        {
+            Say(message, color, iconURL, false);
+        }
+
         public static void Say(IRocketPlayer player, string message, bool rich)
         {
             Say(player, message, Palette.SERVER, rich);
+        }
+
+        public static void Say(IRocketPlayer player, string message, string iconURL, bool rich)
+        {
+            Say(player, message, Palette.SERVER, iconURL, rich);
         }
 
         public static void Say(CSteamID CSteamID, string message, bool rich)
@@ -145,10 +196,19 @@ namespace Rocket.Unturned.Chat
             Say(CSteamID, message, Palette.SERVER, rich);
         }
 
+        public static void Say(CSteamID CSteamID, string message, string iconURL, bool rich)
+        {
+            Say(CSteamID, message, Palette.SERVER, iconURL, rich);
+        }
 
         public static void Say(CSteamID CSteamID, string message)
         {
             Say(CSteamID, message, false);
+        }
+
+        public static void Say(CSteamID CSteamID, string message, string iconURL)
+        {
+            Say(CSteamID, message, iconURL, false);
         }
 
         public static void Say(CSteamID CSteamID, string message, Color color, bool rich)
@@ -166,12 +226,32 @@ namespace Rocket.Unturned.Chat
             }
         }
 
+        public static void Say(CSteamID CSteamID, string message, Color color, string iconURL, bool rich)
+        {
+            if (CSteamID == null || CSteamID.ToString() == "0")
+            {
+                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+            }
+            else
+            {
+                foreach (string m in wrapMessage(message))
+                {
+                    ChatManager.instance.channel.send("tellChat", CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { CSteamID.Nil, iconURL, (byte)EChatMode.SAY, color, rich, m });
+                }
+            }
+        }
+
         public static void Say(CSteamID CSteamID, string message, Color color)
         {
             Say(CSteamID, message, color, false);
         }
 
-         public static List<string> wrapMessage(string text)
+        public static void Say(CSteamID CSteamID, string message, Color color, string iconURL)
+        {
+            Say(CSteamID, message, color, iconURL, false);
+        }
+
+        public static List<string> wrapMessage(string text)
          {
              if (text.Length == 0) return new List<string>();
              string[] words = text.Split(' ');

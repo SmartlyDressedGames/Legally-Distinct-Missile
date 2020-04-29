@@ -14,16 +14,19 @@ namespace Rocket.Unturned
 {
     public class UnturnedPlayerMovement : UnturnedPlayerComponent
     {
+        private PlayerMovement movement;
         public bool VanishMode = false;
         DateTime lastUpdate = DateTime.Now;
         Vector3 lastVector = new Vector3(0,-1,0);
 
-        DateTime? requested = null;
-        string webClientResult = null;
+        //DateTime? requested = null;
+        //string webClientResult = null;
 
         private void OnEnable()
         {
-            if (U.Settings.Instance.RocketModObservatory.CommunityBans)
+            // CommunityBans not working
+            
+            /*if (U.Settings.Instance.RocketModObservatory.CommunityBans)
             {
                 using (RocketWebClient webClient = new RocketWebClient())
                 {
@@ -69,18 +72,21 @@ namespace Rocket.Unturned
                         //                        
                     }
                 }
-            }
+            }*/
         }
-
+        
+        private void Awake()
+        {  
+            movement = Player.GetComponent<PlayerMovement>();
+        }
+        
         private void FixedUpdate()
         {
-            if (requested.HasValue && (DateTime.Now - requested.Value).TotalSeconds >= 2){
+            /*if (requested.HasValue && (DateTime.Now - requested.Value).TotalSeconds >= 2){
                 Provider.kick(Player.CSteamID, webClientResult);
                 requested = null;
-            }
-
-            PlayerMovement movement = (PlayerMovement)Player.GetComponent<PlayerMovement>();
-
+            }*/
+            
             if (!VanishMode)
             {
                 if (U.Settings.Instance.LogSuspiciousPlayerMovement && lastUpdate.AddSeconds(1) < DateTime.Now)

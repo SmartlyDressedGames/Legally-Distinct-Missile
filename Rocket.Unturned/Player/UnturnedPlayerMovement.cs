@@ -17,7 +17,7 @@ namespace Rocket.Unturned
         public bool VanishMode = false;
         DateTime lastUpdate = DateTime.Now;
         Vector3 lastVector = new Vector3(0,-1,0);
-		
+
         private void FixedUpdate()
         {
             PlayerMovement movement = (PlayerMovement)Player.GetComponent<PlayerMovement>();

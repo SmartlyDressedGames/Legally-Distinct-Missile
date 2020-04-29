@@ -124,10 +124,10 @@ namespace Rocket.Unturned.Chat
         public static void Say(string message, Color color, bool rich)
         {
             Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
-			foreach (string m in wrapMessage(message))
+            foreach(string m in wrapMessage(message))
             {
-				ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: null, mode: EChatMode.GLOBAL, iconURL: null, useRichTextFormatting: rich);
-			}
+                ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: null, mode: EChatMode.GLOBAL, iconURL: null, useRichTextFormatting: rich);
+            }
         }
         
         public static void Say(string message, Color color)
@@ -159,10 +159,10 @@ namespace Rocket.Unturned.Chat
             }
             else
             {
-				SteamPlayer toPlayer = PlayerTool.getSteamPlayer(CSteamID);
-				foreach (string m in wrapMessage(message))
+                SteamPlayer toPlayer = PlayerTool.getSteamPlayer(CSteamID);
+                foreach(string m in wrapMessage(message))
                 {
-					ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: toPlayer, mode: EChatMode.SAY, iconURL: null, useRichTextFormatting: rich);
+                    ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: toPlayer, mode: EChatMode.SAY, iconURL: null, useRichTextFormatting: rich);
                 }
             }
         }

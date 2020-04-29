@@ -112,27 +112,27 @@ namespace Rocket.Unturned.Player
 
         public bool Equals(UnturnedPlayer otherPlayer)
         {
-			if(ReferenceEquals(otherPlayer, null))
-			{
-				return false;
-			}
-			else
-			{
-				return this.CSteamID == otherPlayer.CSteamID;
-			}
+            if(ReferenceEquals(otherPlayer, null))
+            {
+                return false;
+            }
+            else
+            {
+                return this.CSteamID == otherPlayer.CSteamID;
+            }
         }
 
-		public override bool Equals(object obj)
-		{
-			return Equals(obj as UnturnedPlayer);
-		}
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as UnturnedPlayer);
+        }
 
-		public override int GetHashCode()
-		{
-			return this.CSteamID.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return this.CSteamID.GetHashCode();
+        }
 
-		public T GetComponent<T>()
+        public T GetComponent<T>()
         {
             return (T)(object)Player.GetComponent(typeof(T));
         }
@@ -284,22 +284,22 @@ namespace Rocket.Unturned.Player
 
         public void Ban(string reason, uint duration)
         {
-			Ban(CSteamID.Nil, reason, duration);
+            Ban(CSteamID.Nil, reason, duration);
         }
 
-		public void Ban(CSteamID instigator, string reason, uint duration)
-		{
-			CSteamID steamIdToBan = this.CSteamID;
+        public void Ban(CSteamID instigator, string reason, uint duration)
+        {
+            CSteamID steamIdToBan = this.CSteamID;
 
-			uint ipToBan = 0;
-			P2PSessionState_t state;
-			if(SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
-			{
-				ipToBan = state.m_nRemoteIP;
-			}
+            uint ipToBan = 0;
+            P2PSessionState_t state;
+            if(SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
+            {
+                ipToBan = state.m_nRemoteIP;
+            }
 
-			Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
-		}
+            Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
+        }
 
         public void Admin(bool admin)
         {

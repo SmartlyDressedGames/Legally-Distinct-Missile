@@ -23,7 +23,7 @@ namespace Rocket.Unturned
 
         private void OnEnable()
         {
-            if (U.Settings.Instance.RocketModObservatory.CommunityBans)
+            /*if (U.Settings.Instance.RocketModObservatory.CommunityBans)
             {
                 using (RocketWebClient webClient = new RocketWebClient())
                 {
@@ -69,7 +69,7 @@ namespace Rocket.Unturned
                         //                        
                     }
                 }
-            }
+            }*/
         }
 
         private void FixedUpdate()

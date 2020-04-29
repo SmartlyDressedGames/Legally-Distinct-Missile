@@ -24,23 +24,21 @@ namespace Rocket.Unturned.Serialisation
         public bool KickTooYoungAccounts = true;
 
         [XmlAttribute]
-        public long MinimumAge = 604800;
+        public ulong MinimumAge = 604800;
     }
 
     public class UnturnedSettings : IDefaultable
     {
-        [XmlElement("RocketModObservatory")]
-        public RocketModObservatorySettings RocketModObservatory = new RocketModObservatorySettings();
-        [XmlElement("AutomaticSave")]
-        public AutomaticSaveSettings AutomaticSave = new AutomaticSaveSettings();
+        [XmlElement("AutomaticSave")] 
+        public AutomaticSaveSettings AutomaticSave;
 
         [XmlElement("CharacterNameValidation")]
-        public bool CharacterNameValidation = false;
+        public bool CharacterNameValidation;
 
         [XmlElement("CharacterNameValidationRule")]
-        public string CharacterNameValidationRule = @"([\x00-\xAA]|[\w_\ \.\+\-])+";
+        public string CharacterNameValidationRule;
 
-        public bool LogSuspiciousPlayerMovement = true;
+        public bool LogSuspiciousPlayerMovement;
 
         public bool EnableItemBlacklist;
 
@@ -54,7 +52,6 @@ namespace Rocket.Unturned.Serialisation
         public void LoadDefaults()
         {
             AutomaticSave = new AutomaticSaveSettings();
-            RocketModObservatory = new RocketModObservatorySettings();
             CharacterNameValidation = true;
             CharacterNameValidationRule = @"([\x00-\xAA]|[\w_\ \.\+\-])+";
             LogSuspiciousPlayerMovement = true;

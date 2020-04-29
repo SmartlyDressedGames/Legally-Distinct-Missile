@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Rocket.Unturned.Skills
+﻿namespace Rocket.Unturned.Skills
 {
     public class UnturnedSkill
     {
@@ -30,9 +25,9 @@ namespace Rocket.Unturned.Skills
         public static readonly UnturnedSkill Mechanic = new UnturnedSkill(2, 6);
         public static readonly UnturnedSkill Engineer = new UnturnedSkill(2, 7);
 
+
         internal byte Speciality;
         internal byte Skill;
-
         internal UnturnedSkill(byte speciality, byte skill)
         {
             Speciality = speciality;

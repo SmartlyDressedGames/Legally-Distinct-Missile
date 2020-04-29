@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+
 
 namespace Rocket.Unturned
 {
@@ -8,7 +8,7 @@ namespace Rocket.Unturned
         public static string RocketDirectory;
         public static void Initialize()
         {
-            RocketDirectory = String.Format("Servers/{0}/Rocket/", U.Instance.InstanceId);
+            RocketDirectory = $"Servers/{U.Instance.InstanceId}/Rocket/";
             if (!Directory.Exists(RocketDirectory)) Directory.CreateDirectory(RocketDirectory);
 
             Directory.SetCurrentDirectory(RocketDirectory);

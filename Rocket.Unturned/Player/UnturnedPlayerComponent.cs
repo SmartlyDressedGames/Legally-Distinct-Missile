@@ -1,19 +1,30 @@
-﻿using SDG.Unturned;
+﻿#region
+
 using UnityEngine;
+
+#endregion
 
 namespace Rocket.Unturned.Player
 {
     public class UnturnedPlayerComponent : MonoBehaviour
     {
-        private UnturnedPlayer player;
-        public UnturnedPlayer Player
+        public UnturnedPlayer Player { get; private set; }
+
+
+        protected virtual void Load()
         {
-            get { return player; }
         }
+
+        protected virtual void Unload()
+        {
+        }
+
+
+        #region Start_Stop
+
         private void Awake()
         {
-            player = UnturnedPlayer.FromPlayer(gameObject.transform.GetComponent<SDG.Unturned.Player>());
-            DontDestroyOnLoad(transform.gameObject);
+            Player = UnturnedPlayer.FromPlayer(gameObject.transform.GetComponent<SDG.Unturned.Player>());
         }
 
         private void OnEnable()
@@ -26,16 +37,6 @@ namespace Rocket.Unturned.Player
             Unload();
         }
 
-        protected virtual void Load()
-        {
-
-        }
-
-
-        protected virtual void Unload()
-        {
-
-        }
-
+        #endregion
     }
 }

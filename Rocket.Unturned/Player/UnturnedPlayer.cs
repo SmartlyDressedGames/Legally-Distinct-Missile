@@ -1,279 +1,219 @@
-﻿using SDG.Unturned;
-using Steamworks;
-using System;
-using UnityEngine;
+﻿#region
+
 using System.Linq;
-using Rocket.Unturned.Events;
 using Rocket.API;
 using Rocket.Core;
-using Rocket.Unturned.Chat;
-using Rocket.Unturned.Skills;
 using Rocket.Core.Steam;
-using Rocket.API.Serialisation;
+using Rocket.Core.Utils;
+using Rocket.Unturned.Chat;
+using Rocket.Unturned.Events;
+using Rocket.Unturned.Skills;
+using SDG.Unturned;
+using Steamworks;
+using UnityEngine;
+
+#endregion
 
 namespace Rocket.Unturned.Player
 {
-    public class PlayerIsConsoleException : Exception { }
-
-    public sealed class UnturnedPlayer : IRocketPlayer
+    public sealed class UnturnedPlayer : MonoBehaviour, IRocketPlayer
     {
+        public string CharacterName => Player.channel.owner.playerID.characterName;
+        public CSteamID CSteamID => Player.channel.owner.playerID.steamID;
+        public InteractableVehicle CurrentVehicle => Player.movement.getVehicle();
+        public bool Dead => Player.life.isDead;
+        public byte Health => Player.life.health;
+        public PlayerInventory Inventory => Player.inventory;
 
-        public string Id
+        public string IP => SteamGameServerNetworking.GetP2PSessionState(CSteamID, out var state)
+            ? Parser.getIPFromUInt32(state.m_nRemoteIP)
+            : null;
+
+        public bool IsInVehicle => CurrentVehicle != null;
+        public bool IsPro => Player.channel.owner.isPro;
+        public float Ping => Player.channel.owner.ping;
+        public Vector3 Position => Player.transform.position;
+        public SDG.Unturned.Player Player => gameObject.GetComponent<SDG.Unturned.Player>();
+        public float Rotation => Player.transform.rotation.eulerAngles.y;
+        public byte Stamina => Player.life.stamina;
+        public EPlayerStance Stance => Player.stance.stance;
+        public CSteamID SteamGroupID => Player.channel.owner.playerID.group;
+        public string SteamName => Player.channel.owner.playerID.playerName;
+        public Profile SteamProfile => new Profile(ulong.Parse(CSteamID.ToString()));
+
+
+        public bool Bleeding
         {
-            get
+            get => Player.life.isBleeding;
+            set
             {
-                return CSteamID.ToString();
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.life.channel.send("tellBleeding", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                    Player.life.channel.send("tellBleeding", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                });
             }
         }
 
-        public string DisplayName
+        public bool Broken
         {
-            get
+            get => Player.life.isBroken;
+            set
             {
-                return CharacterName;
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.life.channel.send("tellBroken", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                    Player.life.channel.send("tellBroken", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                });
             }
-        }
-
-        public bool IsAdmin
-        {
-            get
-            {
-                return player.channel.owner.isAdmin;
-            }
-        }
-
-        public Profile SteamProfile
-        {
-            get { return new Profile(ulong.Parse(CSteamID.ToString())); }
-        }
-
-        private SDG.Unturned.Player player;
-        public SDG.Unturned.Player Player
-        {
-            get { return player; }
-        }
-
-        public CSteamID CSteamID
-        {
-            get { return player.channel.owner.playerID.steamID; }
-        }
-
-        public Exception PlayerIsConsoleException;
-
-        private UnturnedPlayer(SteamPlayer player)
-        {
-            this.player = player.player;
         }
 
         public Color Color
         {
             get
             {
-                if (Features.Color.HasValue)
-                {
-                    return Features.Color.Value;
-                }
-                if (IsAdmin && !Provider.hideAdmins)
-                {
-                    return Palette.ADMIN;
-                }
+                if (Features.Color.HasValue) return Features.Color.Value;
 
-                RocketPermissionsGroup group = R.Permissions.GetGroups(this,false).Where(g => g.Color != null && g.Color != "white").FirstOrDefault();
-                string color = "";
-                if (group != null) color = group.Color;
+
+                if (IsAdmin && !Provider.hideAdmins) return Palette.ADMIN;
+
+
+                var group = R.Permissions.GetGroups(this, false)
+                    .FirstOrDefault(g => g.Color != null && g.Color != "white");
+                var color = group != null ? group.Color : string.Empty;
                 return UnturnedChat.GetColorFromName(color, Palette.COLOR_W);
             }
+            set => Features.Color = value;
+        }
+
+        public uint Experience
+        {
+            get => Player.skills.experience;
             set
             {
-                Features.Color = value;
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.skills.channel.send("tellExperience", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                    Player.skills.channel.send("tellExperience", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                });
             }
         }
 
-
-        private UnturnedPlayer(CSteamID cSteamID)
+        public byte Hunger
         {
-            if (string.IsNullOrEmpty(cSteamID.ToString()) || cSteamID.ToString() == "0")
+            get => Player.life.food;
+            set
             {
-                throw new PlayerIsConsoleException();
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.life.channel.send("tellFood", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
+                    Player.life.channel.send("tellFood", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
+                });
             }
-            else
+        }
+
+        public byte Infection
+        {
+            get => Player.life.virus;
+            set
             {
-                player = PlayerTool.getPlayer(cSteamID);
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.life.channel.send("tellVirus", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                    Player.life.channel.send("tellVirus", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
+                });
             }
         }
 
-        public float Ping
+        public bool GodMode
         {
-            get
+            get => Features.GodMode;
+            set => Features.GodMode = value;
+        }
+
+        public int Reputation
+        {
+            get => Player.skills.reputation;
+            set => TaskDispatcher.QueueOnMainThread(() => Player.skills.askRep(value));
+        }
+
+        public byte Thirst
+        {
+            get => Player.life.water;
+            set
             {
-                return player.channel.owner.ping;
+                TaskDispatcher.QueueOnMainThread(() =>
+                {
+                    Player.life.channel.send("tellWater", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        value);
+                    Player.life.channel.send("tellWater", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
+                });
             }
         }
 
-        public bool Equals(UnturnedPlayer p)
+        public bool VanishMode
         {
-            if ((object)p == null)
-            {
-                return false;
-            }
-
-            return (this.CSteamID.ToString() == p.CSteamID.ToString());
+            get => Features.VanishMode;
+            set => Features.VanishMode = value;
         }
 
-        public T GetComponent<T>()
-        {
-            return (T)(object)Player.GetComponent(typeof(T));
-        }
 
-        private UnturnedPlayer(SDG.Unturned.Player p)
-        {
-            player = p;
-        }
+        public UnturnedPlayerEvents Events => Player.gameObject.transform.GetComponent<UnturnedPlayerEvents>();
 
-        public static UnturnedPlayer FromName(string name)
-        {
-            if (String.IsNullOrEmpty(name)) return null;
-            SDG.Unturned.Player p = null;
-            ulong id = 0;
-            if (ulong.TryParse(name, out id) && id > 76561197960265728)
-            {
-                p = PlayerTool.getPlayer(new CSteamID(id));
-            }
-            else
-            {
-                p = PlayerTool.getPlayer(name);
-            }
-            if (p == null) return null;
-            return new UnturnedPlayer(p);
-        }
+        public UnturnedPlayerFeatures Features => Player.gameObject.transform.GetComponent<UnturnedPlayerFeatures>();
+        public string DisplayName => CharacterName;
+        public string Id => CSteamID.ToString();
+        public bool IsAdmin => Player.channel.owner.isAdmin;
 
-        public static UnturnedPlayer FromCSteamID(CSteamID cSteamID)
-        {
-            if (string.IsNullOrEmpty(cSteamID.ToString()) || cSteamID.ToString() == "0")
-            {
-                return null;
-            }
-            else
-            {
-                return new UnturnedPlayer(cSteamID);
-            }
-        }
-
-        public static UnturnedPlayer FromPlayer(SDG.Unturned.Player player)
-        {
-            return new UnturnedPlayer(player.channel.owner);
-        }
-
-        public static UnturnedPlayer FromSteamPlayer(SteamPlayer player)
-        {
-            return new UnturnedPlayer(player);
-        }
-
-        public UnturnedPlayerFeatures Features
-        {
-            get { return player.gameObject.transform.GetComponent<UnturnedPlayerFeatures>(); }
-        }
-
-        public UnturnedPlayerEvents Events
-        {
-            get { return player.gameObject.transform.GetComponent<UnturnedPlayerEvents>(); }
-        }
-
-        public override string ToString()
-        {
-            return CSteamID.ToString();
-        }
-
-        public void TriggerEffect(ushort effectID)
-        {
-            EffectManager.instance.channel.send("tellEffectPoint", CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { effectID, player.transform.position });
-        }
-        
-        public string IP
-        {
-            get
-            {
-                P2PSessionState_t State;
-                SteamGameServerNetworking.GetP2PSessionState(CSteamID, out State);
-                return Parser.getIPFromUInt32(State.m_nRemoteIP);
-            }
-        }
-
-        public void MaxSkills()
-        {
-            PlayerSkills skills = player.skills;
-            
-            foreach (var skill in skills.skills.SelectMany(s => s))
-            {
-                skill.level = skill.max;
-            }
-            
-            skills.askSkills(player.channel.owner.playerID.steamID);
-        }
 
         public string SteamGroupName()
         {
             FriendsGroupID_t id;
-            id.m_FriendsGroupID = (short)SteamGroupID.m_SteamID;
+            id.m_FriendsGroupID = (short) SteamGroupID.m_SteamID;
             return SteamFriends.GetFriendsGroupName(id);
         }
 
         public int SteamGroupMembersCount()
         {
             FriendsGroupID_t id;
-            id.m_FriendsGroupID = (short)SteamGroupID.m_SteamID;
+            id.m_FriendsGroupID = (short) SteamGroupID.m_SteamID;
             return SteamFriends.GetFriendsGroupMembersCount(id);
         }
 
-        public SteamPlayer SteamPlayer()
+
+        #region Comparation
+
+        public int CompareTo(object obj)
         {
-            foreach (var SteamPlayer in Provider.clients)
-            {
-                if (CSteamID == SteamPlayer.playerID.steamID)
-                {
-                    return SteamPlayer;
-                }
-            }
-            return null;
+            return Id.CompareTo(obj);
         }
 
-        public PlayerInventory Inventory
+        public bool Equals(UnturnedPlayer p)
         {
-            get { return player.inventory; }
+            return p != null && CSteamID == p.CSteamID;
         }
 
-        public bool GiveItem(ushort itemId, byte amount)
+        public override bool Equals(object obj)
         {
-            return ItemTool.tryForceGiveItem(player, itemId, amount);
+            return Equals(obj as UnturnedPlayer);
         }
 
-        public bool GiveItem(Item item)
+        public override int GetHashCode()
         {
-            return player.inventory.tryAddItem(item, false);
+            return CSteamID.GetHashCode();
         }
 
-        public bool GiveVehicle(ushort vehicleId)
-        {
-            return VehicleTool.giveVehicle(player, vehicleId);
-        }
+        #endregion
 
-        public CSteamID SteamGroupID
-        {
-            get
-            {
-                return player.channel.owner.playerID.group;
-            }
-        }
 
-        public void Kick(string reason)
-        {
-            Provider.kick(this.CSteamID, reason);
-        }
-
-        public void Ban(string reason, uint duration)
-        {
-            Provider.ban(this.CSteamID, reason, duration);
-        }
+        #region Functions
 
         public void Admin(bool admin)
         {
@@ -282,235 +222,51 @@ namespace Rocket.Unturned.Player
 
         public void Admin(bool admin, UnturnedPlayer issuer)
         {
-            if (admin)
+            TaskDispatcher.QueueOnMainThread(() =>
             {
-                if (issuer == null)
-                {
-                    SteamAdminlist.admin(this.CSteamID, new CSteamID(0));
-                }
+                if (admin)
+                    SteamAdminlist.admin(CSteamID, issuer == null ? CSteamID.Nil : issuer.CSteamID);
                 else
-                {
-                    SteamAdminlist.admin(this.CSteamID, issuer.CSteamID);
-                }
-            }
-            else
-            {
-                SteamAdminlist.unadmin(player.channel.owner.playerID.steamID);
-            }
+                    SteamAdminlist.unadmin(CSteamID);
+            });
         }
 
-        public void Teleport(UnturnedPlayer target)
+        public void Ban(string reason = null, uint? duration = null, CSteamID? instigator = null)
         {
-            Vector3 d1 = target.player.transform.position;
-            Vector3 vector31 = target.player.transform.rotation.eulerAngles;
-            Teleport(d1, MeasurementTool.angleToByte(vector31.y));
+            TaskDispatcher.QueueOnMainThread(() => Provider.requestBanPlayer(instigator ?? CSteamID.Nil, CSteamID,
+                Parser.getUInt32FromIP(IP), reason ?? string.Empty, duration ?? SteamBlacklist.PERMANENT));
         }
 
-        public void Teleport(Vector3 position, float rotation)
+        public EPlayerKill Damage(byte amount, Vector3 direction, EDeathCause cause, ELimb limb, CSteamID damageDealer)
         {
-            if (VanishMode)
-            {
-                player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new Vector3(position.y, position.y + 1337, position.z), MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-            }
-            else
-            {
-				player.teleportToLocation(position, rotation);
-            }
+            Player.life.askDamage(amount, direction, cause, limb, damageDealer, out var playerKill);
+            return playerKill;
         }
 
-        public bool VanishMode
+        public Skill GetSkill(UnturnedSkill skill)
         {
-            get
-            {
-                UnturnedPlayerFeatures features = player.GetComponent<UnturnedPlayerFeatures>();
-                return features.VanishMode;
-            }
-            set
-            {
-                UnturnedPlayerFeatures features = player.GetComponent<UnturnedPlayerFeatures>();
-                features.VanishMode = value;
-            }
+            var skills = Player.skills;
+            return skills.skills[skill.Speciality][skill.Skill];
         }
 
-        public bool GodMode
+        public byte GetSkillLevel(UnturnedSkill skill)
         {
-            get
-            {
-                UnturnedPlayerFeatures features = player.GetComponent<UnturnedPlayerFeatures>();
-                return features.GodMode;
-            }
-            set
-            {
-                UnturnedPlayerFeatures features = player.GetComponent<UnturnedPlayerFeatures>();
-                features.GodMode = value;
-            }
+            return GetSkill(skill).level;
         }
 
-        public Vector3 Position
+        public bool GiveItem(ushort itemId, byte amount)
         {
-            get
-            {
-                return player.transform.position;
-            }
+            return ItemTool.tryForceGiveItem(Player, itemId, amount);
         }
 
-        public EPlayerStance Stance
+        public bool GiveItem(Item item)
         {
-            get
-            {
-                return player.stance.stance;
-            }
+            return Player.inventory.tryAddItem(item, false);
         }
 
-        public float Rotation
+        public bool GiveVehicle(ushort vehicleId)
         {
-            get
-            {
-                return player.transform.rotation.eulerAngles.y;
-            }
-        }
-
-        public bool Teleport(string nodeName)
-        {
-            Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
-            if (node != null)
-            {
-                Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
-                player.sendTeleport(c, MeasurementTool.angleToByte(Rotation));
-                return true;
-            }
-            return false;
-        }
-
-        public byte Stamina
-        {
-            get
-            {
-                return player.life.stamina;
-            }
-        }
-
-        public string CharacterName
-        {
-            get
-            {
-                return player.channel.owner.playerID.characterName;
-            }
-        }
-
-        public string SteamName
-        {
-            get
-            {
-                return player.channel.owner.playerID.playerName;
-            }
-        }
-
-        public byte Infection
-        {
-            get
-            {
-                return player.life.virus;
-            }
-            set
-            {
-                player.life.askDisinfect(100);
-                player.life.askInfect(value);
-            }
-        }
-
-        public uint Experience
-        {
-            get
-            {
-                return player.skills.experience;
-            }
-            set
-            {
-                player.skills.channel.send("tellExperience", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
-                player.skills.channel.send("tellExperience", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
-            }
-        }
-
-        public int Reputation
-        {
-            get
-            {
-                return player.skills.reputation;
-            }
-            set
-            {
-                player.skills.askRep(value);
-            }
-        }
-
-        public byte Health
-        {
-            get
-            {
-                return player.life.health;
-            }
-        }
-
-        public byte Hunger
-        {
-            get
-            {
-                return player.life.food;
-            }
-            set
-            {
-                player.life.askEat(100);
-                player.life.askStarve(value);
-            }
-        }
-
-        public byte Thirst
-        {
-            get
-            {
-                return player.life.water;
-            }
-            set
-            {
-                player.life.askDrink(100);
-                player.life.askDehydrate(value);
-            }
-        }
-
-        public bool Broken
-        {
-            get
-            {
-                return player.life.isBroken;
-            }
-            set
-            {
-                player.life.tellBroken(Provider.server,value);
-                player.life.channel.send("tellBroken", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
-            }
-        }
-        public bool Bleeding
-        {
-            get
-            {
-                return player.life.isBleeding;
-            }
-            set
-            {
-                player.life.tellBleeding(Provider.server, value);
-                player.life.channel.send("tellBleeding", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
-            }
-        }
-
-        public bool Dead
-        {
-            get
-            {
-                return player.life.isDead;
-            }
+            return VehicleTool.giveVehicle(Player, vehicleId);
         }
 
         public void Heal(byte amount)
@@ -520,65 +276,140 @@ namespace Rocket.Unturned.Player
 
         public void Heal(byte amount, bool? bleeding, bool? broken)
         {
-            player.life.askHeal(amount, bleeding != null ? bleeding.Value : player.life.isBleeding, broken != null ? broken.Value : player.life.isBroken);
+            TaskDispatcher.QueueOnMainThread(() =>
+                Player.life.askHeal(amount, bleeding ?? Player.life.isBleeding, broken ?? Player.life.isBroken));
         }
 
-        public void Suicide()
+        public void Kick(string reason)
         {
-            player.life.askSuicide(player.channel.owner.playerID.steamID);
+            TaskDispatcher.QueueOnMainThread(() => Provider.kick(CSteamID, reason));
         }
 
-        public EPlayerKill Damage(byte amount, Vector3 direction, EDeathCause cause, ELimb limb, CSteamID damageDealer)
+        public void MaxSkills()
         {
-            EPlayerKill playerKill;
-            player.life.askDamage(amount, direction, cause, limb, damageDealer, out playerKill);
-            return playerKill;
-        }
-
-        public bool IsPro
-        {
-            get
+            TaskDispatcher.QueueOnMainThread(() =>
             {
-                return player.channel.owner.isPro;
-            }
-        }
+                var skills = Player.skills;
+                foreach (var skill in skills.skills.SelectMany(s => s))
+                    skill.level = skill.max;
 
-        public InteractableVehicle CurrentVehicle
-        {
-            get
-            {
-                return player.movement.getVehicle();
-            }
-        }
-
-        public bool IsInVehicle
-        {
-            get
-            {
-                return CurrentVehicle != null;
-            }
+                skills.askSkills(CSteamID);
+            });
         }
 
         public void SetSkillLevel(UnturnedSkill skill, byte level)
         {
             GetSkill(skill).level = level;
-            player.skills.askSkills(CSteamID);
+            TaskDispatcher.QueueOnMainThread(() => Player.skills.askSkills(CSteamID));
         }
 
-        public byte GetSkillLevel(UnturnedSkill skill)
+        public SteamPlayer SteamPlayer()
         {
-            return GetSkill(skill).level;
+            return Player.channel.owner;
         }
 
-        public Skill GetSkill(UnturnedSkill skill)
+        public void Suicide()
         {
-            var skills = player.skills;
-            return skills.skills[skill.Speciality][skill.Skill];
+            TaskDispatcher.QueueOnMainThread(() => Player.life.askSuicide(Player.channel.owner.playerID.steamID));
         }
 
-        public int CompareTo(object obj)
+        public void Teleport(UnturnedPlayer target)
         {
-            return Id.CompareTo(obj);
+            if (target == null)
+                return;
+
+            TaskDispatcher.QueueOnMainThread(() => Player.teleportToPlayer(target.Player));
         }
+
+        public void Teleport(Vector3 position, float rotation)
+        {
+            TaskDispatcher.QueueOnMainThread(() =>
+            {
+                if (VanishMode)
+                {
+                    Player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position,
+                        MeasurementTool.angleToByte(rotation));
+                    Player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER,
+                        new Vector3(0, position.y + 1337, 0), MeasurementTool.angleToByte(rotation));
+                    Player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position,
+                        MeasurementTool.angleToByte(rotation));
+                }
+                else
+                {
+                    Player.teleportToLocation(position, rotation);
+                }
+            });
+        }
+
+        public bool Teleport(string nodeName)
+        {
+            var node = LevelNodes.nodes.FirstOrDefault(n =>
+                n.type == ENodeType.LOCATION && ((LocationNode) n).name.ToLower().Contains(nodeName.ToLower()));
+            if (node == null)
+                return false;
+
+
+            var position = node.point;
+            position.y = 1024f;
+            if (!Physics.Raycast(position, Vector3.down, out var hitInfo, 2048f, RayMasks.WAYPOINT))
+                return false;
+
+
+            position = hitInfo.point + Vector3.up;
+            if (!Player.stance.wouldHaveHeightClearanceAtPosition(position, 0.5f))
+                return false;
+
+
+            TaskDispatcher.QueueOnMainThread(() =>
+                Player.teleportToLocation(position, MeasurementTool.angleToByte(Rotation)));
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return CSteamID.ToString();
+        }
+
+        public void TriggerEffect(ushort effectId)
+        {
+            TaskDispatcher.QueueOnMainThread(() => EffectManager.instance.channel.send("tellEffectPoint", CSteamID,
+                ESteamPacket.UPDATE_UNRELIABLE_BUFFER, effectId, Position));
+        }
+
+        #endregion
+
+
+        #region GetUnturnedPlayer
+
+        public static UnturnedPlayer FromName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+
+
+            return PlayerTool.tryGetSteamPlayer(name, out var steamPlayer)
+                ? steamPlayer.player.gameObject.GetComponent<UnturnedPlayer>()
+                : null;
+        }
+
+        public static UnturnedPlayer FromCSteamID(CSteamID cSteamId)
+        {
+            if (cSteamId == CSteamID.Nil || string.IsNullOrEmpty(cSteamId.ToString())) return null;
+
+
+            return PlayerTool.getSteamPlayer(cSteamId)?.player.gameObject.GetComponent<UnturnedPlayer>();
+        }
+
+        public static UnturnedPlayer FromPlayer(SDG.Unturned.Player player)
+        {
+            return player?.gameObject.GetComponent<UnturnedPlayer>();
+        }
+
+        public static UnturnedPlayer FromSteamPlayer(SteamPlayer steamPlayer)
+        {
+            return steamPlayer?.player.gameObject.GetComponent<UnturnedPlayer>();
+        }
+
+        #endregion
     }
 }

@@ -1,23 +1,45 @@
-﻿using Rocket.API;
-using Rocket.Core.Utils;
-using Rocket.Unturned.Player;
-using SDG.Unturned;
+﻿#region
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
-using Rocket.API.Extensions;
+using Rocket.API;
+using Rocket.Core.Utils;
+using Rocket.Unturned.Player;
+using SDG.Unturned;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Logger = Rocket.Core.Logging.Logger;
 
+#endregion
 
 namespace Rocket.Unturned.Plugins
 {
     public sealed class PluginUnturnedPlayerComponentManager : MonoBehaviour
     {
-        private Assembly _assembly;
         private readonly List<Type> _unturnedPlayerComponents = new List<Type>();
+        private Assembly _assembly;
+
+
+        #region Events
+
+        private void OnConnect(SteamPlayer steamPlayer)
+        {
+            GiveAllComponents(steamPlayer.player.gameObject);
+        }
+
+        #endregion
+
+
+        #region Functions
+
+        private void GiveAllComponents(GameObject playerGameObject)
+        {
+            foreach (var playerComponent in _unturnedPlayerComponents.Where(comp =>
+                playerGameObject.GetComponent(comp) == null)) playerGameObject.AddComponent(playerComponent);
+        }
+
+        #endregion
 
 
         #region Start_Stop
@@ -31,7 +53,8 @@ namespace Rocket.Unturned.Plugins
 
 
                 //This is called before 'OnBeforePlayerConnected'
-                _unturnedPlayerComponents.AddRange(RocketHelper.GetTypesFromParentClass(_assembly, typeof(UnturnedPlayerComponent)));
+                _unturnedPlayerComponents.AddRange(
+                    RocketHelper.GetTypesFromParentClass(_assembly, typeof(UnturnedPlayerComponent)));
                 Provider.onEnemyConnected += OnConnect;
 
 
@@ -41,7 +64,7 @@ namespace Rocket.Unturned.Plugins
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex);
+                Logger.LogException(ex);
             }
         }
 
@@ -53,10 +76,10 @@ namespace Rocket.Unturned.Plugins
 
 
                 //Remove from existing players
-                foreach (var comp in Provider.clients.SelectMany(client => _unturnedPlayerComponents.Select(playerComponent => client.player.gameObject.GetComponent(playerComponent)).Where(comp => comp != null)))
-                {
-                    Destroy(comp);
-                }
+                foreach (var comp in Provider.clients.SelectMany(client =>
+                    _unturnedPlayerComponents
+                        .Select(playerComponent => client.player.gameObject.GetComponent(playerComponent))
+                        .Where(comp => comp != null))) Destroy(comp);
 
 
                 _unturnedPlayerComponents.Clear();
@@ -64,29 +87,10 @@ namespace Rocket.Unturned.Plugins
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex);
+                Logger.LogException(ex);
             }
         }
 
-        #endregion
-
-
-        #region Events
-        private void OnConnect(SteamPlayer steamPlayer)
-        {
-            GiveAllComponents(steamPlayer.player.gameObject);
-        }
-        #endregion
-
-
-        #region Functions
-        private void GiveAllComponents(GameObject playerGameObject)
-        {
-            foreach (var playerComponent in _unturnedPlayerComponents.Where(comp => playerGameObject.GetComponent(comp) == null))
-            {
-                playerGameObject.AddComponent(playerComponent);
-            }
-        }
         #endregion
     }
 }

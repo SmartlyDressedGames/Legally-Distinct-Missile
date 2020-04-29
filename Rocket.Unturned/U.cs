@@ -4,11 +4,9 @@ using Rocket.API.Extensions;
 using Rocket.Core;
 using Rocket.Core.Assets;
 using Rocket.Core.Extensions;
-using Rocket.Core.Logging;
 using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Commands;
-using Rocket.Unturned.Effects;
 using Rocket.Unturned.Events;
 using Rocket.Unturned.Permissions;
 using Rocket.Unturned.Player;
@@ -233,6 +231,7 @@ namespace Rocket.Unturned
         
         private void bindDelegates()
         {
+            Provider.onEnemyConnected = OnConnected + Provider.onEnemyConnected;
             CommandWindow.onCommandWindowInputted += (string text, ref bool shouldExecuteCommand) =>
             {
                 if (text.StartsWith("/")) text.Substring(1);
@@ -276,7 +275,12 @@ namespace Rocket.Unturned
                 if(isValid)
                     isValid = UnturnedPermissions.CheckValid(callback);
             };
-    }
+        }
+
+        private static void OnConnected(SteamPlayer steamPlayer)
+        {
+            steamPlayer.player.gameObject.getOrAddComponent<UnturnedPlayer>();
+        }
 
         public void Reload()
         {
@@ -294,13 +298,7 @@ namespace Rocket.Unturned
 
         }
 
-        public string InstanceId
-        {
-            get
-            {
-                return Dedicator.serverID;
-            } 
-        }
+        public string InstanceId => Dedicator.serverID;
     }
                
 }

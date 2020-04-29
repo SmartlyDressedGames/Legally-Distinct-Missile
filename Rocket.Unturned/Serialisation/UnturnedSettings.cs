@@ -16,8 +16,9 @@ namespace Rocket.Unturned.Serialisation
     }
 
     public sealed class RocketModObservatorySettings
-    {
-        [XmlAttribute]
+	{
+		[Obsolete("Observatory is no longer maintained.")]
+		[XmlAttribute]
         public bool CommunityBans = true;
 
         [XmlAttribute]

@@ -1,14 +1,12 @@
-﻿using Rocket.Core;
-using Rocket.Core.Logging;
+﻿using Rocket.API;
 using Rocket.Unturned.Events;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using Rocket.API;
+using Logger = Rocket.Core.Logging.Logger;
 
 namespace Rocket.Unturned.Chat
 {
@@ -16,21 +14,21 @@ namespace Rocket.Unturned.Chat
     {
         private void Awake()
         {
-            SDG.Unturned.ChatManager.onChatted += handleChat;
+            ChatManager.onChatted += HandleChat;
         }
 
-        private void handleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool cancel)
+        private void HandleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool cancel)
         {
             cancel = false;
-            Color color = incomingColor;
+            var color = incomingColor;
             try
             {
-                UnturnedPlayer player = UnturnedPlayer.FromSteamPlayer(steamPlayer);
+                var player = UnturnedPlayer.FromSteamPlayer(steamPlayer);
                 color = UnturnedPlayerEvents.firePlayerChatted(player, chatMode, player.Color, message, ref cancel);
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex);
+                Logger.LogException(ex);
             }
 
             cancel = !cancel;
@@ -55,23 +53,20 @@ namespace Rocket.Unturned.Chat
                 case "rocket": return GetColorFromRGB(90, 206, 205);
             }
 
-            Color? color = GetColorFromHex(colorName);
-            if (color.HasValue) return color.Value;
-
-            return fallback;
+            var color = GetColorFromHex(colorName);
+            return color ?? fallback;
         }
 
         public static Color? GetColorFromHex(string hexString)
         {
             hexString = hexString.Replace("#", "");
             if(hexString.Length == 3)
-            { // #99f
-                hexString = hexString.Insert(1, System.Convert.ToString(hexString[0])); // #999f
-                hexString = hexString.Insert(3, System.Convert.ToString(hexString[2])); // #9999f
-                hexString = hexString.Insert(5, System.Convert.ToString(hexString[4])); // #9999ff
+            {
+                hexString = hexString.Insert(1, Convert.ToString(hexString[0])); // #999f
+                hexString = hexString.Insert(3, Convert.ToString(hexString[2])); // #9999f
+                hexString = hexString.Insert(5, Convert.ToString(hexString[4])); // #9999ff
             }
-            int argb;
-            if (hexString.Length != 6 || !Int32.TryParse(hexString, System.Globalization.NumberStyles.HexNumber, null, out argb))
+            if (hexString.Length != 6 || !int.TryParse(hexString, System.Globalization.NumberStyles.HexNumber, null, out var argb))
             {
                 return null;
             }
@@ -80,13 +75,15 @@ namespace Rocket.Unturned.Chat
             byte b = (byte)(argb & 0xff);
             return GetColorFromRGB(r, g, b);
         }
+
 		public static Color GetColorFromRGB(byte R,byte G,byte B)
 		{
 			return GetColorFromRGB (R, G, B, 100);
 		}
+
         public static Color GetColorFromRGB(byte R,byte G,byte B,short A)
         {
-            return new Color((1f / 255f) * R, (1f / 255f) * G, (1f / 255f) * B,(1f/100f) * A);
+            return new Color(1f / 255f * R, 1f / 255f * G, 1f / 255f * B,1f / 100f * A);
         }
 
         public static void Say(string message, bool rich)
@@ -123,11 +120,11 @@ namespace Rocket.Unturned.Chat
         {
             if (player is ConsolePlayer)
             {
-                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+                Logger.Log(message, ConsoleColor.Gray);
             }
             else
             {
-                Say(new CSteamID(ulong.Parse(player.Id)), message, color);
+                Say(new CSteamID(ulong.Parse(player.Id)), message, color, rich);
             }
         }
 
@@ -135,11 +132,11 @@ namespace Rocket.Unturned.Chat
         {
             if (player is ConsolePlayer)
             {
-                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+                Logger.Log(message, ConsoleColor.Gray);
             }
             else
             {
-                Say(new CSteamID(ulong.Parse(player.Id)), message, color, iconURL);
+                Say(new CSteamID(ulong.Parse(player.Id)), message, color, iconURL, rich);
             }
         }
 
@@ -155,7 +152,7 @@ namespace Rocket.Unturned.Chat
 
         public static void Say(string message, Color color, bool rich)
         {
-            Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
+            Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
             foreach (string m in wrapMessage(message))
             {
                 ChatManager.instance.channel.send("tellChat", ESteamCall.OTHERS, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { CSteamID.Nil, string.Empty, (byte)EChatMode.GLOBAL, color, rich, m });
@@ -164,7 +161,7 @@ namespace Rocket.Unturned.Chat
 
         public static void Say(string message, Color color, string iconURL, bool rich)
         {
-            Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
+            Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
             foreach (string m in wrapMessage(message))
             {
                 ChatManager.instance.channel.send("tellChat", ESteamCall.OTHERS, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { CSteamID.Nil, iconURL, (byte)EChatMode.GLOBAL, color, rich, m });
@@ -215,7 +212,7 @@ namespace Rocket.Unturned.Chat
         {
             if (CSteamID == null || CSteamID.ToString() == "0")
             {
-                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+                Logger.Log(message, ConsoleColor.Gray);
             }
             else
             {
@@ -230,7 +227,7 @@ namespace Rocket.Unturned.Chat
         {
             if (CSteamID == null || CSteamID.ToString() == "0")
             {
-                Core.Logging.Logger.Log(message, ConsoleColor.Gray);
+                Logger.Log(message, ConsoleColor.Gray);
             }
             else
             {

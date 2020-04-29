@@ -7,7 +7,7 @@ namespace Rocket.Unturned.Utils
 {
     internal class AutomaticSaveWatchdog : MonoBehaviour
     {
-        private void FixedUpdate()
+        private void Update()
         {
             checkTimer();
         }

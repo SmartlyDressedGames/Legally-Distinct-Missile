@@ -4,6 +4,9 @@ All notable changes should be documented in this file. The format is based on [K
 
 ## Unreleased
 
+### Changed
+- `AutomaticSaveWatchdog` checks the timer during `Update` rather than `FixedUpdate` because the latter is for physics code. Reported by @rube200 in PR #7.
+
 ### Fixed
 - `UnturnedPlayer.Ban` correctly calls `Provider.requestBanPlayer` rather than `Provider.ban`. The distinction is that `requestBanPlayer` allows plugins to override the ban handling and saves the ban information, whereas `ban` is a poorly named internal callback. Reported by @Kr4ken-9 in PR #1.
 - `UnturnedPlayer` overrides `Object.Equals` and `Object.GetHashCode` in order to work properly with standard containers. Reported by @CyberAndrii in PR #2.

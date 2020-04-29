@@ -272,8 +272,22 @@ namespace Rocket.Unturned.Player
 
         public void Ban(string reason, uint duration)
         {
-            Provider.ban(this.CSteamID, reason, duration);
+			Ban(CSteamID.Nil, reason, duration);
         }
+
+		public void Ban(CSteamID instigator, string reason, uint duration)
+		{
+			CSteamID steamIdToBan = this.CSteamID;
+
+			uint ipToBan = 0;
+			P2PSessionState_t state;
+			if(SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
+			{
+				ipToBan = state.m_nRemoteIP;
+			}
+
+			Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
+		}
 
         public void Admin(bool admin)
         {

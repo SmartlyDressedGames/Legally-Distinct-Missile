@@ -117,7 +117,17 @@ namespace Rocket.Unturned.Player
                 return false;
             }
 
-            return (this.CSteamID.ToString() == p.CSteamID.ToString());
+            return this.CSteamID == p.CSteamID;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as UnturnedPlayer);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.CSteamID.GetHashCode();
         }
 
         public T GetComponent<T>()

@@ -15,66 +15,11 @@ namespace Rocket.Unturned
     public class UnturnedPlayerMovement : UnturnedPlayerComponent
     {
         private PlayerMovement movement;
-        public bool VanishMode = false;
-        DateTime lastUpdate = DateTime.Now;
-        Vector3 lastVector = new Vector3(0,-1,0);
-
-        //DateTime? requested = null;
-        //string webClientResult = null;
-
-        private void OnEnable()
-        {
-            // CommunityBans not working
-            
-            /*if (U.Settings.Instance.RocketModObservatory.CommunityBans)
-            {
-                using (RocketWebClient webClient = new RocketWebClient())
-                {
-                    try
-                    {
-                        webClient.DownloadStringCompleted += (object sender, System.Net.DownloadStringCompletedEventArgs e) =>
-                        {
-                            if (e.Error == null)
-                            {
-                                if (e.Result.Contains(",")){
-                                    string[] result = e.Result.Split(',');
-                                    long age;
-                                    if (result[0] == "true")
-                                    {
-                                        Core.Logging.Logger.Log("[RocketMod Observatory] Kicking Player " + Player.CharacterName + "because he is banned:" + result[1]);
-                                        webClientResult = result[1];
-                                        requested = DateTime.Now;
-                                        Player.Kick("you are banned from observatory: " + result[1]);
-                                    }
-                                    else if (U.Settings.Instance.RocketModObservatory.KickLimitedAccounts && result.Length >= 2 && result[1] == "true")
-                                    {
-                                        Core.Logging.Logger.Log("[RocketMod Observatory] Kicking Player " + Player.CharacterName + " because his account is limited");
-                                        Player.Kick("your Steam account is limited");
-                                    }
-                                    else if (U.Settings.Instance.RocketModObservatory.KickTooYoungAccounts && result.Length == 3 && long.TryParse(result[2].ToString(),out age))
-                                    {
-                                        long epochTicks = new DateTime(1970, 1, 1).Ticks;
-                                        long unixTime = ((DateTime.UtcNow.Ticks - epochTicks) / TimeSpan.TicksPerSecond);
-                                        long d = (unixTime - age);
-                                        if (d < U.Settings.Instance.RocketModObservatory.MinimumAge)
-                                        {
-                                            Core.Logging.Logger.Log("[RocketMod Observatory] Kicking Player " + Player.CharacterName + " because his account is younger then "+ U.Settings.Instance.RocketModObservatory.MinimumAge+" seconds ("+d+" seconds)");
-                                            Player.Kick("your Steam account is not old enough");
-                                        } 
-                                    }
-                                }
-                            }
-                        };
-                        webClient.DownloadStringAsync(new Uri(string.Format("http://banlist.observatory.rocketmod.net/?steamid={0}", Player.CSteamID)));
-                    }
-                    catch (Exception)
-                    {
-                        //                        
-                    }
-                }
-            }*/
-        }
+        private DateTime lastUpdate = DateTime.Now;
+        private Vector3 lastVector = new Vector3(0,-1,0);
         
+        public bool VanishMode = false;
+
         private void Awake()
         {  
             movement = Player.GetComponent<PlayerMovement>();
@@ -82,11 +27,6 @@ namespace Rocket.Unturned
         
         private void FixedUpdate()
         {
-            /*if (requested.HasValue && (DateTime.Now - requested.Value).TotalSeconds >= 2){
-                Provider.kick(Player.CSteamID, webClientResult);
-                requested = null;
-            }*/
-            
             if (!VanishMode)
             {
                 if (U.Settings.Instance.LogSuspiciousPlayerMovement && lastUpdate.AddSeconds(1) < DateTime.Now)

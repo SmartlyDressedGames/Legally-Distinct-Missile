@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Unturned", "Rocket.Unturned\Rocket.Unturned.csproj", "{BADB74F6-90C0-40AF-865D-27795B50C469}"
 EndProject
@@ -12,9 +12,6 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Local|Any CPU = Local|Any CPU
-		Local|x64 = Local|x64
-		Local|x86 = Local|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
@@ -26,12 +23,6 @@ Global
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Debug|x64.Build.0 = Debug|Any CPU
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Debug|x86.Build.0 = Debug|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|Any CPU.ActiveCfg = Local|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|Any CPU.Build.0 = Local|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|x64.ActiveCfg = Local|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|x64.Build.0 = Local|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|x86.ActiveCfg = Local|Any CPU
-		{BADB74F6-90C0-40AF-865D-27795B50C469}.Local|x86.Build.0 = Local|Any CPU
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BADB74F6-90C0-40AF-865D-27795B50C469}.Release|x64.ActiveCfg = Release|Any CPU
@@ -44,12 +35,6 @@ Global
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Debug|x64.Build.0 = Debug|Any CPU
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Debug|x86.Build.0 = Debug|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|Any CPU.ActiveCfg = Local|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|Any CPU.Build.0 = Local|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|x64.ActiveCfg = Local|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|x64.Build.0 = Local|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|x86.ActiveCfg = Local|Any CPU
-		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Local|x86.Build.0 = Local|Any CPU
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}.Release|x64.ActiveCfg = Release|Any CPU
@@ -59,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24EC4C94-73A1-4917-9945-389ECB37EC99}
 	EndGlobalSection
 EndGlobal

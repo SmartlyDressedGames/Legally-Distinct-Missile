@@ -4,50 +4,63 @@ using System.IO;
 
 namespace Rocket.Unturned.Launcher
 {
-    class RocketLauncher
+    internal class RocketLauncher
     {
-        private static TextReader consoleReader;
+        private static TextReader _consoleReader;
 
         public static void Main(string[] args)
         {
-            string instanceName = args.Length > 0 ? args[0] : "Rocket";
+            var instanceName = args.Length > 0 ? args[0] : "Rocket";
 
-            string executableName = "";
-            foreach (string s in new string[] { "Unturned_Headless.x86" , "Unturned.x86" , "Unturned.exe", "Unturned_Headless.x86_64", "Unturned.x86_64"})
+            var executableName = "";
+            foreach (var fileName in new[]{ "Unturned_Headless.x86" , "Unturned.x86" , "Unturned.exe", "Unturned_Headless.x86_64", "Unturned.x86_64"})
             {
-                if (File.Exists(s)) {
-                    executableName = s;
+                if (File.Exists(fileName))
+                {
+                    executableName = fileName;
                     break;
                 }
             }
-            if (String.IsNullOrEmpty(executableName)) throw new FileNotFoundException("Could not locate Unturned executable");
-            string arguments = "-nographics -batchmode -logfile 'Servers/" + instanceName + "/unturned.log' +secureserver/" + instanceName;
 
-            string consoleOutput = instanceName + ".console";
+            if (string.IsNullOrEmpty(executableName))
+            {
+                throw new FileNotFoundException("Could not locate Unturned executable.");
+            }
 
-            FileSystemWatcher fileSystemWatcher = new FileSystemWatcher(".", consoleOutput);
-            fileSystemWatcher.Changed += fileSystemWatcher_Changed;
-            consoleReader = new StreamReader(new FileStream(consoleOutput, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite));
+            var consoleOutput = instanceName + ".console";
+
+            var fileSystemWatcher = new FileSystemWatcher(".", consoleOutput);
+            fileSystemWatcher.Changed += FileSystemWatcher_Changed;
             fileSystemWatcher.EnableRaisingEvents = true;
-            Process p = new Process();
-            p.StartInfo = new ProcessStartInfo(executableName, arguments);
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardInput = false;
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            p.WaitForExit();
+
+            _consoleReader = new StreamReader(new FileStream(consoleOutput, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite));
+
+            var process = new Process
+            {
+                StartInfo =
+                {
+                    FileName = executableName,
+                    Arguments = $"-nographics -batchmode -logfile 'Servers/{instanceName}/unturned.log' +secureserver/{instanceName}",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardInput = false
+                }
+            };
+
+            process.Start();
+            process.WaitForExit();
         }
 
-        private static void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        private static void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType == WatcherChangeTypes.Changed)
             {
-                string newline = consoleReader.ReadToEnd();
-                if (!String.IsNullOrEmpty(newline))
-                    Console.Write(newline);
-                
+                var input = _consoleReader.ReadToEnd();
+                if (!string.IsNullOrEmpty(input))
+                {
+                    Console.Write(input);
+                }
             }
         }
     }
 }
-

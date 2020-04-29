@@ -13,7 +13,6 @@ namespace Rocket.Unturned.Player
         private void Awake()
         {
             player = UnturnedPlayer.FromPlayer(gameObject.transform.GetComponent<SDG.Unturned.Player>());
-            DontDestroyOnLoad(transform.gameObject);
         }
 
         private void OnEnable()

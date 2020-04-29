@@ -1,32 +1,30 @@
-﻿using Rocket.API.Extensions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Rocket.Unturned.Events;
 using SDG.Unturned;
-using System;
 using UnityEngine;
 
 namespace Rocket.Unturned.Player
 {
     public sealed class UnturnedPlayerFeatures : UnturnedPlayerComponent
     {
-
         public DateTime Joined = DateTime.Now;
 
-        internal Color? color = null;
+        internal Color? color;
         internal Color? Color
         {
             get { return color; }
             set { color = value; }
         }
 
-
-        private bool vanishMode = false;
+        private bool vanishMode;
         public bool VanishMode
         {
             get { return vanishMode; }
             set
             {
                 Player.GetComponent<UnturnedPlayerMovement>().VanishMode = value;
-                PlayerMovement pMovement = Player.GetComponent<PlayerMovement>();
+                var pMovement = Player.GetComponent<PlayerMovement>();
                 pMovement.canAddSimulationResultsToUpdates = !value;
                 if (vanishMode && !value)
                 {
@@ -38,7 +36,7 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        private bool godMode = false;
+        private bool godMode;
         public bool GodMode
         {
             set
@@ -65,18 +63,19 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        private bool initialCheck;
+        private bool _initialCheck;
 
-        Vector3 oldPosition = new Vector3();
+        private Vector3 _oldPosition;
 
         private void FixedUpdate()
         {
-            if (oldPosition != Player.Position)
+            if (_oldPosition != Player.Position)
             {
                 UnturnedPlayerEvents.fireOnPlayerUpdatePosition(Player);
-                oldPosition = Player.Position;
+                _oldPosition = Player.Position;
             }
-            if (!initialCheck && (DateTime.Now - Joined).TotalSeconds > 3)
+
+            if (!_initialCheck && (DateTime.Now - Joined).TotalSeconds > 3)
             {
                 Check();
             }
@@ -84,13 +83,14 @@ namespace Rocket.Unturned.Player
 
         private void Check()
         {
-            initialCheck = true;
+            _initialCheck = true;
            
             if (U.Settings.Instance.CharacterNameValidation)
             {
-                string username = Player.CharacterName;
-                System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(U.Settings.Instance.CharacterNameValidationRule);
-                System.Text.RegularExpressions.Match match = regex.Match(username);
+                var username = Player.CharacterName;
+                var regex = new Regex(U.Settings.Instance.CharacterNameValidationRule);
+
+                var match = regex.Match(username);
                 if (match.Groups[0].Length != username.Length)
                 {
                     Provider.kick(Player.CSteamID, U.Translate("invalid_character_name"));
@@ -98,16 +98,8 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        private static string reverse(string s)
-        {
-            string r = "";
-            for (int i = s.Length; i > 0; i--) r += s[i - 1];
-            return r;
-        }
-
         protected override void Load()
         {
-
             if (godMode)
             {
                 Player.Events.OnUpdateHealth += e_OnPlayerUpdateHealth;
@@ -125,17 +117,26 @@ namespace Rocket.Unturned.Player
 
         private void e_OnPlayerUpdateVirus(UnturnedPlayer player, byte virus)
         {
-            if (virus < 95) Player.Infection = 0;
+            if (virus < 95)
+            {
+                Player.Infection = 0;
+            }
         }
 
         private void e_OnPlayerUpdateFood(UnturnedPlayer player, byte food)
         {
-            if (food < 95) Player.Hunger = 0;
+            if (food < 95)
+            {
+                Player.Hunger = 0;
+            }
         }
 
         private void e_OnPlayerUpdateWater(UnturnedPlayer player, byte water)
         {
-            if (water < 95) Player.Thirst = 0;
+            if (water < 95)
+            {
+                Player.Thirst = 0;
+            }
         }
 
         private void e_OnPlayerUpdateHealth(UnturnedPlayer player, byte health)

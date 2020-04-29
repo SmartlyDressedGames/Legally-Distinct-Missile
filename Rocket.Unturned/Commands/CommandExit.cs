@@ -1,8 +1,7 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
-using System.Collections.Generic;
-using System;
 
 namespace Rocket.Unturned.Commands
 {
@@ -40,13 +39,13 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.exit" };
+                return new List<string> { "rocket.exit" };
             }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
+            var player = (UnturnedPlayer)caller;
             Provider.kick(player.CSteamID, "you exited");
         }
     }

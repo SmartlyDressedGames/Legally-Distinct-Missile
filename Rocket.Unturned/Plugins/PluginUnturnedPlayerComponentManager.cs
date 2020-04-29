@@ -1,68 +1,60 @@
-﻿using Rocket.API;
-using Rocket.API.Extensions;
-using Rocket.Core.Logging;
-using Rocket.Core.Utils;
-using Rocket.Unturned.Events;
-using Rocket.Unturned.Player;
-using SDG.Unturned;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Rocket.API;
+using Rocket.Core.Utils;
+using Rocket.Unturned.Player;
 using UnityEngine;
+using Logger = Rocket.Core.Logging.Logger;
 
 namespace Rocket.Unturned.Plugins
 {
     public sealed class PluginUnturnedPlayerComponentManager : MonoBehaviour
     {
-        private Assembly assembly;
-        private List<Type> unturnedPlayerComponents = new List<Type>();
+        private Assembly _assembly;
+        private List<Type> _unturnedPlayerComponents = new List<Type>();
+
+        private void OnEnable()
+        {
+            try
+            {
+                _assembly = GetComponent<IRocketPlugin>().GetType().Assembly;
+
+                U.Events.OnBeforePlayerConnected += AddPlayerComponents;
+                _unturnedPlayerComponents.AddRange(RocketHelper.GetTypesFromParentClass(_assembly, typeof(UnturnedPlayerComponent)));
+
+                foreach (var playerComponent in _unturnedPlayerComponents)
+                {
+                    Logger.Log("Adding UnturnedPlayerComponent: " + playerComponent.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex);
+            }
+        }
         
         private void OnDisable()
         {
             try
             {
-                U.Events.OnPlayerConnected -= addPlayerComponents;
-                unturnedPlayerComponents = unturnedPlayerComponents.Where(p => p.Assembly != assembly).ToList();
-                List<Type> playerComponents = RocketHelper.GetTypesFromParentClass(assembly, typeof(UnturnedPlayerComponent));
-                foreach (Type playerComponent in playerComponents)
-                {
-                    //Provider.Players.ForEach(p => p.Player.gameObject.TryRemoveComponent(playerComponent.GetType()));
-                }
+                U.Events.OnPlayerConnected -= AddPlayerComponents;
+                _unturnedPlayerComponents = _unturnedPlayerComponents.Where(p => p.Assembly != _assembly).ToList();
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex);
+                Logger.LogException(ex);
             }
         }
 
-        private void OnEnable()
+        private void AddPlayerComponents(IRocketPlayer rocketPlayer)
         {
-            try
-            {  
-                IRocketPlugin plugin = GetComponent<IRocketPlugin>();
-                assembly = plugin.GetType().Assembly;
+            var player = (UnturnedPlayer)rocketPlayer;
 
-                U.Events.OnBeforePlayerConnected += addPlayerComponents;
-                unturnedPlayerComponents.AddRange(RocketHelper.GetTypesFromParentClass(assembly, typeof(UnturnedPlayerComponent)));
-
-                foreach (Type playerComponent in unturnedPlayerComponents)
-                {
-                    Core.Logging.Logger.Log("Adding UnturnedPlayerComponent: "+playerComponent.Name);
-                    //Provider.Players.ForEach(p => p.Player.gameObject.TryAddComponent(playerComponent.GetType()));
-                }
-            }
-            catch (Exception ex)
+            foreach (var component in _unturnedPlayerComponents)
             {
-                Core.Logging.Logger.LogException(ex);
-            }
-        }
-
-        private void addPlayerComponents(IRocketPlayer p)
-        {
-            foreach (Type component in unturnedPlayerComponents)
-            {
-                ((UnturnedPlayer)p).Player.gameObject.AddComponent(component);
+                player.Player.gameObject.AddComponent(component);
             }
         }
     }

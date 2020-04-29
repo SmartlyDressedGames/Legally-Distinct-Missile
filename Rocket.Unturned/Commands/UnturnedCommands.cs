@@ -1,15 +1,13 @@
-﻿using Rocket.Core;
-using Rocket.Core.Logging;
-using Rocket.Unturned.Events;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Rocket.API;
+using Rocket.Core;
+using Rocket.Core.Serialization;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using Rocket.API;
-using Rocket.Core.Utils;
 
 namespace Rocket.Unturned.Commands
 {
@@ -17,9 +15,9 @@ namespace Rocket.Unturned.Commands
     {
         private void Awake()
         {
-            foreach(Command vanillaCommand in Commander.commands)
+            foreach(var vanillaCommand in Commander.commands)
             {
-                R.Commands.Register(new UnturnedVanillaCommand(vanillaCommand),vanillaCommand.command.ToLower(),Core.Serialization.CommandPriority.Low);
+                R.Commands.Register(new UnturnedVanillaCommand(vanillaCommand),vanillaCommand.command.ToLower(),CommandPriority.Low);
             }
         }
 
@@ -68,7 +66,7 @@ namespace Rocket.Unturned.Commands
             {
                 get
                 {
-                    return new List<string>() { "unturned."+command.command.ToLower() };
+                    return new List<string> { "unturned."+command.command.ToLower() };
                 }
             }
 
@@ -82,7 +80,7 @@ namespace Rocket.Unturned.Commands
 
             public void Execute(IRocketPlayer caller, string[] command)
             {
-                CSteamID id = CSteamID.Nil;
+                var id = CSteamID.Nil;
                 if(caller is UnturnedPlayer)
                 {
                     id = ((UnturnedPlayer)caller).CSteamID;

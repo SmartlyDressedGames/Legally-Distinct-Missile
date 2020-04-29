@@ -1,9 +1,8 @@
-﻿using Rocket.API;
-using Rocket.Unturned.Player;
-using System.Collections.Generic;
-using System;
-using Rocket.Unturned.Chat;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.API.Extensions;
+using Rocket.Unturned.Chat;
+using Rocket.Unturned.Player;
 
 namespace Rocket.Unturned.Commands
 {
@@ -41,14 +40,14 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.effect" };
+                return new List<string> { "rocket.effect" };
             }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
-            ushort? id = command.GetUInt16Parameter(0);
+            var player = (UnturnedPlayer)caller;
+            var id = command.GetUInt16Parameter(0);
             if (id == null)
             {
                 UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));

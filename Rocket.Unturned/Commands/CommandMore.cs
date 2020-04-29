@@ -1,11 +1,8 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.API.Extensions;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Rocket.Unturned.Commands
 {
@@ -33,7 +30,7 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get{ return new List<string>() { "rocket.more" }; }
+            get{ return new List<string> { "rocket.more" }; }
         }
 
         public string Syntax
@@ -43,15 +40,15 @@ namespace Rocket.Unturned.Commands
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            byte? amount = command.GetByteParameter(0);
+            var amount = command.GetByteParameter(0);
             if (command.Length == 0 || command.Length > 1 || amount == null || amount == 0)
             {
                 UnturnedChat.Say(caller, U.Translate("command_more_usage"));
                 return;
             }
 
-            UnturnedPlayer player = (UnturnedPlayer)caller;
-            ushort itemId = player.Player.equipment.itemID;
+            var player = (UnturnedPlayer)caller;
+            var itemId = player.Player.equipment.itemID;
             if (itemId == 0)
             {
                 UnturnedChat.Say(caller, U.Translate("command_more_dequipped"));

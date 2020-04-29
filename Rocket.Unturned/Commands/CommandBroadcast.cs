@@ -1,10 +1,8 @@
-﻿using Rocket.API;
-using Rocket.Unturned.Player;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using Rocket.Unturned.Chat;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.API.Extensions;
+using Rocket.Unturned.Chat;
+using UnityEngine;
 
 namespace Rocket.Unturned.Commands
 {
@@ -42,17 +40,17 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.broadcast" };
+                return new List<string> { "rocket.broadcast" };
             }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            Color? color = command.GetColorParameter(0);
+            var color = command.GetColorParameter(0);
 
-            int i = 1;
+            var i = 1;
             if (color == null) i = 0;
-            string message = command.GetParameterString(i);
+            var message = command.GetParameterString(i);
 
             if (message == null)
             {
@@ -60,7 +58,7 @@ namespace Rocket.Unturned.Commands
                 throw new WrongUsageOfCommandException(caller, this);
             }
 
-            UnturnedChat.Say(message, (color.HasValue) ? (Color)color : Color.green);
+            UnturnedChat.Say(message, color.HasValue ? (Color)color : Color.green);
         }
     }
 }

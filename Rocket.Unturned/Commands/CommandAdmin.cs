@@ -1,8 +1,7 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Core;
 using Rocket.Unturned.Chat;
-using Rocket.Unturned.Player;
-using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -35,7 +34,7 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.admin" };
+                return new List<string> { "rocket.admin" };
             }
         }
 
@@ -48,7 +47,7 @@ namespace Rocket.Unturned.Commands
         {
             if (!R.Settings.Instance.WebPermissions.Enabled)
             {
-                UnturnedPlayer player = command.GetUnturnedPlayerParameter(0);
+                var player = command.GetUnturnedPlayerParameter(0);
                 if (player == null)
                 {
                     UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));

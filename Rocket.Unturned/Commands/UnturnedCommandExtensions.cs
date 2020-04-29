@@ -1,8 +1,6 @@
 ﻿using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Rocket.Unturned.Commands
@@ -11,7 +9,7 @@ namespace Rocket.Unturned.Commands
     {
         public static UnturnedPlayer GetUnturnedPlayerParameter(this string[] array, int index)
         {
-            return (array.Length <= index) ? null : UnturnedPlayer.FromName(array[index]);
+            return array.Length <= index ? null : UnturnedPlayer.FromName(array[index]);
         }
 
         public static RocketPlayer GetRocketPlayerParameter(this string[] array, int index)
@@ -43,8 +41,8 @@ namespace Rocket.Unturned.Commands
         public static Color? GetColorParameter(this string[] array, int index)
         {
             if(array.Length <= index) return null;
-            Color output = UnturnedChat.GetColorFromName(array[index], Color.clear);
-            return (output == Color.clear) ? null : (Color?)output;
+            var output = UnturnedChat.GetColorFromName(array[index], Color.clear);
+            return output == Color.clear ? null : (Color?)output;
         }
     }
 }

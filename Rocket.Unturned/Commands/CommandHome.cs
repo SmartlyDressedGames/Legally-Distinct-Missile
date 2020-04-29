@@ -1,8 +1,8 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rocket.Unturned.Commands
@@ -39,12 +39,12 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.home" }; }
+            get { return new List<string> { "rocket.home" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
+            var player = (UnturnedPlayer)caller;
             Vector3 pos;
             byte rot;
             if (!BarricadeManager.tryGetBed(player.CSteamID, out pos, out rot))
@@ -52,18 +52,14 @@ namespace Rocket.Unturned.Commands
                 UnturnedChat.Say(caller, U.Translate("command_bed_no_bed_found_private"));
                 throw new WrongUsageOfCommandException(caller, this);
             }
-            else
+
+            if (player.Stance == EPlayerStance.DRIVING || player.Stance == EPlayerStance.SITTING)
             {
-                if (player.Stance == EPlayerStance.DRIVING || player.Stance == EPlayerStance.SITTING)
-                {
-                    UnturnedChat.Say(caller, U.Translate("command_generic_teleport_while_driving_error"));
-                    throw new WrongUsageOfCommandException(caller, this);
-                }
-                else
-                {
-                    player.Teleport(pos, rot);
-                }
+                UnturnedChat.Say(caller, U.Translate("command_generic_teleport_while_driving_error"));
+                throw new WrongUsageOfCommandException(caller, this);
             }
+
+            player.Teleport(pos, rot);
 
         }
     }

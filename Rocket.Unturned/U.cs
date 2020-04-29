@@ -1,4 +1,7 @@
-﻿using Rocket.API;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using Rocket.API;
 using Rocket.API.Collections;
 using Rocket.API.Extensions;
 using Rocket.Core;
@@ -16,10 +19,8 @@ using Rocket.Unturned.Utils;
 using SDG.Framework.Modules;
 using SDG.Unturned;
 using Steamworks;
-using System;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
+using Logger = Rocket.Core.Logging.Logger;
 
 namespace Rocket.Unturned
 {
@@ -36,8 +37,6 @@ namespace Rocket.Unturned
         public IRocketImplementationEvents ImplementationEvents => Events;
 
         public event RocketImplementationInitialized OnRocketImplementationInitialized;
-
-        public static UnturnedConsole Console;
         
         private static GameObject _rocketGameObject; // Normally this should be below DefaultTranslations, but nevermind.
 
@@ -142,15 +141,10 @@ namespace Rocket.Unturned
 
             _rocketGameObject = new GameObject("Rocket");
             DontDestroyOnLoad(_rocketGameObject);
-            
-            if (System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                Console = _rocketGameObject.AddComponent<UnturnedConsole>();
-            }
 
-            System.Console.Clear();
-            System.Console.ForegroundColor = ConsoleColor.Cyan;
-            System.Console.WriteLine($"Rocket Unturned v{Assembly.GetExecutingAssembly().GetName().Version} for Unturned v{Provider.APP_VERSION}\r\n");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Rocket Unturned v{Assembly.GetExecutingAssembly().GetName().Version} for Unturned v{Provider.APP_VERSION}\r\n");
 
             R.OnRockedInitialized += () =>
             {
@@ -189,7 +183,7 @@ namespace Rocket.Unturned
                     }
                     catch (Exception ex)
                     {
-                        Core.Logging.Logger.LogException(ex, "Failed to load plugin " + plugin.Name + ".");
+                        Logger.LogException(ex, "Failed to load plugin " + plugin.Name + ".");
                         cancelLoading = true;
                     }
                 };
@@ -211,7 +205,7 @@ namespace Rocket.Unturned
                 }
                 catch (Exception ex)
                 {
-                    Core.Logging.Logger.LogError("Steam can not be initialized: " + ex.Message);
+                    Logger.LogError("Steam can not be initialized: " + ex.Message);
                 }
 
                 OnRocketImplementationInitialized.TryInvoke();
@@ -219,7 +213,7 @@ namespace Rocket.Unturned
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex);
+                Logger.LogException(ex);
             }
         }
         
@@ -243,7 +237,7 @@ namespace Rocket.Unturned
             };
             
             SteamChannel.onTriggerSend += UnturnedPlayerEvents.TriggerSend;
-            CommandWindow.onCommandWindowOutputted += Core.Logging.Logger.ExternalLog;
+            CommandWindow.onCommandWindowOutputted += Logger.ExternalLog;
 
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>
             {

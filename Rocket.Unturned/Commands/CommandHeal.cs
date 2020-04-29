@@ -1,8 +1,7 @@
-﻿using Rocket.API;
-using Rocket.Unturned.Player;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Unturned.Chat;
+using Rocket.Unturned.Player;
 
 namespace Rocket.Unturned.Commands
 {
@@ -40,7 +39,7 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.heal" };
+                return new List<string> { "rocket.heal" };
             }
         }
 
@@ -48,7 +47,7 @@ namespace Rocket.Unturned.Commands
         {
             if (caller is UnturnedPlayer && command.Length != 1)
             {
-                UnturnedPlayer player = (UnturnedPlayer)caller;
+                var player = (UnturnedPlayer)caller;
                 player.Heal(100);
                 player.Bleeding = false;
                 player.Broken = false;
@@ -59,7 +58,7 @@ namespace Rocket.Unturned.Commands
             }
             else
             {
-                UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[0]);
+                var otherPlayer = UnturnedPlayer.FromName(command[0]);
                 if (otherPlayer != null)
                 {
                     otherPlayer.Heal(100);

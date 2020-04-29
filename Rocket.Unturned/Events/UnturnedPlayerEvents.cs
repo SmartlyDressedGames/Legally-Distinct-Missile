@@ -1,12 +1,12 @@
-﻿using Rocket.Core.Logging;
+﻿using System;
+using System.Linq;
+using Rocket.Core.Extensions;
 using Rocket.Unturned.Enumerations;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
-using System;
 using UnityEngine;
-using System.Linq;
-using Rocket.Core.Extensions;
+using Logger = Rocket.Core.Logging.Logger;
 
 namespace Rocket.Unturned.Events
 {
@@ -44,7 +44,6 @@ namespace Rocket.Unturned.Events
                 Logger.Log("Receive+" + d.ToString() + ": " + o + " - " + b);
             }*/
 #endif
-            return;
         }
         
         internal static void TriggerSend(SteamPlayer s, string W, ESteamCall X, ESteamPacket l, params object[] R)
@@ -52,8 +51,8 @@ namespace Rocket.Unturned.Events
             try
             {
                 if (s == null || s.player == null || s.playerID.steamID == CSteamID.Nil || s.player.transform == null || R == null) return;
-                UnturnedPlayerEvents instance = s.player.transform.GetComponent<UnturnedPlayerEvents>();
-                UnturnedPlayer rp = UnturnedPlayer.FromSteamPlayer(s);
+                var instance = s.player.transform.GetComponent<UnturnedPlayerEvents>();
+                var rp = UnturnedPlayer.FromSteamPlayer(s);
 #if DEBUG
                  //string o = "";
                  //foreach (object r in R)
@@ -129,11 +128,10 @@ namespace Rocket.Unturned.Events
 #endif
                         break;
                 }
-                return;
             }
             catch (Exception ex)
             {
-                Core.Logging.Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
+                Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
             }
         }
 
@@ -181,7 +179,7 @@ namespace Rocket.Unturned.Events
         public static event PlayerUpdateWater OnPlayerUpdateWater;
         public event PlayerUpdateWater OnUpdateWater;
 
-        public enum PlayerGesture { None = 0, InventoryOpen = 1, InventoryClose = 2, Pickup = 3, PunchLeft = 4, PunchRight = 5, SurrenderStart = 6, SurrenderStop = 7, Point = 8, Wave = 9 , Salute = 10 , Arrest_Start = 11 , Arrest_Stop = 12 , Rest_Start = 13 , Rest_Stop = 14 , Facepalm = 15 };
+        public enum PlayerGesture { None = 0, InventoryOpen = 1, InventoryClose = 2, Pickup = 3, PunchLeft = 4, PunchRight = 5, SurrenderStart = 6, SurrenderStop = 7, Point = 8, Wave = 9 , Salute = 10 , Arrest_Start = 11 , Arrest_Stop = 12 , Rest_Start = 13 , Rest_Stop = 14 , Facepalm = 15 }
         public delegate void PlayerUpdateGesture(UnturnedPlayer player, PlayerGesture gesture);
         public static event PlayerUpdateGesture OnPlayerUpdateGesture;
         public event PlayerUpdateGesture OnUpdateGesture;
@@ -267,7 +265,7 @@ namespace Rocket.Unturned.Events
                     }
                     catch (Exception ex)
                     {
-                        Core.Logging.Logger.LogException(ex);
+                        Logger.LogException(ex);
                     }
                 }
             }
@@ -275,7 +273,7 @@ namespace Rocket.Unturned.Events
             return color;
         }
 
-        public enum Wearables { Hat = 0, Mask = 1, Vest = 2, Pants = 3, Shirt = 4, Glasses = 5, Backpack = 6};
+        public enum Wearables { Hat = 0, Mask = 1, Vest = 2, Pants = 3, Shirt = 4, Glasses = 5, Backpack = 6}
         public delegate void PlayerWear(UnturnedPlayer player, Wearables wear, ushort id, byte? quality);
         public static event PlayerWear OnPlayerWear;
 

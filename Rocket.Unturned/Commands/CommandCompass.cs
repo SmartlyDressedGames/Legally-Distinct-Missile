@@ -1,7 +1,7 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -39,14 +39,14 @@ namespace Rocket.Unturned.Commands
         {
             get
             {
-                return new List<string>() { "rocket.compass" };
+                return new List<string> { "rocket.compass" };
             }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
-            float currentDirection = player.Rotation;
+            var player = (UnturnedPlayer)caller;
+            var currentDirection = player.Rotation;
 
             if (command.Length == 1)
             {
@@ -71,7 +71,7 @@ namespace Rocket.Unturned.Commands
                 player.Teleport(player.Position, currentDirection);
             }
             
-            string directionName = "Unknown";
+            var directionName = "Unknown";
 
             if (currentDirection > 30 && currentDirection < 60)
             {

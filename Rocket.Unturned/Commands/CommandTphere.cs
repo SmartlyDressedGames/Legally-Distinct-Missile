@@ -1,8 +1,8 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Core.Logging;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -38,19 +38,19 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.tphere", "rocket.teleporthere" }; }
+            get { return new List<string> { "rocket.tphere", "rocket.teleporthere" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
+            var player = (UnturnedPlayer)caller;
 
             if (command.Length != 1)
             {
                 UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
                 throw new WrongUsageOfCommandException(caller, this);
             }
-            UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[0]);
+            var otherPlayer = UnturnedPlayer.FromName(command[0]);
             if (otherPlayer!=null && otherPlayer != caller)
             {
             	if(otherPlayer.IsInVehicle)

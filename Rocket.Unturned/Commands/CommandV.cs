@@ -1,11 +1,10 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.API.Extensions;
 using Rocket.Core.Logging;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Rocket.Unturned.Commands
 {
@@ -41,23 +40,23 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.v", "rocket.vehicle" }; }
+            get { return new List<string> { "rocket.v", "rocket.vehicle" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
+            var player = (UnturnedPlayer)caller;
             if (command.Length != 1)
             {
                 UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
                 throw new WrongUsageOfCommandException(caller, this);
             }
 
-            ushort? id = command.GetUInt16Parameter(0);
+            var id = command.GetUInt16Parameter(0);
 
             if (!id.HasValue)
             {
-                string itemString = command.GetStringParameter(0);
+                var itemString = command.GetStringParameter(0);
 
                 if (itemString == null)
                 {
@@ -65,7 +64,7 @@ namespace Rocket.Unturned.Commands
                     throw new WrongUsageOfCommandException(caller, this);
                 }
 
-                Asset[] assets = SDG.Unturned.Assets.find(EAssetType.VEHICLE);
+                var assets = Assets.find(EAssetType.VEHICLE);
                 foreach (VehicleAsset ia in assets)
                 {
                     if (ia != null && ia.vehicleName != null && ia.vehicleName.ToLower().Contains(itemString.ToLower()))
@@ -81,8 +80,8 @@ namespace Rocket.Unturned.Commands
                 }
             }
 
-            Asset a = SDG.Unturned.Assets.find(EAssetType.VEHICLE, id.Value);
-            string assetName = ((VehicleAsset)a).vehicleName;
+            var a = Assets.find(EAssetType.VEHICLE, id.Value);
+            var assetName = ((VehicleAsset)a).vehicleName;
 
             if(U.Settings.Instance.EnableVehicleBlacklist && !player.HasPermission("vehicleblacklist.bypass"))
             {

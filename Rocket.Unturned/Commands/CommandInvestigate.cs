@@ -1,8 +1,7 @@
-﻿using SDG.Unturned;
-using System;
+﻿using System.Collections.Generic;
 using Rocket.API;
-using System.Collections.Generic;
 using Rocket.Unturned.Chat;
+using SDG.Unturned;
 
 namespace Rocket.Unturned.Commands
 {
@@ -38,7 +37,7 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.investigate" }; }
+            get { return new List<string> { "rocket.investigate" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
@@ -49,7 +48,7 @@ namespace Rocket.Unturned.Commands
                 throw new WrongUsageOfCommandException(caller, this);
             }
 
-            SteamPlayer otherPlayer = PlayerTool.getSteamPlayer(command[0]);
+            var otherPlayer = PlayerTool.getSteamPlayer(command[0]);
             if (otherPlayer != null && (caller == null || otherPlayer.playerID.steamID.ToString() != caller.ToString()))
             {
                 UnturnedChat.Say(caller, U.Translate("command_investigate_private", otherPlayer.playerID.characterName, otherPlayer.playerID.steamID.ToString()));

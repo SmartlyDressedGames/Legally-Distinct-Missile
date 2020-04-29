@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Rocket.Unturned.Skills
+﻿namespace Rocket.Unturned.Skills
 {
     public class UnturnedSkill
     {
@@ -38,6 +33,5 @@ namespace Rocket.Unturned.Skills
             Speciality = speciality;
             Skill = skill;
         }
-    };
-
+    }
 }

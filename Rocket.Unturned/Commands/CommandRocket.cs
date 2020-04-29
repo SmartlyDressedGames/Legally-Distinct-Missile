@@ -1,13 +1,12 @@
-﻿using SDG.Unturned;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 using Rocket.API;
-using Rocket.Core.Plugins;
 using Rocket.Core;
+using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
-using Rocket.Core.Logging;
+using SDG.Unturned;
 
 namespace Rocket.Unturned.Commands
 {
@@ -43,7 +42,7 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.info", "rocket.rocket" }; }
+            get { return new List<string> { "rocket.info", "rocket.rocket" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
@@ -60,7 +59,7 @@ namespace Rocket.Unturned.Commands
                 switch (command[0].ToLower()) {
                     case "plugins":
                         if (caller != null && !caller.HasPermission("rocket.plugins")) return;
-                        List<IRocketPlugin> plugins = R.Plugins.GetPlugins();
+                        var plugins = R.Plugins.GetPlugins();
                         UnturnedChat.Say(caller, U.Translate("command_rocket_plugins_loaded", String.Join(", ", plugins.Where(p => p.State == PluginState.Loaded).Select(p => p.GetType().Assembly.GetName().Name).ToArray())));
                         UnturnedChat.Say(caller, U.Translate("command_rocket_plugins_unloaded", String.Join(", ", plugins.Where(p => p.State == PluginState.Unloaded).Select(p => p.GetType().Assembly.GetName().Name).ToArray())));
                         UnturnedChat.Say(caller, U.Translate("command_rocket_plugins_failure", String.Join(", ", plugins.Where(p => p.State == PluginState.Failure).Select(p => p.GetType().Assembly.GetName().Name).ToArray())));
@@ -76,7 +75,7 @@ namespace Rocket.Unturned.Commands
 
             if (command.Length == 2)
             {
-                RocketPlugin p = (RocketPlugin)R.Plugins.GetPlugins().Where(pl => pl.Name.ToLower().Contains(command[1].ToLower())).FirstOrDefault();
+                var p = (RocketPlugin)R.Plugins.GetPlugins().Where(pl => pl.Name.ToLower().Contains(command[1].ToLower())).FirstOrDefault();
                 if (p != null)
                 {
                     switch (command[0].ToLower())

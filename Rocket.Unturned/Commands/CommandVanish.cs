@@ -1,8 +1,8 @@
-﻿using Rocket.API;
+﻿using System.Collections.Generic;
+using Rocket.API;
 using Rocket.Core.Logging;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
-using System.Collections.Generic;
 
 namespace Rocket.Unturned.Commands
 {
@@ -38,12 +38,12 @@ namespace Rocket.Unturned.Commands
 
         public List<string> Permissions
         {
-            get { return new List<string>() { "rocket.vanish" }; }
+            get { return new List<string> { "rocket.vanish" }; }
         }
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            UnturnedPlayer player = (UnturnedPlayer)caller;
+            var player = (UnturnedPlayer)caller;
             if (player.Features.VanishMode)
             {
                 Logger.Log(U.Translate("command_vanish_disable_console", player.CharacterName));

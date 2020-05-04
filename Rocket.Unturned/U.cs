@@ -129,7 +129,7 @@ namespace Rocket.Unturned
             return Translation.Instance.Translate(translationKey, placeholder);
         }
 
-
+        [Obsolete("Refer to usage of built-in ICommandInputOutput for handling of custom console/terminal.")]
         public static UnturnedConsole Console;
 
 
@@ -140,9 +140,10 @@ namespace Rocket.Unturned
                 rocketGameObject = new GameObject("Rocket");
                 DontDestroyOnLoad(rocketGameObject);
 
-
                 if(System.Environment.OSVersion.Platform == PlatformID.Unix || System.Environment.OSVersion.Platform == PlatformID.MacOSX)
+#pragma warning disable CS0618
                     Console = rocketGameObject.AddComponent<UnturnedConsole>();
+#pragma warning restore CS0618
 
                 System.Console.Clear();
                 System.Console.ForegroundColor = ConsoleColor.Cyan;

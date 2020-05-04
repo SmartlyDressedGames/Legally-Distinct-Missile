@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Rocket.Unturned
 {
+    [Obsolete("Refer to usage of built-in ICommandInputOutput for handling of custom console/terminal.")]
     public class UnturnedConsoleWriter : TextWriter
     {
         private TextWriter _consoleOutput;

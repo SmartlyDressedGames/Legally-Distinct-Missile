@@ -2,7 +2,7 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## Unreleased
+## 4.9.3.1 - 2020-05-15
 
 ### Changed
 - `AutomaticSaveWatchdog` checks the timer during `Update` rather than `FixedUpdate` because the latter is for physics code. Reported by @rube200 in PR #7.

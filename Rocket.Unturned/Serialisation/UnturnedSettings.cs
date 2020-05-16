@@ -1,8 +1,6 @@
 ﻿using Rocket.API;
-using System.Xml.Serialization;
-using Rocket.Unturned.Items;
-using System.Collections.Generic;
 using System;
+using System.Xml.Serialization;
 
 namespace Rocket.Unturned.Serialisation
 {
@@ -21,11 +19,21 @@ namespace Rocket.Unturned.Serialisation
         [XmlAttribute]
         public bool CommunityBans = true;
 
+
+        [XmlAttribute] 
+        public bool KickIfFail;
+
         [XmlAttribute]
         public bool KickLimitedAccounts = true;
 
         [XmlAttribute]
+        public bool KickPrivateAccounts;
+
+        [XmlAttribute]
         public bool KickTooYoungAccounts = true;
+
+        [XmlAttribute]
+        public bool KickVacBanned;
 
         [XmlAttribute]
         public long MinimumAge = 604800;
@@ -33,10 +41,11 @@ namespace Rocket.Unturned.Serialisation
 
     public class UnturnedSettings : IDefaultable
     {
-        [XmlElement("RocketModObservatory")]
-        public RocketModObservatorySettings RocketModObservatory = new RocketModObservatorySettings();
-        [XmlElement("AutomaticSave")]
-        public AutomaticSaveSettings AutomaticSave = new AutomaticSaveSettings();
+        [XmlElement("RocketModObservatory")] 
+        public RocketModObservatorySettings RocketModObservatory;
+        [XmlElement("AutomaticSave")] 
+        public AutomaticSaveSettings AutomaticSave;
+
 
         [XmlElement("CharacterNameValidation")]
         public bool CharacterNameValidation = false;

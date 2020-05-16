@@ -21,6 +21,7 @@ using Steamworks;
 using System;
 using System.Linq;
 using System.Reflection;
+using Rocket.Core.Steam;
 using UnityEngine;
 
 namespace Rocket.Unturned
@@ -112,7 +113,11 @@ namespace Rocket.Unturned
                 { "command_more_dequipped", "No item being held in hands." },
                 { "command_more_give", "Giving {0} of item: {1}." },
                 { "invalid_character_name","invalid character name"},
-                { "command_not_found","Command not found."}
+                { "command_not_found","Command not found."},
+                { "account_limited", "Your Steam account is limited"},
+                { "account_non_public", "Your account need to be public"},
+                { "account_to_young", "Your Steam account is not old enough"},
+                { "account_vac_banned", "Server does not allow vac banned accounts"}
         };
          
 
@@ -272,12 +277,71 @@ namespace Rocket.Unturned
                 shouldExecuteCommand = false;
             };
 
-            Provider.onCheckValid += (ValidateAuthTicketResponse_t callback, ref bool isValid) =>
+
+            Provider.onCheckValidWithExplanation += (ValidateAuthTicketResponse_t callback, ref bool isValid,
+                ref string explanation) =>
             {
-                if(isValid)
-                    isValid = UnturnedPermissions.CheckValid(callback);
+                if (!isValid)
+                    return;
+
+
+                var profile = new Profile(callback.m_SteamID.m_SteamID);
+                var config = Settings.Instance.RocketModObservatory;
+
+
+                if (config.KickLimitedAccounts)
+                {
+                    if (config.KickIfFail && !profile.IsLimitedAccount.HasValue ||
+                        profile.IsLimitedAccount.HasValue && profile.IsLimitedAccount.Value)
+                    {
+                        isValid = false;
+                        explanation = Translate("account_limited");
+                        return;
+                    }
+                }
+
+
+                if (config.KickPrivateAccounts)
+                {
+                    if (config.KickIfFail && string.IsNullOrEmpty(profile.PrivacyState) ||
+                        !string.IsNullOrEmpty(profile.PrivacyState) && !profile.PrivacyState.Equals("public"))
+                    {
+                        isValid = false;
+                        explanation = Translate("account_non_public");
+                        return;
+                    }
+                }
+
+
+                if (config.KickVacBanned)
+                {
+                    if (config.KickIfFail && !profile.IsVacBanned.HasValue ||
+                        profile.IsVacBanned.HasValue && profile.IsVacBanned.Value)
+                    {
+                        isValid = false;
+                        explanation = Translate("account_vac_banned");
+                        return;
+                    }
+                }
+
+
+                if (config.KickTooYoungAccounts)
+                {
+                    if (config.KickIfFail && !profile.MemberSince.HasValue ||
+                        profile.MemberSince.HasValue && (DateTime.UtcNow - profile.MemberSince.Value).TotalSeconds <
+                        config.MinimumAge)
+                    {
+                        isValid = false;
+                        explanation = Translate("account_to_young");
+                        return;
+                    }
+                }
+
+
+               
+                isValid = UnturnedPermissions.CheckValid(callback);
             };
-    }
+        }
 
         public void Reload()
         {

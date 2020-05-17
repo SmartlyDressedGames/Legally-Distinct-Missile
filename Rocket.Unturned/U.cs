@@ -48,6 +48,7 @@ namespace Rocket.Unturned
                 { "command_duty_disable_console","{0} is no longer in duty"},
                 { "command_duty_disable_private","You are no longer in duty..."},
                 { "command_bed_no_bed_found_private","You do not have a bed to teleport to."},
+                { "command_bed_obstructed","Your bed is obstructed."},
                 { "command_i_too_much","You have tried to spawn too many items! The limit is {0}." },
                 { "command_i_blacklisted","This item is restricted!" },
                 { "command_i_giving_console","Giving {0} item {1}:{2}"},

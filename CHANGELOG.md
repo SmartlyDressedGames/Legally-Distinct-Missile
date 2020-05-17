@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.2 - 2020-05-18
+
+### Changed
+- Home command offsets vertically similar to the vanilla respawn, and warns player when unable to teleport.
+
 ## 4.9.3.1 - 2020-05-15
 
 ### Changed

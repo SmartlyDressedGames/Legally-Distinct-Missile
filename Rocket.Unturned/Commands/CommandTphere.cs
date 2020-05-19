@@ -58,7 +58,11 @@ namespace Rocket.Unturned.Commands
             		UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
             		return;
             	}
-                otherPlayer.Teleport(player);
+                if (!otherPlayer.Teleport(player, caller.IsAdmin))
+                {
+                    UnturnedChat.Say(caller, U.Translate("command_tp_failed_obstructed"));
+                    return;
+                }
                 Logger.Log(U.Translate("command_tphere_teleport_console", otherPlayer.CharacterName, player.CharacterName));
                 UnturnedChat.Say(caller, U.Translate("command_tphere_teleport_from_private", otherPlayer.CharacterName));
                 UnturnedChat.Say(otherPlayer, U.Translate("command_tphere_teleport_to_private", player.CharacterName));

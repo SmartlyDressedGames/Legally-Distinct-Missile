@@ -325,24 +325,30 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        public void Teleport(UnturnedPlayer target)
+        public bool Teleport(UnturnedPlayer target, bool allowUnsafeTeleport = false)
         {
-            Vector3 d1 = target.player.transform.position;
-            Vector3 vector31 = target.player.transform.rotation.eulerAngles;
-            Teleport(d1, MeasurementTool.angleToByte(vector31.y));
+            Vector3 pos = target.player.transform.position;
+            float rot = target.player.look.yaw;
+            return Teleport(pos, rot, allowUnsafeTeleport);
         }
 
-        public void Teleport(Vector3 position, float rotation)
+        public bool Teleport(Vector3 position, float rotation, bool allowUnsafeTeleport = false)
         {
             if (VanishMode)
             {
                 player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
                 player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new Vector3(position.y, position.y + 1337, position.z), MeasurementTool.angleToByte(rotation));
                 player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
+                return true;
             }
             else
             {
-				player.teleportToLocation(position, rotation);
+                if (allowUnsafeTeleport)
+                {
+                    player.teleportToLocationUnsafe(position, rotation);
+                    return true;
+                }
+				return player.teleportToLocation(position, rotation);
             }
         }
 
@@ -398,14 +404,13 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        public bool Teleport(string nodeName)
+        public bool Teleport(string nodeName, bool allowUnsafeTeleport = false)
         {
             Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
             if (node != null)
             {
                 Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
-                player.sendTeleport(c, MeasurementTool.angleToByte(Rotation));
-                return true;
+                return Teleport(c, Rotation, allowUnsafeTeleport);
             }
             return false;
         }

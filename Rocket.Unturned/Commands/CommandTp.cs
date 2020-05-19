@@ -67,9 +67,9 @@ namespace Rocket.Unturned.Commands
             if (command.Length == 3)
             {
                 //Trim comma's and parentheses out of the command, if using a copy/pasted location.
-                command[0] = command[0].Trim(',', '(');
-                command[1] = command[1].Trim(',');
-                command[2] = command[2].Trim(',', ')');
+                command[0] = command[0].TrimStart('(').TrimEnd(',');
+                command[1] = command[1].TrimEnd(',');
+                command[2] = command[2].TrimEnd(')');
                 x = command.GetFloatParameter(0);
                 y = command.GetFloatParameter(1);
                 z = command.GetFloatParameter(2);
@@ -77,8 +77,13 @@ namespace Rocket.Unturned.Commands
             if (x != null && y != null && z != null)
             {
                 Vector3 pos = new Vector3((float)x, (float)y, (float)z);
-                if (!player.Teleport(pos, player.Rotation, caller.IsAdmin))
+                if (!player.Player.teleportToLocation(pos, player.Rotation))
                 {
+                    if (caller.IsAdmin)
+                    {
+                        player.Player.teleportToLocationUnsafe(pos, player.Rotation);
+                        return;
+                    }
                     UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
                     return;
                 }
@@ -90,8 +95,13 @@ namespace Rocket.Unturned.Commands
                 UnturnedPlayer otherplayer = UnturnedPlayer.FromName(command[0]);
                 if (otherplayer != null && otherplayer != player)
                 {
-                    if (!player.Teleport(otherplayer, caller.IsAdmin))
+                    if (!player.Player.teleportToLocation(otherplayer.Position, otherplayer.Rotation))
                     {
+                        if (caller.IsAdmin)
+                        {
+                            player.Player.teleportToLocationUnsafe(otherplayer.Position, otherplayer.Rotation);
+                            return;
+                        }
                         UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
                         return;
                     }
@@ -104,8 +114,13 @@ namespace Rocket.Unturned.Commands
                     if (item != null)
                     {
                         Vector3 c = item.point + new Vector3(0f, 0.5f, 0f);
-                        if (!player.Teleport(c, player.Rotation, caller.IsAdmin))
+                        if (!player.Player.teleportToLocation(c, player.Rotation))
                         {
+                            if (caller.IsAdmin)
+                            {
+                                player.Player.teleportToLocationUnsafe(c, player.Rotation);
+                                return;
+                            }
                             UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
                             return;
                         }

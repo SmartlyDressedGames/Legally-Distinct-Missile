@@ -63,8 +63,13 @@ namespace Rocket.Unturned.Commands
                 {
                     pos.y += 0.5f; // Respawn uses this offset.
                     float yaw = MeasurementTool.byteToAngle(rot);
-                    if (!player.Teleport(pos, yaw, caller.IsAdmin))
+                    if (!player.Player.teleportToLocation(pos, yaw))
                     {
+                        if (caller.IsAdmin)
+                        {
+                            player.Player.teleportToLocationUnsafe(pos, yaw);
+                            return;
+                        }
                         UnturnedChat.Say(caller, U.Translate("command_bed_obstructed"));
                     }
                 }

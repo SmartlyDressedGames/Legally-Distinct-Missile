@@ -58,8 +58,13 @@ namespace Rocket.Unturned.Commands
             		UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
             		return;
             	}
-                if (!otherPlayer.Teleport(player, caller.IsAdmin))
+                if (!otherPlayer.Player.teleportToLocation(player.Position, player.Rotation))
                 {
+                    if (caller.IsAdmin)
+                    {
+                        otherPlayer.Player.teleportToLocationUnsafe(player.Position, player.Rotation);
+                        return;
+                    }
                     UnturnedChat.Say(caller, U.Translate("command_tp_failed_obstructed"));
                     return;
                 }

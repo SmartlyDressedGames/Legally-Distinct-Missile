@@ -66,22 +66,45 @@ namespace Rocket.Unturned.Commands
 
             if (command.Length == 3)
             {
+                //Trim comma's and parentheses out of the command, if using a copy/pasted location.
+                command[0] = command[0].TrimStart('(').TrimEnd(',');
+                command[1] = command[1].TrimEnd(',');
+                command[2] = command[2].TrimEnd(')');
                 x = command.GetFloatParameter(0);
                 y = command.GetFloatParameter(1);
                 z = command.GetFloatParameter(2);
             }
             if (x != null && y != null && z != null)
             {
-                player.Teleport(new Vector3((float)x, (float)y, (float)z), MeasurementTool.angleToByte(player.Rotation));
-                Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, (float)x + "," + (float)y + "," + (float)z));
-                UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", (float)x + "," + (float)y + "," + (float)z));
+                Vector3 pos = new Vector3((float)x, (float)y, (float)z);
+                if (!player.Player.teleportToLocation(pos, player.Rotation))
+                {
+                    if (caller.IsAdmin)
+                    {
+                        player.Player.teleportToLocationUnsafe(pos, player.Rotation);
+                        return;
+                    }
+                    UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
+                    return;
+                }
+                Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, pos.ToString().Trim('(', ')')));
+                UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", pos.ToString().Trim('(', ')')));
             }
             else
             {
                 UnturnedPlayer otherplayer = UnturnedPlayer.FromName(command[0]);
                 if (otherplayer != null && otherplayer != player)
                 {
-                    player.Teleport(otherplayer);
+                    if (!player.Player.teleportToLocation(otherplayer.Position, otherplayer.Rotation))
+                    {
+                        if (caller.IsAdmin)
+                        {
+                            player.Player.teleportToLocationUnsafe(otherplayer.Position, otherplayer.Rotation);
+                            return;
+                        }
+                        UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
+                        return;
+                    }
                     Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, otherplayer.CharacterName));
                     UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", otherplayer.CharacterName));
                 }
@@ -91,7 +114,16 @@ namespace Rocket.Unturned.Commands
                     if (item != null)
                     {
                         Vector3 c = item.point + new Vector3(0f, 0.5f, 0f);
-                        player.Teleport(c, MeasurementTool.angleToByte(player.Rotation));
+                        if (!player.Player.teleportToLocation(c, player.Rotation))
+                        {
+                            if (caller.IsAdmin)
+                            {
+                                player.Player.teleportToLocationUnsafe(c, player.Rotation);
+                                return;
+                            }
+                            UnturnedChat.Say(player, U.Translate("command_tp_failed_obstructed"));
+                            return;
+                        }
                         Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, ((LocationNode)item).name));
                         UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", ((LocationNode)item).name));
                     }

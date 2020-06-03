@@ -327,22 +327,54 @@ namespace Rocket.Unturned.Player
 
         public void Teleport(UnturnedPlayer target)
         {
-            Vector3 d1 = target.player.transform.position;
-            Vector3 vector31 = target.player.transform.rotation.eulerAngles;
-            Teleport(d1, MeasurementTool.angleToByte(vector31.y));
+            Teleport(target, false);
+        }
+
+        public bool Teleport(UnturnedPlayer target, bool allowUnsafeTeleport)
+        {
+            Vector3 pos = target.player.transform.position;
+            float rot = target.player.look.yaw;
+            return Teleport(pos, rot, allowUnsafeTeleport);
+        }
+
+        public bool Teleport(string nodeName)
+        {
+            return Teleport(nodeName, false);
+        }
+
+        public bool Teleport(string nodeName, bool allowUnsafeTeleport)
+        {
+            Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
+            if (node != null)
+            {
+                Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
+                return Teleport(c, Rotation, allowUnsafeTeleport);
+            }
+            return false;
         }
 
         public void Teleport(Vector3 position, float rotation)
+        {
+            Teleport(position, rotation, false);
+        }
+
+        public bool Teleport(Vector3 position, float rotation, bool allowUnsafeTeleport)
         {
             if (VanishMode)
             {
                 player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
                 player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new Vector3(position.y, position.y + 1337, position.z), MeasurementTool.angleToByte(rotation));
                 player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
+                return true;
             }
             else
             {
-				player.teleportToLocation(position, rotation);
+                if (allowUnsafeTeleport)
+                {
+                    player.teleportToLocationUnsafe(position, rotation);
+                    return true;
+                }
+                return player.teleportToLocation(position, rotation);
             }
         }
 
@@ -396,18 +428,6 @@ namespace Rocket.Unturned.Player
             {
                 return player.transform.rotation.eulerAngles.y;
             }
-        }
-
-        public bool Teleport(string nodeName)
-        {
-            Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
-            if (node != null)
-            {
-                Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
-                player.sendTeleport(c, MeasurementTool.angleToByte(Rotation));
-                return true;
-            }
-            return false;
         }
 
         public byte Stamina

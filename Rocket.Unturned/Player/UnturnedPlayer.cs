@@ -3,6 +3,7 @@ using Steamworks;
 using System;
 using UnityEngine;
 using System.Linq;
+using System.Reflection;
 using Rocket.Unturned.Events;
 using Rocket.API;
 using Rocket.Core;
@@ -78,7 +79,7 @@ namespace Rocket.Unturned.Player
                     return Palette.ADMIN;
                 }
 
-                RocketPermissionsGroup group = R.Permissions.GetGroups(this,false).Where(g => g.Color != null && g.Color != "white").FirstOrDefault();
+                RocketPermissionsGroup group = R.Permissions.GetGroups(this,false).FirstOrDefault(g => g.Color != null && g.Color != "white");
                 string color = "";
                 if (group != null) color = group.Color;
                 return UnturnedChat.GetColorFromName(color, Palette.COLOR_W);
@@ -468,7 +469,8 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.skills.askRep(value);
+                typeof(PlayerSkills).GetField("_reputation", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(player.skills, value);
+                player.skills.askRep(0);
             }
         }
 

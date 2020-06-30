@@ -12,38 +12,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandTp : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Player;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Player;
 
-        public string Name
-        {
-            get { return "tp"; }
-        }
+        public string Name => "tp";
 
-        public string Help
-        {
-            get { return "Teleports you to another player or location";}
-        }
+        public string Help => "Teleports you to another player or location";
 
-        public string Syntax
-        {
-            get { return "<player | place | x y z>"; }
-        }
+        public string Syntax => "<player | place | x y z>";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get { return new List<string>() { "rocket.tp", "rocket.teleport" }; }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.tp", "rocket.teleport" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
@@ -78,16 +57,16 @@ namespace Rocket.Unturned.Commands
             }
             else
             {
-                UnturnedPlayer otherplayer = UnturnedPlayer.FromName(command[0]);
-                if (otherplayer != null && otherplayer != player)
+                UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[0]);
+                if (otherPlayer != null && otherPlayer != player)
                 {
-                    player.Teleport(otherplayer);
-                    Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, otherplayer.CharacterName));
-                    UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", otherplayer.CharacterName));
+                    player.Teleport(otherPlayer);
+                    Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, otherPlayer.CharacterName));
+                    UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", otherPlayer.CharacterName));
                 }
                 else
                 {
-                    Node item = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(command[0].ToLower())).FirstOrDefault();
+                    Node item = LevelNodes.nodes.FirstOrDefault(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(command[0].ToLower()));
                     if (item != null)
                     {
                         Vector3 c = item.point + new Vector3(0f, 0.5f, 0f);

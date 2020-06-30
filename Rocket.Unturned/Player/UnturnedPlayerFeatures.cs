@@ -9,36 +9,31 @@ namespace Rocket.Unturned.Player
     public sealed class UnturnedPlayerFeatures : UnturnedPlayerComponent
     {
 
-        public DateTime Joined = DateTime.Now;
+        public DateTime joined = DateTime.Now;
 
-        internal Color? color = null;
-        internal Color? Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
+        internal Color? Color { get; set; }
 
 
-        private bool vanishMode = false;
+        private bool _vanishMode = false;
         public bool VanishMode
         {
-            get { return vanishMode; }
+            get => _vanishMode;
             set
             {
                 Player.GetComponent<UnturnedPlayerMovement>().VanishMode = value;
                 PlayerMovement pMovement = Player.GetComponent<PlayerMovement>();
                 pMovement.canAddSimulationResultsToUpdates = !value;
-                if (vanishMode && !value)
+                if (_vanishMode && !value)
                 {
                     pMovement.updates.Add(new PlayerStateUpdate(pMovement.real, Player.Player.look.angle, Player.Player.look.rot));
                     pMovement.isUpdated = true;
                     PlayerManager.updates++;
                 }
-                vanishMode = value;
+                _vanishMode = value;
             }
         }
 
-        private bool godMode = false;
+        private bool _godMode = false;
         public bool GodMode
         {
             set
@@ -57,26 +52,26 @@ namespace Rocket.Unturned.Player
                     Player.Events.OnUpdateFood -= e_OnPlayerUpdateFood;
                     Player.Events.OnUpdateVirus -= e_OnPlayerUpdateVirus;
                 }
-                godMode = value;
+                _godMode = value;
             }
             get
             {
-                return godMode;
+                return _godMode;
             }
         }
 
         private bool initialCheck;
 
-        Vector3 oldPosition = new Vector3();
+        private Vector3 _oldPosition;
 
         private void FixedUpdate()
         {
-            if (oldPosition != Player.Position)
+            if (_oldPosition != Player.Position)
             {
                 UnturnedPlayerEvents.fireOnPlayerUpdatePosition(Player);
-                oldPosition = Player.Position;
+                _oldPosition = Player.Position;
             }
-            if (!initialCheck && (DateTime.Now - Joined).TotalSeconds > 3)
+            if (!initialCheck && (DateTime.Now - joined).TotalSeconds > 3)
             {
                 Check();
             }
@@ -98,7 +93,7 @@ namespace Rocket.Unturned.Player
             }
         }
 
-        private static string reverse(string s)
+        private static string Reverse(string s)
         {
             string r = "";
             for (int i = s.Length; i > 0; i--) r += s[i - 1];
@@ -108,7 +103,7 @@ namespace Rocket.Unturned.Player
         protected override void Load()
         {
 
-            if (godMode)
+            if (_godMode)
             {
                 Player.Events.OnUpdateHealth += e_OnPlayerUpdateHealth;
                 Player.Events.OnUpdateWater += e_OnPlayerUpdateWater;

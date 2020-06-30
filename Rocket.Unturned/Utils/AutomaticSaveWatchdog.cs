@@ -9,49 +9,44 @@ namespace Rocket.Unturned.Utils
     {
         private void Update()
         {
-            checkTimer();
+            CheckTimer();
         }
 
-        private DateTime? nextSaveTime = null;
-        public static AutomaticSaveWatchdog Instance;
-        private int interval = 30;
+        private DateTime? _nextSaveTime = null;
+        private static AutomaticSaveWatchdog _instance;
+        private int _interval = 30;
 
         private void Start()
         {
-            Instance = this;
+            _instance = this;
             if (U.Settings.Instance.AutomaticSave.Enabled)
             {
-                if(U.Settings.Instance.AutomaticSave.Interval < interval)
+                if(U.Settings.Instance.AutomaticSave.Interval < _interval)
                 {
                     Core.Logging.Logger.LogError("AutomaticSave interval must be atleast 30 seconds, changed to 30 seconds");
                 }
                 else
                 {
-                    interval = U.Settings.Instance.AutomaticSave.Interval;
+                    _interval = U.Settings.Instance.AutomaticSave.Interval;
                 }
-                Core.Logging.Logger.Log(String.Format("This server will automatically save every {0} seconds", interval));
-                restartTimer();
+                Core.Logging.Logger.Log($"This server will automatically save every {_interval} seconds");
+                RestartTimer();
             }
         }
 
-        private void restartTimer ()
+        private void RestartTimer ()
         {
-            nextSaveTime = DateTime.Now.AddSeconds(interval);
+            _nextSaveTime = DateTime.Now.AddSeconds(_interval);
         }
 
-        private void checkTimer()
+        private void CheckTimer()
         {
             try
             {
-                if (nextSaveTime != null)
-                {
-                    if (nextSaveTime.Value < DateTime.Now)
-                    {
-                        Core.Logging.Logger.Log("Saving server");
-                        restartTimer();
-                        SaveManager.save();
-                    }
-                }
+                if (_nextSaveTime == null || _nextSaveTime.Value >= DateTime.Now) return;
+                Core.Logging.Logger.Log("Saving server");
+                RestartTimer();
+                SaveManager.save();
             }
             catch (Exception er)
             {

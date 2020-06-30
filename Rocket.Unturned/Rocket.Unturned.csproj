@@ -165,11 +165,6 @@
     <Content Include="dev\Mono.Cecil.dll" />
     <Content Include="dev\Mono.CompilerServices.SymbolWriter.dll" />
     <Content Include="dev\pdb2mdb.exe" />
-    <Content Include="lib\Assembly-CSharp-firstpass.dll" />
-    <Content Include="lib\Assembly-CSharp.dll" />
-    <Content Include="lib\Rocket.API.dll" />
-    <Content Include="lib\Rocket.Core.dll" />
-    <Content Include="lib\UnityEngine.dll" />
     <Content Include="Rocket.Unturned\Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

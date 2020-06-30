@@ -13,38 +13,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandRocket : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Both;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Both;
 
-        public string Name
-        {
-            get { return "rocket"; }
-        }
+        public string Name => "rocket";
 
-        public string Help
-        {
-            get { return "Reloading Rocket or individual plugins"; }
-        }
+        public string Help => "Reloading Rocket or individual plugins";
 
-        public string Syntax
-        {
-            get { return "<plugins | reload> | <reload | unload | load> <plugin>"; }
-        }
+        public string Syntax => "<plugins | reload> | <reload | unload | load> <plugin>";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get { return new List<string>() { "rocket.info", "rocket.rocket" }; }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.info", "rocket.rocket" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
@@ -76,7 +55,7 @@ namespace Rocket.Unturned.Commands
 
             if (command.Length == 2)
             {
-                RocketPlugin p = (RocketPlugin)R.Plugins.GetPlugins().Where(pl => pl.Name.ToLower().Contains(command[1].ToLower())).FirstOrDefault();
+                RocketPlugin p = (RocketPlugin)R.Plugins.GetPlugins().FirstOrDefault(pl => pl.Name.ToLower().Contains(command[1].ToLower()));
                 if (p != null)
                 {
                     switch (command[0].ToLower())

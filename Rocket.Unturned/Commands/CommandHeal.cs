@@ -8,41 +8,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandHeal : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Both;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Both;
 
-        public string Name
-        {
-            get { return "heal"; }
-        }
+        public string Name => "heal";
 
-        public string Help
-        {
-            get { return "Heals yourself or somebody else";}
-        }
+        public string Help => "Heals yourself or somebody else";
 
-        public string Syntax
-        {
-            get { return "[player]"; }
-        }
+        public string Syntax => "[player]";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get
-            {
-                return new List<string>() { "rocket.heal" };
-            }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.heal" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {

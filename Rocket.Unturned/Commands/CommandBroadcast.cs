@@ -18,33 +18,15 @@ namespace Rocket.Unturned.Commands
             }
         }
 
-        public string Name
-        {
-            get { return "broadcast"; }
-        }
+        public string Name => "broadcast";
 
-        public string Help
-        {
-            get { return "Broadcast a message"; }
-        }
+        public string Help => "Broadcast a message";
 
-        public string Syntax
-        {
-            get { return "<color> <message>"; }
-        }
+        public string Syntax => "<color> <message>";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get
-            {
-                return new List<string>() { "rocket.broadcast" };
-            }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.broadcast" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {

@@ -11,38 +11,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandP : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Both;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Both;
 
-        public string Name
-        {
-            get { return "p"; }
-        }
+        public string Name => "p";
 
-        public string Help
-        {
-            get { return "Sets a Rocket permission group of a specific player"; }
-        }
+        public string Help => "Sets a Rocket permission group of a specific player";
 
-        public string Syntax
-        {
-            get { return "<player> [group] | reload"; }
-        }
+        public string Syntax => "<player> [group] | reload";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>() { "permissions" }; }
-        }
+        public List<string> Aliases => new List<string>() { "permissions" };
 
-        public List<string> Permissions
-        {
-            get { return new List<string>() { "rocket.p", "rocket.permissions" }; }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.p", "rocket.permissions" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
@@ -63,17 +42,14 @@ namespace Rocket.Unturned.Commands
             }
             else if(command.Length == 1) {
 
-                IRocketPlayer player = command.GetUnturnedPlayerParameter(0);
-                if (player == null) player = command.GetRocketPlayerParameter(0);
+                IRocketPlayer player = command.GetUnturnedPlayerParameter(0) ?? (IRocketPlayer) command.GetRocketPlayerParameter(0);
                 if (player != null) {
-                UnturnedChat.Say(caller, U.Translate("command_p_groups_private", player.DisplayName+"s", string.Join(", ", R.Permissions.GetGroups(player, true).Select(g => g.DisplayName).ToArray())));
-                UnturnedChat.Say(caller, U.Translate("command_p_permissions_private", player.DisplayName + "s", string.Join(", ", Core.R.Permissions.GetPermissions(player).Select(p => p.Name +(p.Cooldown != 0? "(" + p.Cooldown + ")" : "")).ToArray())));
+                    UnturnedChat.Say(caller, U.Translate("command_p_groups_private", player.DisplayName+"s", string.Join(", ", R.Permissions.GetGroups(player, true).Select(g => g.DisplayName).ToArray())));
+                    UnturnedChat.Say(caller, U.Translate("command_p_permissions_private", player.DisplayName + "s", string.Join(", ", Core.R.Permissions.GetPermissions(player).Select(p => p.Name +(p.Cooldown != 0? "(" + p.Cooldown + ")" : "")).ToArray())));
                 }
                 else
-                {
                     UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
-                    return;
-                }
+                
             }
             else if (command.Length == 3)
             {
@@ -109,27 +85,25 @@ namespace Rocket.Unturned.Commands
                         }
                         return;
                     case "remove":
-                        if (caller.HasPermission("p.remove") && player != null && groupName != null) {
-                            switch (Core.R.Permissions.RemovePlayerFromGroup(groupName, player))
-                            {
-                                case RocketPermissionsProviderResult.Success:
-                                    UnturnedChat.Say(caller, U.Translate("command_p_group_player_removed", player.DisplayName, groupName));
-                                    return;
-                                case RocketPermissionsProviderResult.DuplicateEntry:
-                                    UnturnedChat.Say(caller, U.Translate("command_p_duplicate_entry", player.DisplayName, groupName));
-                                    return;
-                                case RocketPermissionsProviderResult.GroupNotFound:
-                                    UnturnedChat.Say(caller, U.Translate("command_p_group_not_found", player.DisplayName, groupName));
-                                    return;
-                                case RocketPermissionsProviderResult.PlayerNotFound:
-                                    UnturnedChat.Say(caller, U.Translate("command_p_player_not_found", player.DisplayName, groupName));
-                                    return;
-                                default:
-                                    UnturnedChat.Say(caller, U.Translate("command_p_unknown_error", player.DisplayName, groupName));
-                                    return;
-                            }
+                        if (!caller.HasPermission("p.remove") || player == null || groupName == null) return;
+                        switch (R.Permissions.RemovePlayerFromGroup(groupName, player))
+                        {
+                            case RocketPermissionsProviderResult.Success:
+                                UnturnedChat.Say(caller, U.Translate("command_p_group_player_removed", player.DisplayName, groupName));
+                                return;
+                            case RocketPermissionsProviderResult.DuplicateEntry:
+                                UnturnedChat.Say(caller, U.Translate("command_p_duplicate_entry", player.DisplayName, groupName));
+                                return;
+                            case RocketPermissionsProviderResult.GroupNotFound:
+                                UnturnedChat.Say(caller, U.Translate("command_p_group_not_found", player.DisplayName, groupName));
+                                return;
+                            case RocketPermissionsProviderResult.PlayerNotFound:
+                                UnturnedChat.Say(caller, U.Translate("command_p_player_not_found", player.DisplayName, groupName));
+                                return;
+                            default:
+                                UnturnedChat.Say(caller, U.Translate("command_p_unknown_error", player.DisplayName, groupName));
+                                return;
                         }
-                        return;
                     default:
                         UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
                         throw new WrongUsageOfCommandException(caller, this);
@@ -144,6 +118,6 @@ namespace Rocket.Unturned.Commands
             }
 
             
-         }
+        }
     }
 }

@@ -16,10 +16,10 @@ namespace Rocket.Unturned.Chat
     {
         private void Awake()
         {
-            SDG.Unturned.ChatManager.onChatted += handleChat;
+            ChatManager.onChatted += HandleChat;
         }
 
-        private void handleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool cancel)
+        private static void HandleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool cancel)
         {
             cancel = false;
             Color color = incomingColor;
@@ -124,7 +124,7 @@ namespace Rocket.Unturned.Chat
         public static void Say(string message, Color color, bool rich)
         {
             Core.Logging.Logger.Log("Broadcast: " + message, ConsoleColor.Gray);
-            foreach(string m in wrapMessage(message))
+            foreach(string m in WrapMessage(message))
             {
                 ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: null, mode: EChatMode.GLOBAL, iconURL: null, useRichTextFormatting: rich);
             }
@@ -153,16 +153,15 @@ namespace Rocket.Unturned.Chat
 
         public static void Say(CSteamID CSteamID, string message, Color color, bool rich)
         {
-            if (CSteamID == null || CSteamID.ToString() == "0")
-            {
+            if (CSteamID == CSteamID.Nil || CSteamID.ToString() == "0")
                 Core.Logging.Logger.Log(message, ConsoleColor.Gray);
-            }
+            
             else
             {
                 SteamPlayer toPlayer = PlayerTool.getSteamPlayer(CSteamID);
-                foreach(string m in wrapMessage(message))
+                foreach(string m in WrapMessage(message))
                 {
-                    ChatManager.serverSendMessage(m, color, fromPlayer: null, toPlayer: toPlayer, mode: EChatMode.SAY, iconURL: null, useRichTextFormatting: rich);
+                    ChatManager.serverSendMessage(m, color, null, toPlayer, EChatMode.SAY, null, rich);
                 }
             }
         }
@@ -172,7 +171,7 @@ namespace Rocket.Unturned.Chat
             Say(CSteamID, message, color, false);
         }
 
-         public static List<string> wrapMessage(string text)
+         public static List<string> WrapMessage(string text)
          {
              if (text.Length == 0) return new List<string>();
              string[] words = text.Split(' ');

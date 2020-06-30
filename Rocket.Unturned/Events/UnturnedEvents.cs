@@ -15,17 +15,17 @@ namespace Rocket.Unturned.Events
         private void Awake()
         {
             Instance = this;
-            Provider.onServerDisconnected += (CSteamID r) => {
+            Provider.onServerDisconnected += r => {
                 if (r != CSteamID.Nil)
                 {
                     OnPlayerDisconnected.TryInvoke(UnturnedPlayer.FromCSteamID(r));
                 }
             };
             Provider.onServerShutdown += () => { onShutdown.TryInvoke(); };
-            Provider.onServerConnected += (CSteamID r) => {
+            Provider.onServerConnected += r => {
                 if (r != CSteamID.Nil)
                 {
-                    UnturnedPlayer p = (UnturnedPlayer)UnturnedPlayer.FromCSteamID(r);
+                    UnturnedPlayer p = UnturnedPlayer.FromCSteamID(r);
                     p.Player.gameObject.TryAddComponent<UnturnedPlayerFeatures>();
                     p.Player.gameObject.TryAddComponent<UnturnedPlayerMovement>();
                     p.Player.gameObject.TryAddComponent<UnturnedPlayerEvents>();

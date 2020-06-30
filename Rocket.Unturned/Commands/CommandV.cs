@@ -11,38 +11,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandV : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Player;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Player;
 
-        public string Name
-        {
-            get { return "v"; }
-        }
+        public string Name => "v";
 
-        public string Help
-        {
-            get { return "Gives yourself an vehicle";}
-        }
+        public string Help => "Gives yourself an vehicle";
 
-        public string Syntax
-        {
-            get { return "<id>"; }
-        }
+        public string Syntax => "<id>";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get { return new List<string>() { "rocket.v", "rocket.vehicle" }; }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.v", "rocket.vehicle" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
@@ -65,14 +44,14 @@ namespace Rocket.Unturned.Commands
                     throw new WrongUsageOfCommandException(caller, this);
                 }
 
-                Asset[] assets = SDG.Unturned.Assets.find(EAssetType.VEHICLE);
-                foreach (VehicleAsset ia in assets)
+                Asset[] assets = Assets.find(EAssetType.VEHICLE);
+                foreach (var asset in assets)
                 {
-                    if (ia != null && ia.vehicleName != null && ia.vehicleName.ToLower().Contains(itemString.ToLower()))
-                    {
-                        id = ia.id;
-                        break;
-                    }
+                    var ia = (VehicleAsset) asset;
+                    if (ia == null || ia.vehicleName == null ||
+                        !ia.vehicleName.ToLower().Contains(itemString.ToLower())) continue;
+                    id = ia.id;
+                    break;
                 }
                 if (!id.HasValue)
                 {

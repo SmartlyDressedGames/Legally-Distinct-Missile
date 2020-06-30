@@ -25,60 +25,24 @@ namespace Rocket.Unturned.Commands
 
         internal class UnturnedVanillaCommand : IRocketCommand
         {
-            public Command command;
+            public readonly Command Command;
 
             public UnturnedVanillaCommand(Command command)
             {
-                this.command = command;
+                Command = command;
             }
 
-            public List<string> Aliases
-            {
-                get
-                {
-                   return new List<string>();
-                }
-            }
+            public List<string> Aliases => new List<string>();
 
-            public AllowedCaller AllowedCaller
-            {
-                get
-                {
-                    return AllowedCaller.Both;
-                }
-            }
+            public AllowedCaller AllowedCaller => AllowedCaller.Both;
 
-            public string Help
-            {
-                get
-                {
-                    return command.help;
-                }
-            }
+            public string Help => Command.help;
 
-            public string Name
-            {
-                get
-                {
-                    return command.command;
-                }
-            }
+            public string Name => Command.command;
 
-            public List<string> Permissions
-            {
-                get
-                {
-                    return new List<string>() { "unturned."+command.command.ToLower() };
-                }
-            }
+            public List<string> Permissions => new List<string>() { "unturned."+Command.command.ToLower() };
 
-            public string Syntax
-            {
-                get
-                {
-                    return command.info.Replace("/"," ");
-                }
-            }
+            public string Syntax => Command.info.Replace("/"," ");
 
             public void Execute(IRocketPlayer caller, string[] command)
             {
@@ -87,7 +51,7 @@ namespace Rocket.Unturned.Commands
                 {
                     id = ((UnturnedPlayer)caller).CSteamID;
                 }
-                Commander.commands.Where(c => c.command == Name).FirstOrDefault()?.check(id,Name, String.Join("/", command));
+                Commander.commands.FirstOrDefault(c => c.command == Name)?.check(id,Name, String.Join("/", command));
             }
         }
 

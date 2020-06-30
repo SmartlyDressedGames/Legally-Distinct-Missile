@@ -30,10 +30,10 @@ namespace Rocket.Unturned.Skills
         public static readonly UnturnedSkill Mechanic = new UnturnedSkill(2, 6);
         public static readonly UnturnedSkill Engineer = new UnturnedSkill(2, 7);
 
-        internal byte Speciality;
-        internal byte Skill;
+        internal readonly byte Speciality;
+        internal readonly byte Skill;
 
-        internal UnturnedSkill(byte speciality, byte skill)
+        private UnturnedSkill(byte speciality, byte skill)
         {
             Speciality = speciality;
             Skill = skill;

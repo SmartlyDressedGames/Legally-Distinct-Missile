@@ -44,7 +44,6 @@ namespace Rocket.Unturned.Events
                 Logger.Log("Receive+" + d.ToString() + ": " + o + " - " + b);
             }*/
 #endif
-            return;
         }
         
         internal static void TriggerSend(SteamPlayer s, string W, ESteamCall X, ESteamPacket l, params object[] R)
@@ -129,7 +128,6 @@ namespace Rocket.Unturned.Events
 #endif
                         break;
                 }
-                return;
             }
             catch (Exception ex)
             {

@@ -41,17 +41,13 @@ namespace Rocket.Unturned.Permissions
                     }
                     return true;
                 }
-                else
-                {
-                    UnturnedChat.Say(player, R.Translate("command_no_permission"), Color.red);
-                    return false;
-                }
-            }
-            else
-            {
-                UnturnedChat.Say(player, U.Translate("command_not_found"), Color.red);
+
+                UnturnedChat.Say(player, R.Translate("command_no_permission"), Color.red);
                 return false;
             }
+
+            UnturnedChat.Say(player, U.Translate("command_not_found"), Color.red);
+            return false;
         }
 
         internal static bool CheckValid(ValidateAuthTicketResponse_t r)
@@ -87,25 +83,22 @@ namespace Rocket.Unturned.Permissions
             {
                 Core.Logging.Logger.Log($"Failed adding prefix/suffix to player {r.m_SteamID}: {ex}");
             }
-
-            if (OnJoinRequested != null)
+            
+            if (OnJoinRequested == null) return true;
+            
+            foreach (var handler in OnJoinRequested.GetInvocationList().Cast<JoinRequested>())
             {
-                foreach (var handler in OnJoinRequested.GetInvocationList().Cast<JoinRequested>())
-                {
                     try
                     {
                         handler(r.m_SteamID, ref reason);
-                        if (reason != null)
-                        {
-                            Provider.reject(r.m_SteamID, reason.Value);
-                            return false;
-                        }
+                        if (reason == null) continue;
+                        Provider.reject(r.m_SteamID, reason.Value);
+                        return false;
                     }
                     catch (Exception ex)
                     {
                         Core.Logging.Logger.LogException(ex);
                     }
-                }
             }
             return true;
         }

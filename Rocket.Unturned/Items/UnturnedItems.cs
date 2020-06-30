@@ -4,10 +4,12 @@ using SDG.Unturned;
 
 namespace Rocket.Unturned.Items
 {
-    public class Attachment{
-        public ushort AttachmentId = 0;
-        public byte Durability = 100;
-        public Attachment(ushort attachmentId, byte durability){
+    public class Attachment
+    {
+        public readonly ushort AttachmentId;
+        public readonly byte Durability = 100;
+        public Attachment(ushort attachmentId, byte durability)
+        {
             AttachmentId = attachmentId;
             Durability = durability;
         }
@@ -18,12 +20,12 @@ namespace Rocket.Unturned.Items
         public static ItemAsset GetItemAssetByName(string name)
         {
             if (String.IsNullOrEmpty(name)) return null;
-            return SDG.Unturned.Assets.find(EAssetType.ITEM).Cast<ItemAsset>().Where(i => i.itemName != null && i.itemName.ToLower().Contains(name.ToLower())).FirstOrDefault();
+            return Assets.find(EAssetType.ITEM).Cast<ItemAsset>().FirstOrDefault(i => i.itemName != null && i.itemName.ToLower().Contains(name.ToLower()));
         }
 
         public static ItemAsset GetItemAssetById(ushort id)
         {
-            Asset asset = SDG.Unturned.Assets.find(EAssetType.ITEM, id);
+            Asset asset = Assets.find(EAssetType.ITEM, id);
             if (asset == null) return null;
             return (ItemAsset)asset;
         }
@@ -81,7 +83,7 @@ namespace Rocket.Unturned.Items
 
         public static Item AssembleItem(ushort itemId, byte amount = 1, byte durability = 100, byte[] metadata = null)
         {
-            return new Item(itemId, amount, durability, (metadata == null ? new byte[0] : metadata));
+            return new Item(itemId, amount, durability, metadata ?? new byte[0]);
         }
     }
 }

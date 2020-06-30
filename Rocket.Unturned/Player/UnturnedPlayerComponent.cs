@@ -5,14 +5,12 @@ namespace Rocket.Unturned.Player
 {
     public class UnturnedPlayerComponent : MonoBehaviour
     {
-        private UnturnedPlayer player;
-        public UnturnedPlayer Player
-        {
-            get { return player; }
-        }
+        private UnturnedPlayer _player;
+        public UnturnedPlayer Player => _player;
+
         private void Awake()
         {
-            player = UnturnedPlayer.FromPlayer(gameObject.transform.GetComponent<SDG.Unturned.Player>());
+            _player = UnturnedPlayer.FromPlayer(gameObject.transform.GetComponent<SDG.Unturned.Player>());
         }
 
         private void OnEnable()

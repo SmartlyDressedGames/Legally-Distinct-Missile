@@ -9,41 +9,17 @@ namespace Rocket.Unturned.Commands
 {
     public class CommandEffect : IRocketCommand
     {
-        public AllowedCaller AllowedCaller
-        {
-            get
-            {
-                return AllowedCaller.Player;
-            }
-        }
+        public AllowedCaller AllowedCaller => AllowedCaller.Player;
 
-        public string Name
-        {
-            get { return "effect"; }
-        }
+        public string Name => "effect";
 
-        public string Help
-        {
-            get { return "Triggers an effect at your position";}
-        }
+        public string Help => "Triggers an effect at your position";
 
-        public string Syntax
-        {
-            get { return "<id>"; }
-        }
+        public string Syntax => "<id>";
 
-        public List<string> Aliases
-        {
-            get { return new List<string>(); }
-        }
+        public List<string> Aliases => new List<string>();
 
-        public List<string> Permissions
-        {
-            get
-            {
-                return new List<string>() { "rocket.effect" };
-            }
-        }
+        public List<string> Permissions => new List<string>() { "rocket.effect" };
 
         public void Execute(IRocketPlayer caller, string[] command)
         {

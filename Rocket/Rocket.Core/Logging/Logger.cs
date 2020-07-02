@@ -163,7 +163,7 @@ namespace Rocket.Core.Logging
             }
             catch (Exception)
             {
-                Console.WriteLine("ouch...");
+                LogError("Caught exception while logging an exception! Ouch...");
             }
 
             ProcessInternalLog(ELogType.Exception, assembly + (message != null ? message +" -> ": "") + "Exception in " + source + ": " + ex);
@@ -173,36 +173,19 @@ namespace Rocket.Core.Logging
         {
             if (type == ELogType.Error || type == ELogType.Exception)
             {
-                writeToConsole(message, ConsoleColor.Red);
+                SDG.Unturned.CommandWindow.LogError(message);
             }
             else if (type == ELogType.Warning)
             {
-                writeToConsole(message, ConsoleColor.Yellow);
+                SDG.Unturned.CommandWindow.LogWarning(message);
             }
             else
             {
-                writeToConsole(message, color);
+                SDG.Unturned.CommandWindow.Log(message);
             }
             ProcessLog(type, message);
         }
-
-        internal static void logRCON(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            string m = "RocketRCON >> " + message;
-            ProcessLog(ELogType.Info, m, false);
-            Console.WriteLine(m);
-        }
-
-        private static void writeToConsole(string message,ConsoleColor color)
-        {
-            ConsoleColor old = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ForegroundColor = old;
-        }
-
-
+        
         private static void ProcessLog(ELogType type, string message,bool rcon = true)
         {
             AsyncLoggerQueue.Current.Enqueue(new LogEntry() { Severity = type, Message = message, RCON = rcon });

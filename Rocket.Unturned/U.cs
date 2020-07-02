@@ -146,10 +146,8 @@ namespace Rocket.Unturned
 #pragma warning disable CS0618
                     Console = rocketGameObject.AddComponent<UnturnedConsole>();
 #pragma warning restore CS0618
-
-                System.Console.Clear();
-                System.Console.ForegroundColor = ConsoleColor.Cyan;
-                System.Console.WriteLine("Rocket Unturned v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " for Unturned v" + Provider.APP_VERSION + "\n");
+                
+                CommandWindow.Log("Rocket Unturned v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " for Unturned v" + Provider.APP_VERSION);
 
                 R.OnRockedInitialized += () =>
                 {

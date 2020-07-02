@@ -62,20 +62,20 @@ namespace Rocket.Core
                 Destroy(this);
                 return;
             }
-            Console.Write("Waiting for debugger...");
+            Logging.Logger.Log("Waiting for debugger...");
         }
 
         public void FixedUpdate()
         {
             if ((DateTime.Now - lastUpdate).TotalSeconds > 3)
             {
-                Console.Write(".");
+                Logging.Logger.Log("..."); // Originally used Console.Write to append, but Unturned does not support that.
                 lastUpdate = DateTime.Now;
             }
 
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                Console.WriteLine("\nDebugger found, continuing...");
+                Logging.Logger.Log("Debugger found, continuing...");
                 R.Instance.Initialize();
                 Destroy(this);
             }

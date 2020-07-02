@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## Unreleased
+
+### Changed
+- The command to reload all plugins at once has been disabled by popular request. Many plugins did not support it properly. Reloading individual plugins is still enabled. Read this issue for more details: [#1794](https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/1794)
+
 ## 4.9.3.2 - 2020-05-18
 
 ### Changed

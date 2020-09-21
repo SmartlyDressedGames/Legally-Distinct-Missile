@@ -19,6 +19,7 @@ using SDG.Framework.Modules;
 using SDG.Unturned;
 using Steamworks;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -149,6 +150,9 @@ namespace Rocket.Unturned
                 
                 CommandWindow.Log("Rocket Unturned v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " for Unturned v" + Provider.APP_VERSION);
 
+                IPluginAdvertising pluginAdvertising = PluginAdvertising.Get();
+                pluginAdvertising.PluginFrameworkName = "rocket";
+
                 R.OnRockedInitialized += () =>
                 {
                     Instance.Initialize();
@@ -209,14 +213,21 @@ namespace Rocket.Unturned
                 {
                     R.Plugins.OnPluginsLoaded += () =>
                     {
-                        SteamGameServer.SetKeyValue("rocketplugins", String.Join(",", R.Plugins.GetPlugins().Select(p => p.Name).ToArray()));
+                        IPluginAdvertising pluginAdvertising = PluginAdvertising.Get();
+                        List<IRocketPlugin> rocketPlugins = R.Plugins.GetPlugins();
+                        List<string> pluginNames = new List<string>(rocketPlugins.Count);
+                        foreach(IRocketPlugin plugin in rocketPlugins)
+                        {
+                            if(plugin != null && !string.IsNullOrEmpty(plugin.Name))
+                            {
+                                pluginNames.Add(plugin.Name);
+                            }
+                        }
+                        pluginAdvertising.AddPlugins(pluginNames);
                     };
-
-
+                    
                     SteamGameServer.SetKeyValue("unturned", Provider.APP_VERSION);
                     SteamGameServer.SetKeyValue("rocket", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                    SteamGameServer.SetBotPlayerCount(1);
-
                 }
                 catch (Exception ex)
                 {

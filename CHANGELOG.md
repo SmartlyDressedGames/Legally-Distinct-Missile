@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.5 - 2020-09-25
+
+### Changed
+- Updated to use Unturned's plugin advertising interface rather than directly setting Steam Game Server details, and no longer consume a bot player slot.
+
 ## 4.9.3.4 - 2020-09-11
 
 ### Fixed

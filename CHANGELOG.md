@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.6 - 2020-10-16
+
+### Fixed
+- Updated `UnturnedPlayer.IP` and `UnturnedPlayer.Ban` to use address from transport layer refactor.
+
 ## 4.9.3.5 - 2020-09-25
 
 ### Changed

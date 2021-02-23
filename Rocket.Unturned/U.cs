@@ -270,6 +270,7 @@ namespace Rocket.Unturned
             };
 
             // Replacements for Rocket usage of onTriggerSend:
+            SDG.Unturned.Player.onPlayerStatIncremented += UnturnedPlayerEvents.InternalOnPlayerStatIncremented;
             PlayerClothing.OnShirtChanged_Global += UnturnedPlayerEvents.InternalOnShirtChanged;
             PlayerClothing.OnPantsChanged_Global += UnturnedPlayerEvents.InternalOnPantsChanged;
             PlayerClothing.OnHatChanged_Global += UnturnedPlayerEvents.InternalOnHatChanged;

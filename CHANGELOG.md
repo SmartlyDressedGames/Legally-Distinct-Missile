@@ -5,6 +5,7 @@ All notable changes should be documented in this file. The format is based on [K
 ## Unreleased
 
 ### Changed
+- Replaced `OnPlayerUpdateStat` usage of `SteamChannel.onTriggerSend` with `Player.onPlayerStatIncremented`.
 - Replaced `OnPlayerWear` usage of `SteamChannel.onTriggerSend` with `PlayerClothing.OnItemChanged_Global`.
 - Replaced life stat usage event of `SteamChannel.onTriggerSend` with `PlayerLife.OnTellStat_Changed`.
 - Replaced `OnPlayerUpdateStance` usage of `SteamChannel.onTriggerSend` with `PlayerStance.OnStanceChanged_Global`.

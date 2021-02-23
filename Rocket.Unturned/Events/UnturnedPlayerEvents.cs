@@ -72,10 +72,6 @@ namespace Rocket.Unturned.Events
                         OnPlayerUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
                         instance.OnUpdateGesture.TryInvoke( rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
                         break;
-                    case "tellStat":
-                        OnPlayerUpdateStat.TryInvoke(rp, (EPlayerStat)(byte)R[0]);
-                        instance.OnUpdateStat.TryInvoke(rp, (EPlayerStat)(byte)R[0]);
-                        break;
                     case "tellExperience":
                         OnPlayerUpdateExperience.TryInvoke(rp, (uint)R[0]);
                         instance.OnUpdateExperience.TryInvoke(rp, (uint)R[0]);
@@ -104,6 +100,14 @@ namespace Rocket.Unturned.Events
             {
                 Core.Logging.Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
             }
+        }
+
+        internal static void InternalOnPlayerStatIncremented(SDG.Unturned.Player player, EPlayerStat gameStat)
+        {
+            UnturnedPlayerEvents instance = player.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(player);
+            OnPlayerUpdateStat.TryInvoke(rp, gameStat);
+            instance.OnUpdateStat.TryInvoke(rp, gameStat);
         }
 
         internal static void InternalOnShirtChanged(PlayerClothing clothing)

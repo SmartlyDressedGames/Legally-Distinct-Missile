@@ -269,6 +269,15 @@ namespace Rocket.Unturned
                 UnturnedPlayerEvents.TriggerSend(player, name, mode, type, arguments);
             };
 
+            // Replacements for Rocket usage of onTriggerSend:
+            PlayerClothing.OnShirtChanged_Global += UnturnedPlayerEvents.InternalOnShirtChanged;
+            PlayerClothing.OnPantsChanged_Global += UnturnedPlayerEvents.InternalOnPantsChanged;
+            PlayerClothing.OnHatChanged_Global += UnturnedPlayerEvents.InternalOnHatChanged;
+            PlayerClothing.OnBackpackChanged_Global += UnturnedPlayerEvents.InternalOnBackpackChanged;
+            PlayerClothing.OnVestChanged_Global += UnturnedPlayerEvents.InternalOnVestChanged;
+            PlayerClothing.OnMaskChanged_Global += UnturnedPlayerEvents.InternalOnMaskChanged;
+            PlayerClothing.OnGlassesChanged_Global += UnturnedPlayerEvents.InternalOnGlassesChanged;
+
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>
             {
                 if (text.StartsWith("/"))

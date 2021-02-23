@@ -62,9 +62,6 @@ namespace Rocket.Unturned.Events
                  //}
                  //Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + o);
 #endif
-                if (W.StartsWith("tellWear")) {
-                    OnPlayerWear.TryInvoke(rp, Enum.Parse(typeof(Wearables), W.Replace("tellWear", "")), (ushort)R[0], R.Count() > 1 ? (byte?)R[1] : null);
-                }
                 switch (W)
                 {
                     case "tellBleeding":
@@ -137,6 +134,47 @@ namespace Rocket.Unturned.Events
             }
         }
 
+        internal static void InternalOnShirtChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Shirt, clothing.shirt, clothing.shirtQuality);
+        }
+
+        internal static void InternalOnPantsChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Pants, clothing.pants, clothing.pantsQuality);
+        }
+
+        internal static void InternalOnHatChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Hat, clothing.hat, clothing.hatQuality);
+        }
+
+        internal static void InternalOnBackpackChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Backpack, clothing.backpack, clothing.backpackQuality);
+        }
+
+        internal static void InternalOnVestChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Vest, clothing.vest, clothing.vestQuality);
+        }
+
+        internal static void InternalOnMaskChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.mask, clothing.maskQuality);
+        }
+
+        internal static void InternalOnGlassesChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.glasses, clothing.glassesQuality);
+        }
 
         public delegate void PlayerUpdatePosition(UnturnedPlayer player, Vector3 position);
         public static event PlayerUpdatePosition OnPlayerUpdatePosition;

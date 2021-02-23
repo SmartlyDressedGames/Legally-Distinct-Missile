@@ -278,6 +278,7 @@ namespace Rocket.Unturned
             PlayerClothing.OnVestChanged_Global += UnturnedPlayerEvents.InternalOnVestChanged;
             PlayerClothing.OnMaskChanged_Global += UnturnedPlayerEvents.InternalOnMaskChanged;
             PlayerClothing.OnGlassesChanged_Global += UnturnedPlayerEvents.InternalOnGlassesChanged;
+            PlayerAnimator.OnGestureChanged_Global += UnturnedPlayerEvents.InternalOnGestureChanged;
             PlayerLife.OnTellHealth_Global += UnturnedPlayerEvents.InternalOnTellHealth;
             PlayerLife.OnTellFood_Global += UnturnedPlayerEvents.InternalOnTellFood;
             PlayerLife.OnTellWater_Global += UnturnedPlayerEvents.InternalOnTellWater;

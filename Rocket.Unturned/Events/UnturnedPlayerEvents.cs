@@ -68,10 +68,6 @@ namespace Rocket.Unturned.Events
                         OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
                         instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
                         break;
-                    case "tellGesture":
-                        OnPlayerUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
-                        instance.OnUpdateGesture.TryInvoke( rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
-                        break;
                     case "tellExperience":
                         OnPlayerUpdateExperience.TryInvoke(rp, (uint)R[0]);
                         instance.OnUpdateExperience.TryInvoke(rp, (uint)R[0]);
@@ -150,6 +146,20 @@ namespace Rocket.Unturned.Events
         {
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
             OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.glasses, clothing.glassesQuality);
+        }
+
+        internal static void InternalOnGestureChanged(PlayerAnimator animator)
+        {
+            UnturnedPlayerEvents instance = animator.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(animator.player);
+            try
+            {
+                // This is how Rocket converted the enum prior to onTriggerSend rewrite.
+                PlayerGesture rocketGesture = (PlayerGesture) Enum.Parse(typeof(PlayerGesture), animator.gesture.ToString());
+                OnPlayerUpdateGesture.TryInvoke(rp, rocketGesture);
+                instance.OnUpdateGesture.TryInvoke(rp, rocketGesture);
+            }
+            catch { }
         }
 
         internal static void InternalOnTellHealth(PlayerLife life)

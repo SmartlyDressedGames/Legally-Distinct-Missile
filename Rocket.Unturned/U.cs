@@ -285,6 +285,7 @@ namespace Rocket.Unturned
             PlayerLife.OnTellVirus_Global += UnturnedPlayerEvents.InternalOnTellVirus;
             PlayerLife.OnTellBleeding_Global += UnturnedPlayerEvents.InternalOnTellBleeding;
             PlayerLife.OnTellBroken_Global += UnturnedPlayerEvents.InternalOnTellBroken;
+            PlayerSkills.OnExperienceChanged_Global += UnturnedPlayerEvents.InternalOnExperienceChanged;
             PlayerStance.OnStanceChanged_Global += UnturnedPlayerEvents.InternalOnStanceChanged;
 
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>

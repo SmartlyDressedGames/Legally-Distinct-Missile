@@ -8,7 +8,8 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `OnPlayerUpdateStat` usage of `SteamChannel.onTriggerSend` with `Player.onPlayerStatIncremented`.
 - Replaced `OnPlayerWear` usage of `SteamChannel.onTriggerSend` with `PlayerClothing.OnItemChanged_Global`.
 - Replaced life stat usage event of `SteamChannel.onTriggerSend` with `PlayerLife.OnTellStat_Changed`.
-- Replaced `OnPlayerUpdateGesture` usage of `SteamChannel.onTriggerSend` with `PlayerAnimator.OnGestureChanged_Global`. 
+- Replaced `OnPlayerUpdateGesture` usage of `SteamChannel.onTriggerSend` with `PlayerAnimator.OnGestureChanged_Global`.
+- Replaced `OnPlayerUpdateExperience` usage of `SteamChannel.onTriggerSend` with `PlayerSkills.OnExperienceChanged_Global`.
 - Replaced `OnPlayerUpdateStance` usage of `SteamChannel.onTriggerSend` with `PlayerStance.OnStanceChanged_Global`.
 
 ## 4.9.3.6 - 2020-10-16

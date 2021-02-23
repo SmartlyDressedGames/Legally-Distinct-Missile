@@ -68,10 +68,6 @@ namespace Rocket.Unturned.Events
                         OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
                         instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
                         break;
-                    case "tellExperience":
-                        OnPlayerUpdateExperience.TryInvoke(rp, (uint)R[0]);
-                        instance.OnUpdateExperience.TryInvoke(rp, (uint)R[0]);
-                        break;
                     case "tellRevive":
                         OnPlayerRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
                         instance.OnRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
@@ -200,6 +196,14 @@ namespace Rocket.Unturned.Events
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
             OnPlayerUpdateBleeding.TryInvoke(rp, life.isBleeding);
             instance.OnUpdateBleeding.TryInvoke(rp, life.isBleeding);
+        }
+
+        internal static void InternalOnExperienceChanged(PlayerSkills skills, uint oldExerience)
+        {
+            UnturnedPlayerEvents instance = skills.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(skills.player);
+            OnPlayerUpdateExperience.TryInvoke(rp, skills.experience);
+            instance.OnUpdateExperience.TryInvoke(rp, skills.experience);
         }
 
         internal static void InternalOnTellBroken(PlayerLife life)

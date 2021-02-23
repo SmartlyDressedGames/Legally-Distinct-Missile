@@ -47,37 +47,6 @@ namespace Rocket.Unturned.Events
             return;
         }
         
-        internal static void TriggerSend(SteamPlayer s, string W, ESteamCall X, ESteamPacket l, params object[] R)
-        {
-            try
-            {
-                if (s == null || s.player == null || s.playerID.steamID == CSteamID.Nil || s.player.transform == null || R == null) return;
-                UnturnedPlayerEvents instance = s.player.transform.GetComponent<UnturnedPlayerEvents>();
-                UnturnedPlayer rp = UnturnedPlayer.FromSteamPlayer(s);
-#if DEBUG
-                 //string o = "";
-                 //foreach (object r in R)
-                 //{
-                 //    o += r.ToString();
-                 //}
-                 //Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + o);
-#endif
-                switch (W)
-                {
-                    default:
-#if DEBUG
-                       // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
-#endif
-                        break;
-                }
-                return;
-            }
-            catch (Exception ex)
-            {
-                Core.Logging.Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
-            }
-        }
-
         internal static void InternalOnPlayerStatIncremented(SDG.Unturned.Player player, EPlayerStat gameStat)
         {
             UnturnedPlayerEvents instance = player.GetComponent<UnturnedPlayerEvents>();

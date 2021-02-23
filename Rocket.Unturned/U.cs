@@ -263,12 +263,7 @@ namespace Rocket.Unturned
                  UnturnedPlayerEvents.TriggerReceive(channel, steamID, packet, offset, size);
              };
              */
-
-            SteamChannel.onTriggerSend += (SteamPlayer player, string name, ESteamCall mode, ESteamPacket type, object[] arguments) =>
-            {
-                UnturnedPlayerEvents.TriggerSend(player, name, mode, type, arguments);
-            };
-
+             
             // Replacements for Rocket usage of onTriggerSend:
             SDG.Unturned.Player.onPlayerStatIncremented += UnturnedPlayerEvents.InternalOnPlayerStatIncremented;
             PlayerClothing.OnShirtChanged_Global += UnturnedPlayerEvents.InternalOnShirtChanged;

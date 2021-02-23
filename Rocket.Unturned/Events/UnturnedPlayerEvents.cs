@@ -64,14 +64,6 @@ namespace Rocket.Unturned.Events
 #endif
                 switch (W)
                 {
-                    case "tellLife":
-                        OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellRevive":
-                        OnPlayerRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
-                        instance.OnRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
-                        break;
                     default:
 #if DEBUG
                        // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
@@ -204,6 +196,22 @@ namespace Rocket.Unturned.Events
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
             OnPlayerUpdateBroken.TryInvoke(rp, life.isBroken);
             instance.OnUpdateBroken.TryInvoke(rp, life.isBroken);
+        }
+
+        internal static void InternalOnRevived(PlayerLife sender)
+        {
+            UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(sender.player);
+
+            // First parameter of tellLife was health.
+            OnPlayerUpdateLife.TryInvoke(rp, sender.health);
+            instance.OnUpdateLife.TryInvoke(rp, sender.health);
+
+            // Ideally avoid using this angleToByte method in new code. Please.
+            Vector3 position = sender.transform.position;
+            byte angle = MeasurementTool.angleToByte(sender.transform.rotation.eulerAngles.y);
+            OnPlayerRevive.TryInvoke(rp, position, angle);
+            instance.OnRevive.TryInvoke(rp, position, angle);
         }
 
         internal static void InternalOnPlayerDied(PlayerLife sender, EDeathCause cause, ELimb limb, CSteamID instigator)

@@ -11,6 +11,7 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `OnPlayerUpdateGesture` usage of `SteamChannel.onTriggerSend` with `PlayerAnimator.OnGestureChanged_Global`.
 - Replaced `OnPlayerUpdateExperience` usage of `SteamChannel.onTriggerSend` with `PlayerSkills.OnExperienceChanged_Global`.
 - Replaced `OnPlayerUpdateStance` usage of `SteamChannel.onTriggerSend` with `PlayerStance.OnStanceChanged_Global`.
+- Replaced `OnPlayerDead` and `OnPlayerDeath` usage of `SteamChannel.onTriggerSend` with `PlayerLife.onPlayerDied`.
 
 ## 4.9.3.6 - 2020-10-16
 

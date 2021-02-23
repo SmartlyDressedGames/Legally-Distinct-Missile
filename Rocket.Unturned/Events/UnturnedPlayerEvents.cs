@@ -72,14 +72,6 @@ namespace Rocket.Unturned.Events
                         OnPlayerRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
                         instance.OnRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
                         break;
-                    case "tellDead":
-                        OnPlayerDead.TryInvoke(rp, (Vector3)R[0]);
-                        instance.OnDead.TryInvoke(rp, (Vector3)R[0]);
-                        break;
-                    case "tellDeath":
-                        OnPlayerDeath.TryInvoke(rp, (EDeathCause)(byte)R[0], (ELimb)(byte)R[1], new CSteamID(ulong.Parse(R[2].ToString())));
-                        instance.OnDeath.TryInvoke(rp, (EDeathCause)(byte)R[0], (ELimb)(byte)R[1], new CSteamID(ulong.Parse(R[2].ToString())));
-                        break;
                     default:
 #if DEBUG
                        // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
@@ -212,6 +204,19 @@ namespace Rocket.Unturned.Events
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
             OnPlayerUpdateBroken.TryInvoke(rp, life.isBroken);
             instance.OnUpdateBroken.TryInvoke(rp, life.isBroken);
+        }
+
+        internal static void InternalOnPlayerDied(PlayerLife sender, EDeathCause cause, ELimb limb, CSteamID instigator)
+        {
+            UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(sender.player);
+
+            // First parameter of tellDead was the "ragdoll" force prior to client adjustments. Unnecessary AFAIK.
+            OnPlayerDead.TryInvoke(rp, Vector3.zero);
+            instance.OnDead.TryInvoke(rp, Vector3.zero);
+
+            OnPlayerDeath.TryInvoke(rp, cause, limb, instigator);
+            instance.OnDeath.TryInvoke(rp, cause, limb, instigator);
         }
 
         internal static void InternalOnStanceChanged(PlayerStance stance)

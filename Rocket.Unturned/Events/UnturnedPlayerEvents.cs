@@ -68,10 +68,6 @@ namespace Rocket.Unturned.Events
                         OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
                         instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
                         break;
-                    case "tellStance":
-                        OnPlayerUpdateStance.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateStance.TryInvoke( rp, (byte)R[0]);
-                        break;
                     case "tellGesture":
                         OnPlayerUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
                         instance.OnUpdateGesture.TryInvoke( rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
@@ -198,6 +194,14 @@ namespace Rocket.Unturned.Events
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
             OnPlayerUpdateBroken.TryInvoke(rp, life.isBroken);
             instance.OnUpdateBroken.TryInvoke(rp, life.isBroken);
+        }
+
+        internal static void InternalOnStanceChanged(PlayerStance stance)
+        {
+            UnturnedPlayerEvents instance = stance.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(stance.player);
+            OnPlayerUpdateStance.TryInvoke(rp, (byte) stance.stance);
+            instance.OnUpdateStance.TryInvoke(rp, (byte) stance.stance);
         }
 
         public delegate void PlayerUpdatePosition(UnturnedPlayer player, Vector3 position);

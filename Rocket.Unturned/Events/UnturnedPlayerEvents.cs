@@ -64,33 +64,9 @@ namespace Rocket.Unturned.Events
 #endif
                 switch (W)
                 {
-                    case "tellBleeding":
-                        OnPlayerUpdateBleeding.TryInvoke(rp, (bool)R[0]);
-                        instance.OnUpdateBleeding.TryInvoke( rp, (bool)R[0]);
-                        break;
-                    case "tellBroken":
-                        OnPlayerUpdateBroken.TryInvoke(rp, (bool)R[0]);
-                        instance.OnUpdateBroken.TryInvoke(rp, (bool)R[0]);
-                        break;
                     case "tellLife":
                         OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
                         instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellFood":
-                        OnPlayerUpdateFood.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateFood.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellHealth":
-                        OnPlayerUpdateHealth.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateHealth.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellVirus":
-                        OnPlayerUpdateVirus.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateVirus.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellWater":
-                        OnPlayerUpdateWater.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateWater.TryInvoke(rp, (byte)R[0]);
                         break;
                     case "tellStance":
                         OnPlayerUpdateStance.TryInvoke(rp, (byte)R[0]);
@@ -174,6 +150,54 @@ namespace Rocket.Unturned.Events
         {
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
             OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.glasses, clothing.glassesQuality);
+        }
+
+        internal static void InternalOnTellHealth(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateHealth.TryInvoke(rp, life.health);
+            instance.OnUpdateHealth.TryInvoke(rp, life.health);
+        }
+
+        internal static void InternalOnTellFood(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateFood.TryInvoke(rp, life.food);
+            instance.OnUpdateFood.TryInvoke(rp, life.food);
+        }
+
+        internal static void InternalOnTellWater(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateWater.TryInvoke(rp, life.water);
+            instance.OnUpdateWater.TryInvoke(rp, life.water);
+        }
+
+        internal static void InternalOnTellVirus(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateVirus.TryInvoke(rp, life.virus);
+            instance.OnUpdateVirus.TryInvoke(rp, life.virus);
+        }
+
+        internal static void InternalOnTellBleeding(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateBleeding.TryInvoke(rp, life.isBleeding);
+            instance.OnUpdateBleeding.TryInvoke(rp, life.isBleeding);
+        }
+
+        internal static void InternalOnTellBroken(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateBroken.TryInvoke(rp, life.isBroken);
+            instance.OnUpdateBroken.TryInvoke(rp, life.isBroken);
         }
 
         public delegate void PlayerUpdatePosition(UnturnedPlayer player, Vector3 position);

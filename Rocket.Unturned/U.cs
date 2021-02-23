@@ -277,6 +277,12 @@ namespace Rocket.Unturned
             PlayerClothing.OnVestChanged_Global += UnturnedPlayerEvents.InternalOnVestChanged;
             PlayerClothing.OnMaskChanged_Global += UnturnedPlayerEvents.InternalOnMaskChanged;
             PlayerClothing.OnGlassesChanged_Global += UnturnedPlayerEvents.InternalOnGlassesChanged;
+            PlayerLife.OnTellHealth_Global += UnturnedPlayerEvents.InternalOnTellHealth;
+            PlayerLife.OnTellFood_Global += UnturnedPlayerEvents.InternalOnTellFood;
+            PlayerLife.OnTellWater_Global += UnturnedPlayerEvents.InternalOnTellWater;
+            PlayerLife.OnTellVirus_Global += UnturnedPlayerEvents.InternalOnTellVirus;
+            PlayerLife.OnTellBleeding_Global += UnturnedPlayerEvents.InternalOnTellBleeding;
+            PlayerLife.OnTellBroken_Global += UnturnedPlayerEvents.InternalOnTellBroken;
 
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>
             {

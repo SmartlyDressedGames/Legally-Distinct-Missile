@@ -263,11 +263,27 @@ namespace Rocket.Unturned
                  UnturnedPlayerEvents.TriggerReceive(channel, steamID, packet, offset, size);
              };
              */
-
-            SteamChannel.onTriggerSend += (SteamPlayer player, string name, ESteamCall mode, ESteamPacket type, object[] arguments) =>
-            {
-                UnturnedPlayerEvents.TriggerSend(player, name, mode, type, arguments);
-            };
+             
+            // Replacements for Rocket usage of onTriggerSend:
+            SDG.Unturned.Player.onPlayerStatIncremented += UnturnedPlayerEvents.InternalOnPlayerStatIncremented;
+            PlayerClothing.OnShirtChanged_Global += UnturnedPlayerEvents.InternalOnShirtChanged;
+            PlayerClothing.OnPantsChanged_Global += UnturnedPlayerEvents.InternalOnPantsChanged;
+            PlayerClothing.OnHatChanged_Global += UnturnedPlayerEvents.InternalOnHatChanged;
+            PlayerClothing.OnBackpackChanged_Global += UnturnedPlayerEvents.InternalOnBackpackChanged;
+            PlayerClothing.OnVestChanged_Global += UnturnedPlayerEvents.InternalOnVestChanged;
+            PlayerClothing.OnMaskChanged_Global += UnturnedPlayerEvents.InternalOnMaskChanged;
+            PlayerClothing.OnGlassesChanged_Global += UnturnedPlayerEvents.InternalOnGlassesChanged;
+            PlayerAnimator.OnGestureChanged_Global += UnturnedPlayerEvents.InternalOnGestureChanged;
+            PlayerLife.OnTellHealth_Global += UnturnedPlayerEvents.InternalOnTellHealth;
+            PlayerLife.OnTellFood_Global += UnturnedPlayerEvents.InternalOnTellFood;
+            PlayerLife.OnTellWater_Global += UnturnedPlayerEvents.InternalOnTellWater;
+            PlayerLife.OnTellVirus_Global += UnturnedPlayerEvents.InternalOnTellVirus;
+            PlayerLife.OnTellBleeding_Global += UnturnedPlayerEvents.InternalOnTellBleeding;
+            PlayerLife.OnTellBroken_Global += UnturnedPlayerEvents.InternalOnTellBroken;
+            PlayerLife.OnRevived_Global += UnturnedPlayerEvents.InternalOnRevived;
+            PlayerLife.onPlayerDied += UnturnedPlayerEvents.InternalOnPlayerDied;
+            PlayerSkills.OnExperienceChanged_Global += UnturnedPlayerEvents.InternalOnExperienceChanged;
+            PlayerStance.OnStanceChanged_Global += UnturnedPlayerEvents.InternalOnStanceChanged;
 
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>
             {

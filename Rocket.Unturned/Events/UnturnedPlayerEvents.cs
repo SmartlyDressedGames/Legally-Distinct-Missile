@@ -47,96 +47,162 @@ namespace Rocket.Unturned.Events
             return;
         }
         
-        internal static void TriggerSend(SteamPlayer s, string W, ESteamCall X, ESteamPacket l, params object[] R)
+        internal static void InternalOnPlayerStatIncremented(SDG.Unturned.Player player, EPlayerStat gameStat)
         {
-            try
-            {
-                if (s == null || s.player == null || s.playerID.steamID == CSteamID.Nil || s.player.transform == null || R == null) return;
-                UnturnedPlayerEvents instance = s.player.transform.GetComponent<UnturnedPlayerEvents>();
-                UnturnedPlayer rp = UnturnedPlayer.FromSteamPlayer(s);
-#if DEBUG
-                 //string o = "";
-                 //foreach (object r in R)
-                 //{
-                 //    o += r.ToString();
-                 //}
-                 //Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + o);
-#endif
-                if (W.StartsWith("tellWear")) {
-                    OnPlayerWear.TryInvoke(rp, Enum.Parse(typeof(Wearables), W.Replace("tellWear", "")), (ushort)R[0], R.Count() > 1 ? (byte?)R[1] : null);
-                }
-                switch (W)
-                {
-                    case "tellBleeding":
-                        OnPlayerUpdateBleeding.TryInvoke(rp, (bool)R[0]);
-                        instance.OnUpdateBleeding.TryInvoke( rp, (bool)R[0]);
-                        break;
-                    case "tellBroken":
-                        OnPlayerUpdateBroken.TryInvoke(rp, (bool)R[0]);
-                        instance.OnUpdateBroken.TryInvoke(rp, (bool)R[0]);
-                        break;
-                    case "tellLife":
-                        OnPlayerUpdateLife.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateLife.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellFood":
-                        OnPlayerUpdateFood.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateFood.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellHealth":
-                        OnPlayerUpdateHealth.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateHealth.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellVirus":
-                        OnPlayerUpdateVirus.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateVirus.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellWater":
-                        OnPlayerUpdateWater.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateWater.TryInvoke(rp, (byte)R[0]);
-                        break;
-                    case "tellStance":
-                        OnPlayerUpdateStance.TryInvoke(rp, (byte)R[0]);
-                        instance.OnUpdateStance.TryInvoke( rp, (byte)R[0]);
-                        break;
-                    case "tellGesture":
-                        OnPlayerUpdateGesture.TryInvoke(rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
-                        instance.OnUpdateGesture.TryInvoke( rp, (PlayerGesture)Enum.Parse(typeof(PlayerGesture), R[0].ToString()));
-                        break;
-                    case "tellStat":
-                        OnPlayerUpdateStat.TryInvoke(rp, (EPlayerStat)(byte)R[0]);
-                        instance.OnUpdateStat.TryInvoke(rp, (EPlayerStat)(byte)R[0]);
-                        break;
-                    case "tellExperience":
-                        OnPlayerUpdateExperience.TryInvoke(rp, (uint)R[0]);
-                        instance.OnUpdateExperience.TryInvoke(rp, (uint)R[0]);
-                        break;
-                    case "tellRevive":
-                        OnPlayerRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
-                        instance.OnRevive.TryInvoke(rp, (Vector3)R[0], (byte)R[1]);
-                        break;
-                    case "tellDead":
-                        OnPlayerDead.TryInvoke(rp, (Vector3)R[0]);
-                        instance.OnDead.TryInvoke(rp, (Vector3)R[0]);
-                        break;
-                    case "tellDeath":
-                        OnPlayerDeath.TryInvoke(rp, (EDeathCause)(byte)R[0], (ELimb)(byte)R[1], new CSteamID(ulong.Parse(R[2].ToString())));
-                        instance.OnDeath.TryInvoke(rp, (EDeathCause)(byte)R[0], (ELimb)(byte)R[1], new CSteamID(ulong.Parse(R[2].ToString())));
-                        break;
-                    default:
-#if DEBUG
-                       // Logger.Log("Send+" + s.SteamPlayerID.CSteamID.ToString() + ": " + W + " - " + String.Join(",",R.Select(e => e.ToString()).ToArray()));
-#endif
-                        break;
-                }
-                return;
-            }
-            catch (Exception ex)
-            {
-                Core.Logging.Logger.LogException(ex,"Failed to receive packet \""+W+"\"");
-            }
+            UnturnedPlayerEvents instance = player.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(player);
+            OnPlayerUpdateStat.TryInvoke(rp, gameStat);
+            instance.OnUpdateStat.TryInvoke(rp, gameStat);
         }
 
+        internal static void InternalOnShirtChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Shirt, clothing.shirt, clothing.shirtQuality);
+        }
+
+        internal static void InternalOnPantsChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Pants, clothing.pants, clothing.pantsQuality);
+        }
+
+        internal static void InternalOnHatChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Hat, clothing.hat, clothing.hatQuality);
+        }
+
+        internal static void InternalOnBackpackChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Backpack, clothing.backpack, clothing.backpackQuality);
+        }
+
+        internal static void InternalOnVestChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Vest, clothing.vest, clothing.vestQuality);
+        }
+
+        internal static void InternalOnMaskChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.mask, clothing.maskQuality);
+        }
+
+        internal static void InternalOnGlassesChanged(PlayerClothing clothing)
+        {
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(clothing.player);
+            OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.glasses, clothing.glassesQuality);
+        }
+
+        internal static void InternalOnGestureChanged(PlayerAnimator animator)
+        {
+            UnturnedPlayerEvents instance = animator.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(animator.player);
+            try
+            {
+                // This is how Rocket converted the enum prior to onTriggerSend rewrite.
+                PlayerGesture rocketGesture = (PlayerGesture) Enum.Parse(typeof(PlayerGesture), animator.gesture.ToString());
+                OnPlayerUpdateGesture.TryInvoke(rp, rocketGesture);
+                instance.OnUpdateGesture.TryInvoke(rp, rocketGesture);
+            }
+            catch { }
+        }
+
+        internal static void InternalOnTellHealth(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateHealth.TryInvoke(rp, life.health);
+            instance.OnUpdateHealth.TryInvoke(rp, life.health);
+        }
+
+        internal static void InternalOnTellFood(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateFood.TryInvoke(rp, life.food);
+            instance.OnUpdateFood.TryInvoke(rp, life.food);
+        }
+
+        internal static void InternalOnTellWater(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateWater.TryInvoke(rp, life.water);
+            instance.OnUpdateWater.TryInvoke(rp, life.water);
+        }
+
+        internal static void InternalOnTellVirus(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateVirus.TryInvoke(rp, life.virus);
+            instance.OnUpdateVirus.TryInvoke(rp, life.virus);
+        }
+
+        internal static void InternalOnTellBleeding(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateBleeding.TryInvoke(rp, life.isBleeding);
+            instance.OnUpdateBleeding.TryInvoke(rp, life.isBleeding);
+        }
+
+        internal static void InternalOnExperienceChanged(PlayerSkills skills, uint oldExerience)
+        {
+            UnturnedPlayerEvents instance = skills.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(skills.player);
+            OnPlayerUpdateExperience.TryInvoke(rp, skills.experience);
+            instance.OnUpdateExperience.TryInvoke(rp, skills.experience);
+        }
+
+        internal static void InternalOnTellBroken(PlayerLife life)
+        {
+            UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(life.player);
+            OnPlayerUpdateBroken.TryInvoke(rp, life.isBroken);
+            instance.OnUpdateBroken.TryInvoke(rp, life.isBroken);
+        }
+
+        internal static void InternalOnRevived(PlayerLife sender)
+        {
+            UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(sender.player);
+
+            // First parameter of tellLife was health.
+            OnPlayerUpdateLife.TryInvoke(rp, sender.health);
+            instance.OnUpdateLife.TryInvoke(rp, sender.health);
+
+            // Ideally avoid using this angleToByte method in new code. Please.
+            Vector3 position = sender.transform.position;
+            byte angle = MeasurementTool.angleToByte(sender.transform.rotation.eulerAngles.y);
+            OnPlayerRevive.TryInvoke(rp, position, angle);
+            instance.OnRevive.TryInvoke(rp, position, angle);
+        }
+
+        internal static void InternalOnPlayerDied(PlayerLife sender, EDeathCause cause, ELimb limb, CSteamID instigator)
+        {
+            UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(sender.player);
+
+            // First parameter of tellDead was the "ragdoll" force prior to client adjustments. Unnecessary AFAIK.
+            OnPlayerDead.TryInvoke(rp, Vector3.zero);
+            instance.OnDead.TryInvoke(rp, Vector3.zero);
+
+            OnPlayerDeath.TryInvoke(rp, cause, limb, instigator);
+            instance.OnDeath.TryInvoke(rp, cause, limb, instigator);
+        }
+
+        internal static void InternalOnStanceChanged(PlayerStance stance)
+        {
+            UnturnedPlayerEvents instance = stance.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(stance.player);
+            OnPlayerUpdateStance.TryInvoke(rp, (byte) stance.stance);
+            instance.OnUpdateStance.TryInvoke(rp, (byte) stance.stance);
+        }
 
         public delegate void PlayerUpdatePosition(UnturnedPlayer player, Vector3 position);
         public static event PlayerUpdatePosition OnPlayerUpdatePosition;

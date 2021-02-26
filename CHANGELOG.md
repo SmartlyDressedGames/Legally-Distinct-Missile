@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.8 - 2021-02-26
+
+### Changed
+- Replaced gesture parse with switch statement. Thanks @PandahutMiku: [#2435](https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2435)
+
 ## 4.9.3.7 - 2021-02-26
 
 ### Changed

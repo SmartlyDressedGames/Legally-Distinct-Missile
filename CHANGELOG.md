@@ -5,6 +5,7 @@ All notable changes should be documented in this file. The format is based on [K
 ## Unreleased
 
 ### Changed
+- Replaced `tellBleeding` invocation with `serverSetBleeding`. 
 - Replaced `tellBroken` invocation with `serverSetLegsBroken`. 
 
 ## 4.9.3.7 - 2021-02-26

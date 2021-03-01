@@ -198,7 +198,10 @@ namespace Rocket.Unturned.Player
 
         public void TriggerEffect(ushort effectID)
         {
-            EffectManager.instance.channel.send("tellEffectPoint", CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { effectID, player.transform.position });
+            TriggerEffectParameters parameters = new TriggerEffectParameters(effectID);
+            parameters.position = player.transform.position;
+            parameters.relevantPlayerID = CSteamID;
+            EffectManager.triggerEffect(parameters);
         }
         
         public string IP

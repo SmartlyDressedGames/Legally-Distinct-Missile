@@ -20,17 +20,26 @@ namespace Rocket.Unturned.Effects
         {
             if (!Global)
             {
-                SDG.Unturned.EffectManager.instance.channel.send("tellEffectPoint", player.CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { EffectID, player.Player.transform.position });
+                TriggerEffectParameters parameters = new TriggerEffectParameters(EffectID);
+                parameters.position = player.Player.transform.position;
+                parameters.relevantPlayerID = player.CSteamID;
+                EffectManager.triggerEffect(parameters);
             }
             else
             {
-                SDG.Unturned.EffectManager.instance.channel.send("tellEffectPoint", ESteamCall.CLIENTS, player.Player.transform.position, 1024, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { EffectID, player.Player.transform.position });
+                TriggerEffectParameters parameters = new TriggerEffectParameters(EffectID);
+                parameters.position = player.Player.transform.position;
+                parameters.relevantDistance = 1024.0f;
+                EffectManager.triggerEffect(parameters);
             }
         }
 
         public void Trigger(Vector3 position)
         {
-            SDG.Unturned.EffectManager.instance.channel.send("tellEffectPoint", ESteamCall.CLIENTS, position, 1024, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { EffectID, position });
+            TriggerEffectParameters parameters = new TriggerEffectParameters(EffectID);
+            parameters.position = position;
+            parameters.relevantDistance = 1024.0f;
+            EffectManager.triggerEffect(parameters);
         }
     }
 }

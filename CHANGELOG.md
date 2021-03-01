@@ -8,6 +8,7 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `tellBleeding` invocation with `serverSetBleeding`.
 - Replaced `tellBroken` invocation with `serverSetLegsBroken`.
 - Replaced `UnturnedPlayer.TriggerEffect` invocation with `EffectManager.triggerEffect`.
+- Replaced `UnturnedEffect` invocation with `EffectManager.triggerEffect`.
 
 ## 4.9.3.7 - 2021-02-26
 

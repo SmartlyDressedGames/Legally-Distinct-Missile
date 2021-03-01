@@ -525,8 +525,7 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.tellBroken(Provider.server,value);
-                player.life.channel.send("tellBroken", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
+                player.life.serverSetLegsBroken(value);
             }
         }
         public bool Bleeding

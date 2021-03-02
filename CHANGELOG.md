@@ -12,6 +12,11 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `UnturnedPlayer.Experience` invocation with `PlayerSkills.ServerSetExperience`.
 - Vanish mode teleport no longer needs special handling because the vanilla game skips other clients if canAddSimulationResultsToUpdates is false.
 
+## 4.9.3.8 - 2021-02-26
+
+### Changed
+- Replaced gesture parse with switch statement. Thanks @PandahutMiku: [#2435](https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2435)
+
 ## 4.9.3.7 - 2021-02-26
 
 ### Changed

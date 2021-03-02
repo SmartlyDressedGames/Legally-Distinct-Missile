@@ -99,18 +99,70 @@ namespace Rocket.Unturned.Events
 
         internal static void InternalOnGestureChanged(PlayerAnimator animator)
         {
+            PlayerGesture rocketGesture;
+            switch(animator.gesture)
+            {
+                case EPlayerGesture.NONE:
+                    rocketGesture = PlayerGesture.None;
+                    break;
+                case EPlayerGesture.INVENTORY_START:
+                    rocketGesture = PlayerGesture.InventoryOpen;
+                    break;
+                case EPlayerGesture.INVENTORY_STOP:
+                    rocketGesture = PlayerGesture.InventoryClose;
+                    break;
+                case EPlayerGesture.PICKUP:
+                    rocketGesture = PlayerGesture.Pickup;
+                    break;
+                case EPlayerGesture.PUNCH_LEFT:
+                    rocketGesture = PlayerGesture.PunchLeft;
+                    break;
+                case EPlayerGesture.PUNCH_RIGHT:
+                    rocketGesture = PlayerGesture.PunchRight;
+                    break;
+                case EPlayerGesture.SURRENDER_START:
+                    rocketGesture = PlayerGesture.SurrenderStart;
+                    break;
+                case EPlayerGesture.SURRENDER_STOP:
+                    rocketGesture = PlayerGesture.SurrenderStop;
+                    break;
+                case EPlayerGesture.POINT:
+                    rocketGesture = PlayerGesture.Point;
+                    break;
+                case EPlayerGesture.WAVE:
+                    rocketGesture = PlayerGesture.Wave;
+                    break;
+                case EPlayerGesture.SALUTE:
+                    rocketGesture = PlayerGesture.Salute;
+                    break;
+                case EPlayerGesture.ARREST_START:
+                    rocketGesture = PlayerGesture.Arrest_Start;
+                    break;
+                case EPlayerGesture.ARREST_STOP:
+                    rocketGesture = PlayerGesture.Arrest_Stop;
+                    break;
+                case EPlayerGesture.REST_START:
+                    rocketGesture = PlayerGesture.Rest_Start;
+                    break;
+                case EPlayerGesture.REST_STOP:
+                    rocketGesture = PlayerGesture.Rest_Stop;
+                    break;
+                case EPlayerGesture.FACEPALM:
+                    rocketGesture = PlayerGesture.Facepalm;
+                    break;
+
+                default:
+                    // Rocket does not have an equivalent. Plugins should use the game's event instead because this
+                    // listener only exists for backwards compatibility.
+                    return;
+            }
+
             UnturnedPlayerEvents instance = animator.GetComponent<UnturnedPlayerEvents>();
             UnturnedPlayer rp = UnturnedPlayer.FromPlayer(animator.player);
-            try
-            {
-                // This is how Rocket converted the enum prior to onTriggerSend rewrite.
-                PlayerGesture rocketGesture = (PlayerGesture) Enum.Parse(typeof(PlayerGesture), animator.gesture.ToString());
-                OnPlayerUpdateGesture.TryInvoke(rp, rocketGesture);
-                instance.OnUpdateGesture.TryInvoke(rp, rocketGesture);
-            }
-            catch { }
+            OnPlayerUpdateGesture.TryInvoke(rp, rocketGesture);
+            instance.OnUpdateGesture.TryInvoke(rp, rocketGesture);
         }
-
+        
         internal static void InternalOnTellHealth(PlayerLife life)
         {
             UnturnedPlayerEvents instance = life.GetComponent<UnturnedPlayerEvents>();

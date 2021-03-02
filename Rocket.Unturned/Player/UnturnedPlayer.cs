@@ -348,16 +348,9 @@ namespace Rocket.Unturned.Player
 
         public void Teleport(Vector3 position, float rotation)
         {
-            if (VanishMode)
-            {
-                player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new Vector3(position.y, position.y + 1337, position.z), MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-            }
-            else
-            {
-				player.teleportToLocation(position, rotation);
-            }
+            // In older versions Rocket had a special case for "vanish" mode, but now the vanilla game will
+            // only send teleport to all clients if canAddSimulationResultsToUpdates is true.
+            player.teleportToLocation(position, rotation);
         }
 
         public bool VanishMode

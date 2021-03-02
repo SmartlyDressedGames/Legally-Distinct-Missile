@@ -10,6 +10,7 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `UnturnedPlayer.TriggerEffect` invocation with `EffectManager.triggerEffect`.
 - Replaced `UnturnedEffect` invocation with `EffectManager.triggerEffect`.
 - Replaced `UnturnedPlayer.Experience` invocation with `PlayerSkills.ServerSetExperience`.
+- Vanish mode teleport no longer needs special handling because the vanilla game skips other clients if canAddSimulationResultsToUpdates is false.
 
 ## 4.9.3.7 - 2021-02-26
 

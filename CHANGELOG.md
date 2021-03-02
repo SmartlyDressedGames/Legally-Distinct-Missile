@@ -9,6 +9,7 @@ All notable changes should be documented in this file. The format is based on [K
 - Replaced `tellBroken` invocation with `serverSetLegsBroken`.
 - Replaced `UnturnedPlayer.TriggerEffect` invocation with `EffectManager.triggerEffect`.
 - Replaced `UnturnedEffect` invocation with `EffectManager.triggerEffect`.
+- Replaced `UnturnedPlayer.Experience` invocation with `PlayerSkills.ServerSetExperience`.
 
 ## 4.9.3.7 - 2021-02-26
 

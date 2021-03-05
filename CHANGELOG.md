@@ -2,7 +2,7 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## Unreleased
+## 4.9.3.9 - 2021-03-05
 
 ### Changed
 - Replaced `tellBleeding` invocation with `serverSetBleeding`.

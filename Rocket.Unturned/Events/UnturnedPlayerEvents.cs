@@ -97,10 +97,10 @@ namespace Rocket.Unturned.Events
             OnPlayerWear.TryInvoke(rp, Wearables.Mask, clothing.glasses, clothing.glassesQuality);
         }
 
-        internal static void InternalOnGestureChanged(PlayerAnimator animator)
+        internal static void InternalOnGestureChanged(PlayerAnimator animator, EPlayerGesture vanillaGesture)
         {
             PlayerGesture rocketGesture;
-            switch(animator.gesture)
+            switch(vanillaGesture)
             {
                 case EPlayerGesture.NONE:
                     rocketGesture = PlayerGesture.None;

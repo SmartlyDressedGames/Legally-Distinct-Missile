@@ -281,6 +281,7 @@ namespace Rocket.Unturned
             PlayerLife.OnTellBleeding_Global += UnturnedPlayerEvents.InternalOnTellBleeding;
             PlayerLife.OnTellBroken_Global += UnturnedPlayerEvents.InternalOnTellBroken;
             PlayerLife.OnRevived_Global += UnturnedPlayerEvents.InternalOnRevived;
+            PlayerLife.RocketLegacyOnDeath += UnturnedPlayerEvents.InternalOnPlayerDeath;
             PlayerLife.onPlayerDied += UnturnedPlayerEvents.InternalOnPlayerDied;
             PlayerSkills.OnExperienceChanged_Global += UnturnedPlayerEvents.InternalOnExperienceChanged;
             PlayerStance.OnStanceChanged_Global += UnturnedPlayerEvents.InternalOnStanceChanged;

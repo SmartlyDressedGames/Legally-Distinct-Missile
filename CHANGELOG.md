@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.10 - 2021-03-19
+
+### Fixed
+- Call OnPlayerDeath (tellDeath) before tellDead to respect old behaviour. Thanks @rube200 in issue #38 and @RestoreMonarchy in issue #37.
+
 ## 4.9.3.9 - 2021-03-05
 
 ### Changed

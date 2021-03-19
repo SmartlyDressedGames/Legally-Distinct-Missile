@@ -235,6 +235,15 @@ namespace Rocket.Unturned.Events
             instance.OnRevive.TryInvoke(rp, position, angle);
         }
 
+        internal static void InternalOnPlayerDeath(PlayerLife sender, EDeathCause cause, ELimb limb, CSteamID instigator)
+        {
+            UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
+            UnturnedPlayer rp = UnturnedPlayer.FromPlayer(sender.player);
+            
+            OnPlayerDeath.TryInvoke(rp, cause, limb, instigator);
+            instance.OnDeath.TryInvoke(rp, cause, limb, instigator);
+        }
+
         internal static void InternalOnPlayerDied(PlayerLife sender, EDeathCause cause, ELimb limb, CSteamID instigator)
         {
             UnturnedPlayerEvents instance = sender.GetComponent<UnturnedPlayerEvents>();
@@ -243,9 +252,6 @@ namespace Rocket.Unturned.Events
             // First parameter of tellDead was the "ragdoll" force prior to client adjustments. Unnecessary AFAIK.
             OnPlayerDead.TryInvoke(rp, Vector3.zero);
             instance.OnDead.TryInvoke(rp, Vector3.zero);
-
-            OnPlayerDeath.TryInvoke(rp, cause, limb, instigator);
-            instance.OnDeath.TryInvoke(rp, cause, limb, instigator);
         }
 
         internal static void InternalOnStanceChanged(PlayerStance stance)

@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## Unreleased
+
+### Changed
+- Replaced Assembly-CSharp-firstpass.dll with Steamworks.NET.dll.
+
 ## 4.9.3.10 - 2021-03-19
 
 ### Fixed

@@ -224,14 +224,7 @@ namespace Rocket.Unturned.Player
 
         public void MaxSkills()
         {
-            PlayerSkills skills = player.skills;
-            
-            foreach (var skill in skills.skills.SelectMany(s => s))
-            {
-                skill.level = skill.max;
-            }
-            
-            skills.askSkills(player.channel.owner.playerID.steamID);
+            player.skills.ServerUnlockAllSkills();
         }
 
         public string SteamGroupName()
@@ -591,8 +584,7 @@ namespace Rocket.Unturned.Player
 
         public void SetSkillLevel(UnturnedSkill skill, byte level)
         {
-            GetSkill(skill).level = level;
-            player.skills.askSkills(CSteamID);
+            player.skills.ServerSetSkillLevel(skill.Speciality, skill.Skill, level);
         }
 
         public byte GetSkillLevel(UnturnedSkill skill)

@@ -2,7 +2,12 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## 4.9.3.11 - 2021-4-02
+## 4.9.3.12 - 2021-04-09
+
+### Changed
+- Replaced `UnturnedPlayer` usage of `PlayerSkills.askSkills`. Thanks @PandahutMiku: [#2537](https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2537)
+
+## 4.9.3.11 - 2021-04-02
 
 ### Changed
 - Replaced Assembly-CSharp-firstpass.dll with Steamworks.NET.dll.

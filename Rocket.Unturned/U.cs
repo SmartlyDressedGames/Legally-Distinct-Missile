@@ -300,10 +300,14 @@ namespace Rocket.Unturned
                 shouldExecuteCommand = false;
             };
 
-            Provider.onCheckValid += (ValidateAuthTicketResponse_t callback, ref bool isValid) =>
+            //this is no being calle :/
+            Provider.onCheckValidWithExplanation += (ValidateAuthTicketResponse_t callback, ref bool isValid, ref string explanation) =>
             {
-                if(isValid)
-                    isValid = UnturnedPermissions.CheckValid(callback);
+                if (!isValid)
+                    return;
+
+
+                isValid = UnturnedPermissions.CheckValid(callback);
             };
     }
 

@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.13 - 2021-04-23
+
+### Changed
+- Updated `onCheckValid` to `onCheckValidWithExplanation`. "Thanks" @surv0013 in issue #39.
+
 ## 4.9.3.12 - 2021-04-09
 
 ### Changed

@@ -62,6 +62,9 @@
       <HintPath>lib\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="com.rlabrecque.steamworks.net">
+      <HintPath>lib\com.rlabrecque.steamworks.net.dll</HintPath>
+    </Reference>
     <Reference Include="Rocket.API">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Rocket.API.dll</HintPath>
@@ -74,10 +77,6 @@
     </Reference>
     <Reference Include="SDG.NetTransport">
       <HintPath>lib\SDG.NetTransport.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Steamworks.NET">
-      <HintPath>lib\Steamworks.NET.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

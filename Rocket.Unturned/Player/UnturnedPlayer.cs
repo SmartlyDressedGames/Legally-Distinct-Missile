@@ -1,4 +1,5 @@
 ﻿using SDG.Unturned;
+using SDG.NetTransport;
 using Steamworks;
 using System;
 using UnityEngine;
@@ -601,6 +602,14 @@ namespace Rocket.Unturned.Player
         public int CompareTo(object obj)
         {
             return Id.CompareTo(obj);
+        }
+        
+        public ITransportConnection TransportConnection() 
+        {
+            get 
+            {
+                return player.channel.owner.transportConnection;
+            }
         }
     }
 }

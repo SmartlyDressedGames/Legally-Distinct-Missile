@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.14 - 2022-04-01
+
+### Changed
+- Assembly resolve looks for dependency with requested version number. Thanks @Sl4vP0weR in issue #49.
+
 ## 4.9.3.13 - 2021-04-23
 
 ### Changed

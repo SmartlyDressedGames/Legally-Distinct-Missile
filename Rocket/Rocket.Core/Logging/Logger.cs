@@ -183,15 +183,23 @@ namespace Rocket.Core.Logging
             {
                 SDG.Unturned.CommandWindow.Log(message);
             }
-            ProcessLog(type, message);
+
+            // LDM: originally Rocket called ProcessLog here to write the message to their log file as well as the Console.
+            // After LDM was updated to use the CommandWindow methods instead of the Console directly this caused each 
+            // message to be logged twice because Rocket logs the output of CommandWindow.onCommandWindowOutputted.
         }
         
+        /// <summary>
+        /// LDM: this method writes a line to the Rocket log file.
+        /// </summary>
         private static void ProcessLog(ELogType type, string message,bool rcon = true)
         {
             AsyncLoggerQueue.Current.Enqueue(new LogEntry() { Severity = type, Message = message, RCON = rcon });
         }
 
-
+        /// <summary>
+        /// LDM: Rocket.Unturned.U relays the CommandWindow.onCommandWindowOutputted output here.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static void ExternalLog(object message, ConsoleColor color)
         {

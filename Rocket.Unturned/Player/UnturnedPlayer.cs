@@ -198,29 +198,33 @@ namespace Rocket.Unturned.Player
 
         public void TriggerEffect(ushort effectID)
         {
-            EffectManager.instance.channel.send("tellEffectPoint", CSteamID, ESteamPacket.UPDATE_UNRELIABLE_BUFFER, new object[] { effectID, player.transform.position });
+            TriggerEffectParameters parameters = new TriggerEffectParameters(effectID);
+            parameters.position = player.transform.position;
+            parameters.relevantPlayerID = CSteamID;
+            EffectManager.triggerEffect(parameters);
         }
         
         public string IP
         {
             get
             {
-                P2PSessionState_t State;
-                SteamGameServerNetworking.GetP2PSessionState(CSteamID, out State);
-                return Parser.getIPFromUInt32(State.m_nRemoteIP);
+                if(player != null)
+                {
+                    string address = player.channel.owner.getAddressString(/*withPort*/ false);
+                    if(!string.IsNullOrEmpty(address))
+                    {
+                        return address;
+                    }
+                }
+
+                // Prior to the net transport rewrite this property always returned a non-null IPv4 string.
+                return "0.0.0.0";
             }
         }
 
         public void MaxSkills()
         {
-            PlayerSkills skills = player.skills;
-            
-            foreach (var skill in skills.skills.SelectMany(s => s))
-            {
-                skill.level = skill.max;
-            }
-            
-            skills.askSkills(player.channel.owner.playerID.steamID);
+            player.skills.ServerUnlockAllSkills();
         }
 
         public string SteamGroupName()
@@ -291,13 +295,16 @@ namespace Rocket.Unturned.Player
         {
             CSteamID steamIdToBan = this.CSteamID;
 
-            uint ipToBan = 0;
-            P2PSessionState_t state;
-            if(SteamGameServerNetworking.GetP2PSessionState(steamIdToBan, out state))
+            uint ipToBan;
+            if(player != null)
             {
-                ipToBan = state.m_nRemoteIP;
+                ipToBan = player.channel.owner.getIPv4AddressOrZero();
             }
-
+            else
+            {
+                ipToBan = 0;
+            }
+            
             Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
         }
 
@@ -334,16 +341,9 @@ namespace Rocket.Unturned.Player
 
         public void Teleport(Vector3 position, float rotation)
         {
-            if (VanishMode)
-            {
-                player.channel.send("askTeleport", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.NOT_OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new Vector3(position.y, position.y + 1337, position.z), MeasurementTool.angleToByte(rotation));
-                player.channel.send("askTeleport", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, position, MeasurementTool.angleToByte(rotation));
-            }
-            else
-            {
-				player.teleportToLocation(position, rotation);
-            }
+            // In older versions Rocket had a special case for "vanish" mode, but now the vanilla game will
+            // only send teleport to all clients if canAddSimulationResultsToUpdates is true.
+            player.teleportToLocation(position, rotation);
         }
 
         public bool VanishMode
@@ -455,8 +455,7 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.skills.channel.send("tellExperience", ESteamCall.SERVER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
-                player.skills.channel.send("tellExperience", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, value);
+                player.skills.ServerSetExperience(value);
             }
         }
 
@@ -514,8 +513,7 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.tellBroken(Provider.server,value);
-                player.life.channel.send("tellBroken", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
+                player.life.serverSetLegsBroken(value);
             }
         }
         public bool Bleeding
@@ -526,8 +524,7 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.tellBleeding(Provider.server, value);
-                player.life.channel.send("tellBleeding", ESteamCall.OWNER, ESteamPacket.UPDATE_RELIABLE_BUFFER, new object[] { value });
+                player.life.serverSetBleeding(value);
             }
         }
 
@@ -587,8 +584,7 @@ namespace Rocket.Unturned.Player
 
         public void SetSkillLevel(UnturnedSkill skill, byte level)
         {
-            GetSkill(skill).level = level;
-            player.skills.askSkills(CSteamID);
+            player.skills.ServerSetSkillLevel(skill.Speciality, skill.Skill, level);
         }
 
         public byte GetSkillLevel(UnturnedSkill skill)

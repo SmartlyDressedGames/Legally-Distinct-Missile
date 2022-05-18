@@ -19,6 +19,7 @@ using SDG.Framework.Modules;
 using SDG.Unturned;
 using Steamworks;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -149,6 +150,9 @@ namespace Rocket.Unturned
                 
                 CommandWindow.Log("Rocket Unturned v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " for Unturned v" + Provider.APP_VERSION);
 
+                IPluginAdvertising pluginAdvertising = PluginAdvertising.Get();
+                pluginAdvertising.PluginFrameworkName = "rocket";
+
                 R.OnRockedInitialized += () =>
                 {
                     Instance.Initialize();
@@ -209,14 +213,21 @@ namespace Rocket.Unturned
                 {
                     R.Plugins.OnPluginsLoaded += () =>
                     {
-                        SteamGameServer.SetKeyValue("rocketplugins", String.Join(",", R.Plugins.GetPlugins().Select(p => p.Name).ToArray()));
+                        IPluginAdvertising pluginAdvertising = PluginAdvertising.Get();
+                        List<IRocketPlugin> rocketPlugins = R.Plugins.GetPlugins();
+                        List<string> pluginNames = new List<string>(rocketPlugins.Count);
+                        foreach(IRocketPlugin plugin in rocketPlugins)
+                        {
+                            if(plugin != null && !string.IsNullOrEmpty(plugin.Name))
+                            {
+                                pluginNames.Add(plugin.Name);
+                            }
+                        }
+                        pluginAdvertising.AddPlugins(pluginNames);
                     };
-
-
+                    
                     SteamGameServer.SetKeyValue("unturned", Provider.APP_VERSION);
                     SteamGameServer.SetKeyValue("rocket", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                    SteamGameServer.SetBotPlayerCount(1);
-
                 }
                 catch (Exception ex)
                 {
@@ -252,11 +263,28 @@ namespace Rocket.Unturned
                  UnturnedPlayerEvents.TriggerReceive(channel, steamID, packet, offset, size);
              };
              */
-
-            SteamChannel.onTriggerSend += (SteamPlayer player, string name, ESteamCall mode, ESteamPacket type, object[] arguments) =>
-            {
-                UnturnedPlayerEvents.TriggerSend(player, name, mode, type, arguments);
-            };
+             
+            // Replacements for Rocket usage of onTriggerSend:
+            SDG.Unturned.Player.onPlayerStatIncremented += UnturnedPlayerEvents.InternalOnPlayerStatIncremented;
+            PlayerClothing.OnShirtChanged_Global += UnturnedPlayerEvents.InternalOnShirtChanged;
+            PlayerClothing.OnPantsChanged_Global += UnturnedPlayerEvents.InternalOnPantsChanged;
+            PlayerClothing.OnHatChanged_Global += UnturnedPlayerEvents.InternalOnHatChanged;
+            PlayerClothing.OnBackpackChanged_Global += UnturnedPlayerEvents.InternalOnBackpackChanged;
+            PlayerClothing.OnVestChanged_Global += UnturnedPlayerEvents.InternalOnVestChanged;
+            PlayerClothing.OnMaskChanged_Global += UnturnedPlayerEvents.InternalOnMaskChanged;
+            PlayerClothing.OnGlassesChanged_Global += UnturnedPlayerEvents.InternalOnGlassesChanged;
+            PlayerAnimator.OnGestureChanged_Global += UnturnedPlayerEvents.InternalOnGestureChanged;
+            PlayerLife.OnTellHealth_Global += UnturnedPlayerEvents.InternalOnTellHealth;
+            PlayerLife.OnTellFood_Global += UnturnedPlayerEvents.InternalOnTellFood;
+            PlayerLife.OnTellWater_Global += UnturnedPlayerEvents.InternalOnTellWater;
+            PlayerLife.OnTellVirus_Global += UnturnedPlayerEvents.InternalOnTellVirus;
+            PlayerLife.OnTellBleeding_Global += UnturnedPlayerEvents.InternalOnTellBleeding;
+            PlayerLife.OnTellBroken_Global += UnturnedPlayerEvents.InternalOnTellBroken;
+            PlayerLife.OnRevived_Global += UnturnedPlayerEvents.InternalOnRevived;
+            PlayerLife.RocketLegacyOnDeath += UnturnedPlayerEvents.InternalOnPlayerDeath;
+            PlayerLife.onPlayerDied += UnturnedPlayerEvents.InternalOnPlayerDied;
+            PlayerSkills.OnExperienceChanged_Global += UnturnedPlayerEvents.InternalOnExperienceChanged;
+            PlayerStance.OnStanceChanged_Global += UnturnedPlayerEvents.InternalOnStanceChanged;
 
             ChatManager.onCheckPermissions += (SteamPlayer player, string text, ref bool shouldExecuteCommand, ref bool shouldList) =>
             {
@@ -272,7 +300,7 @@ namespace Rocket.Unturned
                 shouldExecuteCommand = false;
             };
 
-            Provider.onCheckValid += (ValidateAuthTicketResponse_t callback, ref bool isValid) =>
+            Provider.onCheckValidWithExplanation += (ValidateAuthTicketResponse_t callback, ref bool isValid, ref string explanation) =>
             {
                 if(isValid)
                     isValid = UnturnedPermissions.CheckValid(callback);

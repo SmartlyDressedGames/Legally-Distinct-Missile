@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.15 - 2023-02-08
+
+### Fixed
+- `OnPlayerChatted` overriding `isVisible` when `onChatted` is called beforehand. Thanks @rube200 in PR #58.
+
 ## 4.9.3.14 - 2022-04-01
 
 ### Changed

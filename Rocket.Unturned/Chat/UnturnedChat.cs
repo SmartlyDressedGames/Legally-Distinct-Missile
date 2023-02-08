@@ -19,9 +19,9 @@ namespace Rocket.Unturned.Chat
             SDG.Unturned.ChatManager.onChatted += handleChat;
         }
 
-        private void handleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool cancel)
+        private void handleChat(SteamPlayer steamPlayer, EChatMode chatMode, ref Color incomingColor, ref bool rich, string message, ref bool isVisible)
         {
-            cancel = false;
+            var cancel = !isVisible;
             Color color = incomingColor;
             try
             {
@@ -33,7 +33,7 @@ namespace Rocket.Unturned.Chat
                 Core.Logging.Logger.LogException(ex);
             }
 
-            cancel = !cancel;
+            isVisible = !cancel;
             incomingColor = color;
         }
 

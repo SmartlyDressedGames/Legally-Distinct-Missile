@@ -87,13 +87,13 @@ namespace Rocket.Unturned.Commands
                 }
                 else
                 {
-                    Node item = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(command[0].ToLower())).FirstOrDefault();
+                    LocationDevkitNode item = LocationDevkitNodeSystem.Get().GetAllNodes().Where(n => n.locationName.IndexOf(command[0]) != -1).FirstOrDefault();
                     if (item != null)
                     {
-                        Vector3 c = item.point + new Vector3(0f, 0.5f, 0f);
+                        Vector3 c = item.transform.position + new Vector3(0f, 0.5f, 0f);
                         player.Teleport(c, MeasurementTool.angleToByte(player.Rotation));
-                        Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, ((LocationNode)item).name));
-                        UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", ((LocationNode)item).name));
+                        Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, item.locationName));
+                        UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", item.locationName));
                     }
                     else
                     {

@@ -39,26 +39,29 @@ namespace Rocket.Core.Plugins
             return plugins.Select(g => g.GetComponent<IRocketPlugin>()).Where(p => p != null && ((IRocketPlugin)p).Name == name).FirstOrDefault();
         }
 
-        private void Awake() {
-            AppDomain.CurrentDomain.AssemblyResolve += delegate (object sender, ResolveEventArgs args)
+        private Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            try
             {
-                try
+                AssemblyName requestedName = new AssemblyName(args.Name);
+                var bestMatch = libraries.FirstOrDefault(lib => string.Equals(lib.Key.Name, requestedName.Name) && lib.Key.Version >= requestedName.Version);
+                if (!string.IsNullOrEmpty(bestMatch.Value))
                 {
-                    AssemblyName requestedName = new AssemblyName(args.Name);
-                    var bestMatch = libraries.FirstOrDefault(lib => string.Equals(lib.Key.Name, requestedName.Name) && lib.Key.Version >= requestedName.Version);
-                    if (!string.IsNullOrEmpty(bestMatch.Value))
-                    {
-                        return Assembly.Load(File.ReadAllBytes(bestMatch.Value));
-                    }
+                    return Assembly.Load(File.ReadAllBytes(bestMatch.Value));
                 }
-                catch (Exception ex)
-                {
-                    Logging.Logger.LogException(ex, "Caught exception resolving dependency: " + args.Name);
-                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Logger.LogException(ex, "Caught exception resolving dependency: " + args.Name);
+            }
 
-                Logging.Logger.LogError("Could not find dependency: " + args.Name);
-                return null;
-            };
+            Logging.Logger.LogError("Could not find dependency: " + args.Name);
+            return null;
+        }
+
+        private void Awake() {
+            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+            SDG.Framework.Modules.ModuleHook.PreVanillaAssemblyResolvePostRedirects += OnAssemblyResolve;
         }
 
         private void Start()

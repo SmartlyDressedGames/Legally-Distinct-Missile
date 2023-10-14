@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.16 - 2023-10-13
+
+### Changed
+- Bind Unturned's `PreVanillaAssemblyResolvePostRedirects` event to fix assembly resolve consistency.
+
 ## 4.9.3.15 - 2023-02-08
 
 ### Fixed

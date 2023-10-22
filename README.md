@@ -4,12 +4,12 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 
 ## Our plan
 
-- [-] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
-- [-] Assembly Resolve fixes.
-- [] /vanish fixes.
-- [] Keep backward compatibility.
-- [] CI/CD and nightly builds with RocketMod .dlls.
-- [] Collect a Team with a direct access to the repo edit without admins help.
+- [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
+- [ ] Assembly Resolve fixes.
+- [ ] /vanish fixes.
+- [ ] Keep backward compatibility.
+- [ ] CI/CD and nightly builds with RocketMod .dlls.
+- [ ] Collect a Team with a direct access to the repo edit without admins help.
 
 After plan is finished -> Keep coding and don't ignore PR or issues.
 

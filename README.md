@@ -17,7 +17,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [ ] CI/CD and nightly builds with RocketMod .dlls.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
 
-After plan is finished -> Keep coding and don't ignore PR or issues.
+After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.
 
 ## Installation
 

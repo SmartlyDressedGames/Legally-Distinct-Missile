@@ -27,9 +27,9 @@ The dedicated server includes the latest version, so an external download is not
 
 ## Contributing
 
-PR and issues are feel free to be made and approved - we don't ignore them.
+PR and issues are feel free to be made and approved.
 
-We don't commit right into `master` branch, make a branch from `dev`, and then PR inside `dev`. We keep `master` branch stable as possible.
+We don't commit right into `master` branch, make a branch from `dev`, and then PR inside `dev`. We keep `master` branch stable as possible, the `dev` branch is for development and its allowed to be unstable.
 
 ## Resources
 

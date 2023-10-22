@@ -4,6 +4,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 
 ## Our plan
 
+- [ ] Create Discord Server Community.
 - [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [ ] Assembly Resolve fixes.
 - [ ] /vanish fixes.

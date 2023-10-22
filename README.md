@@ -1,4 +1,4 @@
-# RocketModFix
+# ![RocketModFix](https://media.discordapp.net/attachments/834557779363758121/1165778419628392610/RocketModFix.png?ex=654816c2)
 
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 

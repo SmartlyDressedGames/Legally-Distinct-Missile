@@ -5,6 +5,8 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 ## Our plan
 
 - [x] Create Discord Server Community.
+- [ ] UnityEngine NuGet Package redist.
+- [ ] Unturned NuGet Package redist.
 - [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 

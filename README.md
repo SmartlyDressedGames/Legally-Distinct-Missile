@@ -1,6 +1,14 @@
-# Legally Distinct Missile
+# RocketModFix
 
-The **Legally Distinct Missile** (or LDM) is a fork of Rocket for Unturned maintained by the game developers (SDG) after the resignation of its original community team. Using this fork is recommended because it preserves compatibility, and has fixes for important legacy Rocket issues like multithreading exceptions and teleportation exploits.
+The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compability with API, etc.
+
+## Our plan
+- [] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
+- [] Assembly Resolve fixes.
+- [] /vanish fixes.
+- [] Keep backward compatibility.
+- [] CI/CD and nightly builds with RocketMod .dlls.
+- [] Collect a Team with a direct access to the repo edit without admins help.
 
 ## Installation
 
@@ -10,9 +18,7 @@ The dedicated server includes the latest version, so an external download is not
 
 ## Contributing
 
-The goals of this repository are to maintain compatibility with Unturned, maintain backwards compatibility with plugins, and fix bugs. Changes outside that scope will be made to the Unturned API rather than reworking the Rocket API. New plugins should ideally be using the game API where possible.
-
-Issues are monitored and will be discussed, but pull requests will not be directly merged.
+PR and issues are feel free to be made and approved - we don't ignore them.
 
 ## Resources
 

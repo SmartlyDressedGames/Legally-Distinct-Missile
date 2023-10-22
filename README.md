@@ -3,12 +3,15 @@
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compability with API, etc.
 
 ## Our plan
-- [] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
-- [] Assembly Resolve fixes.
+
+- [-] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
+- [-] Assembly Resolve fixes.
 - [] /vanish fixes.
 - [] Keep backward compatibility.
 - [] CI/CD and nightly builds with RocketMod .dlls.
 - [] Collect a Team with a direct access to the repo edit without admins help.
+
+After plan is finished -> Keep coding and don't ignore PR or issues.
 
 ## Installation
 

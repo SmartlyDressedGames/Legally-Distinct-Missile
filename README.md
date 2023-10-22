@@ -6,12 +6,13 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 
 - [ ] Create Discord Server Community.
 - [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
-- [ ] Assembly Resolve fixes.
+- [ ] RocketMod API Fixes:
+	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
+	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
 - [ ] Commands fixes:
 	- [ ] Fix /vanish.
 	- [ ] Fix /god.
-	- [ ] Fix /p (not readable at all).
-- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
+	- [ ] Fix /p (not readable at all). 
 - [ ] Keep backward compatibility.
 - [ ] CI/CD and nightly builds with RocketMod .dlls.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.

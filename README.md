@@ -29,6 +29,8 @@ The dedicated server includes the latest version, so an external download is not
 
 PR and issues are feel free to be made and approved - we don't ignore them.
 
+We don't commit right into `master` branch, make a branch from `dev`, and then PR inside `dev`. We keep `master` branch stable as possible.
+
 ## Resources
 
 fr34kyn01535 has listed all of the original plugins in a post to the /r/RocketMod subreddit: [List of plugins from the old repository](https://www.reddit.com/r/rocketmod/comments/ek4i7b/)

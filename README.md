@@ -11,6 +11,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 	- [ ] Fix /vanish.
 	- [ ] Fix /god.
 	- [ ] Fix /p (not readable at all).
+- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 - [ ] Keep backward compatibility.
 - [ ] CI/CD and nightly builds with RocketMod .dlls.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.

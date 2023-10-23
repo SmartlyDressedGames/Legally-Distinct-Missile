@@ -48,5 +48,5 @@ jobs:
           tag: v${{ github.ref_name }}
           artifacts: "./Rocket.Unturned/build/Rocket.Unturned-v${{ github.ref_name }}.zip"
           token: ${{secrets.PAT}}
-          prerelease: true
+          prerelease: false
           allowUpdates: true

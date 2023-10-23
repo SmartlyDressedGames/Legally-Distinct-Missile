@@ -1,0 +1,23 @@
+<Project>
+
+  <PropertyGroup>
+    <PackageId>$(AssemblyName)</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <Authors>RocketModFix</Authors>
+    <Company>RocketModFix</Company>
+    <RocketModVersion>4.9.3.16</RocketModVersion>
+    <Version>$(RocketModVersion)</Version>
+    <InformationalVersion>$(RocketModVersion)</InformationalVersion>
+    <Copyright>RocketModFix and their contributors</Copyright>
+    <RepositoryUrl>https://github.com/RocketModFix/RocketModFix</RepositoryUrl>
+    <LangVersion>11</LangVersion>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);NU1701;NU1702;CS0436;CS1591</NoWarn>
+    <CreateRocketModUnturnedModuleArtifacts>true</CreateRocketModUnturnedModuleArtifacts>
+  </PropertyGroup>
+
+</Project>

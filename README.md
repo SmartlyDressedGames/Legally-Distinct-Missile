@@ -7,8 +7,10 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] Create Discord Server Community.
 - [x] UnityEngine NuGet Package redist.
 - [x] Unturned NuGet Package redist.
+- [x] Update MSBuild to the `Microsoft.NET.Sdk`, because current MSBuild in RocketMod is outdated and its hard to support and understand what's going on inside.
 - [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [ ] CI/CD and nightly builds with RocketMod .dlls.
+- [ ] Automatic Release on Tag creation (with RocketMod Module).
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
@@ -17,7 +19,9 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 		- [ ] Fix /god.
 		- [ ] Fix /p (not readable at all). 
 - [ ] Keep backward compatibility.
+	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
+- [ ] Fix UnturnedPlayerComponent is not being added automatically.
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.
 

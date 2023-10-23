@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Unturned", "Rocket.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Unturned.Launcher", "Rocket.Unturned.Launcher\Rocket.Unturned.Launcher.csproj", "{0F68CF17-C7C9-41BF-8F76-4DAF1D5146B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E04B6DB1-DEB3-4211-89DE-2D9379782360}"
+	ProjectSection(SolutionItems) = preProject
+		props\SharedProjectProps.props = props\SharedProjectProps.props
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

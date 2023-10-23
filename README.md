@@ -1,6 +1,6 @@
 # ![RocketModFix][rocketmodfix_logo]
 
-![RocketModFix.UnityEngine.Redist][badge_RocketModFix.UnityEngine.Redist]
+![RocketModFix.UnityEngine.Redist][https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?label=RocketModFix.UnityEngine.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist]
 
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 

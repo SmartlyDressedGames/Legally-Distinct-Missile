@@ -19,14 +19,17 @@ jobs:
   build:
     name: "Rocket.Core Build"
     runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+
     - uses: actions/setup-dotnet@v3
       name: Setup .NET
       with:
         dotnet-version: 7.x
+
     - uses: ./.github/actions/project-build
       id: project-build
       with:

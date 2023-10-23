@@ -8,12 +8,12 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] UnityEngine NuGet Package redist.
 - [x] Unturned NuGet Package redist.
 - [x] Update MSBuild to the `Microsoft.NET.Sdk`, because current MSBuild in RocketMod is outdated and its hard to support and understand what's going on inside.
+- [x] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
+- [x] CI/CD and nightly builds with RocketMod .dlls.
+- [x] Automatic Release on Tag creation (with RocketMod Module).
 - [ ] Reset changelog.
 - [ ] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
 - [ ] For versioning use [SemVer][semver_url].
-- [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
-- [ ] CI/CD and nightly builds with RocketMod .dlls.
-- [ ] Automatic Release on Tag creation (with RocketMod Module).
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)

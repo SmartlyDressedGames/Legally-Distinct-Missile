@@ -1,5 +1,7 @@
 # ![RocketModFix](https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png)
 
+![RocketModFix.UnityEngine.Redist][badge_RocketModFix.UnityEngine.Redist]
+
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 
 ## Our plan
@@ -52,3 +54,5 @@ On the 20th of December 2019 Sven Mawby "fr34kyn01535" and Enes Sadık Özbek "T
 Following their resignation SDG forked the repository to continue maintenance in sync with the game.
 
 On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help distance himself from the project.
+
+[badge_RocketModFix.UnityEngine.Redist]: https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist

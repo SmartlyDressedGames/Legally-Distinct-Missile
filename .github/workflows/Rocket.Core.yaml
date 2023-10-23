@@ -31,6 +31,6 @@ jobs:
       id: project-build
       with:
         project_path: Rocket/Rocket.Core
-        github_token: ${{ secrets.PAT }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         nuget_key: ${{ secrets.NUGET_DEPLOY_KEY }}
         nuget_push: true

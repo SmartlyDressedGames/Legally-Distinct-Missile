@@ -63,6 +63,10 @@ Following their resignation SDG forked the repository to continue maintenance in
 
 On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help distance himself from the project.
 
+## Credits
+
+[OpenMod][openmod_github_repository] for nuget packages ready-to-go actions and workflows.
+
 [rocketmodfix_logo]: https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png
 
 [nuget_package_RocketModFix.Unturned.Redist]: https://www.nuget.org/packages/RocketModFix.Unturned.Redist
@@ -71,3 +75,5 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 [badge_RocketModFix.UnityEngine.Redist]: https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?label=RocketModFix.UnityEngine.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist
 
 [discordserver_url]: https://discord.gg/z6VM7taWeG 
+
+[openmod_github_repository]: https://github.com/openmod/openmod

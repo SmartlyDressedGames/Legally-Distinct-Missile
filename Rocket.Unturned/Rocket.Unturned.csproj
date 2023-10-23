@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
     <SolutionDir>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/../../))</SolutionDir>
   </PropertyGroup>
 
@@ -14,15 +14,8 @@
     <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.23.12.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="Rocket.API">
-      <HintPath>..\lib\Rocket.API.dll</HintPath>
-    </Reference>
-    <Reference Include="Rocket.Core">
-      <HintPath>..\lib\Rocket.Core.dll</HintPath>
-    </Reference>
+    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.9.3.31" />
+    <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.31" />
   </ItemGroup>
 
   <Target Name="ZipOutputPath" AfterTargets="PostBuildEvent" Condition=" '$(CreateRocketModUnturnedModuleArtifacts)' == 'true' ">

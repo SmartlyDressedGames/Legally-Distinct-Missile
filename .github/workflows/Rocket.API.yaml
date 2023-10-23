@@ -1,4 +1,4 @@
-name: Rocket.Core
+name: Rocket.API
 
 on:
   create:

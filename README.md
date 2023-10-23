@@ -37,12 +37,15 @@ PR and issues are feel free to be made and approved.
 
 We don't commit right into `master` branch, make a branch from `dev`, and then PR inside `dev`. We keep `master` branch stable as possible, the `dev` branch is for development and its allowed to be unstable.
 
-## NuGet Packages
+## Build Status
 
-### Redist
+### Unturned
+
+[![RocketModFix.Unturned.Redist][badge_RocketModFix.Unturned.Redist]][nuget_package_RocketModFix.Unturned.Redist]
+
+### UnityEngine
 
 [![RocketModFix.UnityEngine.Redist][badge_RocketModFix.UnityEngine.Redist]][nuget_package_RocketModFix.UnityEngine.Redist]
-[![RocketModFix.Unturned.Redist][badge_RocketModFix.Unturned.Redist]][nuget_package_RocketModFix.Unturned.Redist]
 
 ## Resources
 

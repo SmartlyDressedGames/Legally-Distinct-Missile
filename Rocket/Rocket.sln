@@ -1,8 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core", "Rocket.Core\Rocket.Core.csproj", "{7A9D652F-DC18-45FD-8964-DBAAD6384C3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.API", "Rocket.API\Rocket.API.csproj", "{C362DF2F-1336-4932-AADC-4F2074FEDB64}"

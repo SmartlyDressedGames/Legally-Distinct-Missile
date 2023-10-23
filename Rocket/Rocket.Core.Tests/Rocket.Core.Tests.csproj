@@ -15,7 +15,7 @@
     <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.28.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.23.12.1-preview">
+    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.23.12.2">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>

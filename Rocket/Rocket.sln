@@ -4,13 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core", "Rocket.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.API", "Rocket.API\Rocket.API.csproj", "{C362DF2F-1336-4932-AADC-4F2074FEDB64}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev", "dev", "{BF6C67CB-DA13-47BD-8E8D-E335DD457E01}"
-	ProjectSection(SolutionItems) = preProject
-		dev\Mono.Cecil.dll = dev\Mono.Cecil.dll
-		dev\Mono.CompilerServices.SymbolWriter.dll = dev\Mono.CompilerServices.SymbolWriter.dll
-		dev\pdb2mdb.exe = dev\pdb2mdb.exe
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCE572A8-5DD9-4DCA-8B3E-30F428817065}"
 	ProjectSection(SolutionItems) = preProject
 		..\props\SharedProjectProps.props = ..\props\SharedProjectProps.props

@@ -5,7 +5,7 @@
     <SolutionDir>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/../../))</SolutionDir>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\props\SharedProjectProps.props"/>
+  <Import Project="$(MSBuildThisFileDirectory)\..\props\SharedProjectProps.props"/>
   
   <ItemGroup>
     <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.34" />

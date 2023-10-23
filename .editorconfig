@@ -1,14 +1,21 @@
-# EditorConfig is awesome: https://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
 
 [*]
+trim_trailing_whitespace = true
+csharp_using_directive_placement = outside_namespace:silent
+csharp_style_namespace_declarations = file_scoped:silent
 indent_style = tab
-insert_final_newline = true
 
 # Match style of legacy RocketMod code
 [*.cs]
 indent_style = space
 indent_size = 4
 insert_final_newline = false
+
+[*.yml]
+indent_size = 2
+indent_style = space
+
+[*.{proj,csproj,vbproj,props,targets,resx,vsixmanifest}]
+indent_size = 2
+indent_style = space

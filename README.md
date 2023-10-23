@@ -7,8 +7,13 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] Create Discord Server Community.
 - [x] UnityEngine NuGet Package redist.
 - [x] Unturned NuGet Package redist.
-- [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
-- [ ] CI/CD and nightly builds with RocketMod .dlls.
+- [x] Update MSBuild to the `Microsoft.NET.Sdk`, because current MSBuild in RocketMod is outdated and its hard to support and understand what's going on inside.
+- [x] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
+- [x] CI/CD and nightly builds with RocketMod .dlls.
+- [x] Automatic Release on Tag creation (with RocketMod Module).
+- [ ] Reset changelog.
+- [ ] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
+- [ ] For versioning use [SemVer][semver_url].
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
@@ -17,7 +22,9 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 		- [ ] Fix /god.
 		- [ ] Fix /p (not readable at all). 
 - [ ] Keep backward compatibility.
+	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
+- [ ] Fix UnturnedPlayerComponent is not being added automatically.
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.
 
@@ -66,6 +73,9 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 ## Credits
 
 [OpenMod][openmod_github_repository] for nuget packages ready-to-go actions and workflows.
+
+[keep_a_changelog_url]: https://keepachangelog.com/en/1.1.0/
+[semver_url]: https://semver.org/
 
 [rocketmodfix_logo]: https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png
 

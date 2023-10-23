@@ -1,4 +1,4 @@
-# ![RocketModFix](https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png)
+# ![RocketModFix][rocketmodfix_logo]
 
 ![RocketModFix.UnityEngine.Redist][badge_RocketModFix.UnityEngine.Redist]
 
@@ -31,7 +31,7 @@ The dedicated server includes the latest version, so an external download is not
 
 ## Discord
 
-Feel free to join our [Discord Server](https://discord.gg/z6VM7taWeG).
+Feel free to join our [Discord Server][discordserver_url].
 
 ## Contributing
 
@@ -55,4 +55,8 @@ Following their resignation SDG forked the repository to continue maintenance in
 
 On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help distance himself from the project.
 
-[badge_RocketModFix.UnityEngine.Redist]: https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist
+[rocketmodfix_logo]: https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png
+
+[badge_RocketModFix.UnityEngine.Redist]: https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?label=RocketModFix.UnityEngine.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist
+
+[discordserver_url]: https://discord.gg/z6VM7taWeG 

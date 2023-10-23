@@ -8,6 +8,9 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] UnityEngine NuGet Package redist.
 - [x] Unturned NuGet Package redist.
 - [x] Update MSBuild to the `Microsoft.NET.Sdk`, because current MSBuild in RocketMod is outdated and its hard to support and understand what's going on inside.
+- [ ] Reset changelog.
+- [ ] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
+- [ ] For versioning use [SemVer][semver_url].
 - [ ] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [ ] CI/CD and nightly builds with RocketMod .dlls.
 - [ ] Automatic Release on Tag creation (with RocketMod Module).
@@ -70,6 +73,9 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 ## Credits
 
 [OpenMod][openmod_github_repository] for nuget packages ready-to-go actions and workflows.
+
+[keep_a_changelog_url]: https://keepachangelog.com/en/1.1.0/
+[semver_url]: https://semver.org/
 
 [rocketmodfix_logo]: https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png
 

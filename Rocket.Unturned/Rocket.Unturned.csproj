@@ -30,14 +30,13 @@
     </PropertyGroup>
 
     <MakeDir Directories="$(RocketUnturnedOutputDirectory)" />
-    <MakeDir Directories="build" />
 
     <Copy SourceFiles="@(AllRocketModFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
     <Copy SourceFiles="@(AllRocketModModuleFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
 
     <ZipDirectory
       SourceDirectory="$(RocketUnturnedOutputDirectory)"
-      DestinationFile="build\Rocket.Unturned-v$(RocketModVersion).zip"
+      DestinationFile="Rocket.Unturned-v$(RocketModVersion).zip"
       Overwrite="true"/>
   </Target>
   

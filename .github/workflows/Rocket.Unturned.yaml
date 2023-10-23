@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build
-          path: "./Rocket.Unturned/build/Rocket.Unturned-v${{ github.ref_name }}.zip"
+          path: "./Rocket.Unturned/Rocket.Unturned-v${{ github.ref_name }}.zip"
 
   Release:
     needs: [Build]
@@ -46,7 +46,7 @@ jobs:
         with:
           name: v${{ github.ref_name }}
           tag: v${{ github.ref_name }}
-          artifacts: "./Rocket.Unturned/build/Rocket.Unturned-v${{ github.ref_name }}.zip"
+          artifacts: "./build/Rocket.Unturned-v${{ github.ref_name }}.zip"
           token: ${{secrets.PAT}}
           prerelease: false
           allowUpdates: true

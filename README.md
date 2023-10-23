@@ -1,4 +1,4 @@
-# RocketModFix
+# ![RocketModFix](https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png)
 
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 

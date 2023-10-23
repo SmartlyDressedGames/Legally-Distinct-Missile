@@ -5,7 +5,7 @@
     <RepositoryType>git</RepositoryType>
     <Authors>RocketModFix</Authors>
     <Company>RocketModFix</Company>
-    <RocketModVersion>4.9.3.16</RocketModVersion>
+    <RocketModVersion>0.0.0</RocketModVersion>
     <Version>$(RocketModVersion)</Version>
     <InformationalVersion>$(RocketModVersion)</InformationalVersion>
     <Copyright>RocketModFix and their contributors</Copyright>
@@ -21,9 +21,12 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>Unturned RocketMod RocketModFix OpenMod Utility Lib Module Rocket Helper</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
     <PackageProjectUrl>https://github.com/RocketModFix/RocketModFix</PackageProjectUrl>
     <PackageOwners>RocketModFix;</PackageOwners>
-    <PackageVersion>0.0.0</PackageVersion>
+    <PackageVersion>$(RocketModVersion)</PackageVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>

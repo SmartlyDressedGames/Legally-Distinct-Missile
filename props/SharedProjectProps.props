@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <PackageId>$(AssemblyName)</PackageId>
+    <PackageId Condition="'$(PackageId)' == ''">$(AssemblyName)</PackageId>
     <RepositoryType>git</RepositoryType>
     <Authors>RocketModFix</Authors>
     <Company>RocketModFix</Company>

@@ -18,6 +18,13 @@
     <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn);NU1701;NU1702;CS0436;CS1591</NoWarn>
     <CreateRocketModUnturnedModuleArtifacts>true</CreateRocketModUnturnedModuleArtifacts>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>Unturned RocketMod RocketModFix OpenMod Utility Lib Module Rocket Helper</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/RocketModFix/RocketModFix</PackageProjectUrl>
+    <PackageOwners>RocketModFix;</PackageOwners>
+    <PackageVersion>0.0.0</PackageVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 

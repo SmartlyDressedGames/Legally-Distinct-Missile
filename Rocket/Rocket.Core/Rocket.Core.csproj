@@ -2,13 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>Unturned RocketMod RocketModFix OpenMod Utility Lib Module Rocket Helper</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/RocketModFix/RocketModFix</PackageProjectUrl>
-    <PackageOwners>RocketModFix;</PackageOwners>
-    <PackageVersion>0.0.0</PackageVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\props\SharedProjectProps.props"/>

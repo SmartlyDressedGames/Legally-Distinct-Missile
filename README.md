@@ -1,5 +1,7 @@
 # ![RocketModFix][rocketmodfix_logo]
 
+## RocketModFix
+
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 
 ## Compatibility
@@ -62,7 +64,7 @@ We're thrilled to have you here! Feel free to create pull requests (PRs) and ope
 ### Branching Guidelines
 - Avoid Committing to `master`: Please refrain from committing directly to the `master` branch.
 - Create a Branch from `dev`: Instead, create a new branch from the `dev` branch.
-- Submit PRs to `dev`: Submit your changes by creating a PR into the `dev` branch. This keeps our master branch stable, ensuring a smooth experience for all users.
+- Submit PRs to `dev`: Submit your changes by creating a PR into the `dev` branch. This keeps our `master` branch stable, ensuring a smooth experience for all users.
 
 ### Why We Use Issues
 Before you dive into making changes, consider creating an [issue][issues_url] or discussions on our [discord server][discordserver_url] first. Here's why:

@@ -31,6 +31,10 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 		- [ ] /tpall (teleport everyone to self or Vector3 point)
 - [ ] Keep backward compatibility.
 	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
+	- [ ] Test with most used Modules:
+		- [ ] AviRockets.
+		- [ ] uScript.
+		- [ ] OpenMod.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 

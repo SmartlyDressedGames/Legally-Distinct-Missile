@@ -18,6 +18,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] Installation guides inside of the Rocket Unturned Module.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
+	- [ ] Fix UnturnedPlayerComponent is not being added automatically.
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
 	- [ ] Commands fixes:
 		- [ ] Fix /vanish.
@@ -30,7 +31,6 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [ ] Keep backward compatibility.
 	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
-- [ ] Fix UnturnedPlayerComponent is not being added automatically.
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.

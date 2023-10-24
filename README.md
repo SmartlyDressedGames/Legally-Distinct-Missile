@@ -23,6 +23,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 		- [ ] Fix /vanish.
 		- [ ] Fix /god.
 		- [ ] Fix /p (not readable at all). 
+	- [ ] Perfomance.
 - [ ] Keep backward compatibility.
 	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.

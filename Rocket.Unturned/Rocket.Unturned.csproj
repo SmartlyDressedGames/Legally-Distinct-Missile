@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\props\SharedProjectProps.props"/>
-  
+
   <ItemGroup>
     <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.34" />
     <PackageReference Include="RocketModFix.Rocket.Core" Version="4.9.3.34" />
@@ -19,14 +19,14 @@
   </ItemGroup>
 
   <Target Name="ZipOutputPath" AfterTargets="PostBuildEvent" Condition=" '$(CreateRocketModUnturnedModuleArtifacts)' == 'true' ">
-    
+
     <ItemGroup>
       <AllRocketModFiles Include="$(OutDir)*Rocket*.dll"/>
       <AllRocketModModuleFiles Include="Rocket.Unturned/*"/>
     </ItemGroup>
 
     <PropertyGroup>
-      <RocketUnturnedOutputDirectory>$(OutDir)Rocket.Unturned</RocketUnturnedOutputDirectory>
+      <RocketUnturnedOutputDirectory>$(OutDir)Rocket.Unturned/Rocket.Unturned</RocketUnturnedOutputDirectory>
     </PropertyGroup>
 
     <MakeDir Directories="$(RocketUnturnedOutputDirectory)" />
@@ -35,9 +35,9 @@
     <Copy SourceFiles="@(AllRocketModModuleFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
 
     <ZipDirectory
-      SourceDirectory="$(RocketUnturnedOutputDirectory)"
+      SourceDirectory="$(RocketUnturnedOutputDirectory)\.."
       DestinationFile="Rocket.Unturned-v$(RocketModVersion).zip"
       Overwrite="true"/>
   </Target>
-  
+
 </Project>

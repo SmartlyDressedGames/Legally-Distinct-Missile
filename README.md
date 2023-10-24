@@ -50,13 +50,19 @@ We don't commit right into `master` branch, make a branch from `dev`, and then P
 
 ## NuGet Packages
 
-### Unturned
+### Redist
 
 [![RocketModFix.Unturned.Redist][badge_RocketModFix.Unturned.Redist]][nuget_package_RocketModFix.Unturned.Redist]
 
-### UnityEngine
-
 [![RocketModFix.UnityEngine.Redist][badge_RocketModFix.UnityEngine.Redist]][nuget_package_RocketModFix.UnityEngine.Redist]
+
+### RocketModFix
+
+[![RocketModFix.Rocket.API][badge_RocketModFix.Rocket.API]][nuget_package_RocketModFix.Rocket.API]
+
+[![RocketModFix.Rocket.Core][badge_RocketModFix.Rocket.Core]][nuget_package_RocketModFix.Rocket.Core]
+
+[![RocketModFix.Rocket.Unturned][badge_RocketModFix.Rocket.Unturned]][nuget_package_RocketModFix.Rocket.Unturned]
 
 ## Resources
 
@@ -85,8 +91,18 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 
 [nuget_package_RocketModFix.Unturned.Redist]: https://www.nuget.org/packages/RocketModFix.Unturned.Redist
 [badge_RocketModFix.Unturned.Redist]: https://img.shields.io/nuget/v/RocketModFix.Unturned.Redist?label=RocketModFix.Unturned.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Unturned.Redist
+
 [nuget_package_RocketModFix.UnityEngine.Redist]: https://www.nuget.org/packages/RocketModFix.UnityEngine.Redist
 [badge_RocketModFix.UnityEngine.Redist]: https://img.shields.io/nuget/v/RocketModFix.UnityEngine.Redist?label=RocketModFix.UnityEngine.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.UnityEngine.Redist
+
+[nuget_package_RocketModFix.Rocket.API]: https://www.nuget.org/packages/RocketModFix.Rocket.API
+[badge_RocketModFix.Rocket.API]: https://img.shields.io/nuget/v/RocketModFix.Rocket.API?label=RocketModFix.Rocket.API&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Rocket.API
+
+[nuget_package_RocketModFix.Rocket.Core]: https://www.nuget.org/packages/RocketModFix.Rocket.Core
+[badge_RocketModFix.Rocket.Core]: https://img.shields.io/nuget/v/RocketModFix.Rocket.Core?label=RocketModFix.Rocket.Core&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Rocket.Core
+
+[nuget_package_RocketModFix.Rocket.Unturned]: https://www.nuget.org/packages/RocketModFix.Rocket.Unturned
+[badge_RocketModFix.Rocket.Unturned]: https://img.shields.io/nuget/v/RocketModFix.Rocket.Unturned?label=RocketModFix.Rocket.Unturned&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Rocket.Unturned
 
 [discordserver_url]: https://discord.gg/z6VM7taWeG 
 

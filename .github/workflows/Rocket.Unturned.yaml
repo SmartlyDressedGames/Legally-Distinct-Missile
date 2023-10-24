@@ -1,4 +1,4 @@
-name: Rocket.Unturned
+name: NuGet Package for Rocket.Unturned
 
 on:
   create:

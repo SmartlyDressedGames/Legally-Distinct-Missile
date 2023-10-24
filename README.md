@@ -23,11 +23,11 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 - [x] For versioning use [SemVer][semver_url].
 - [x] Installation guides inside of the Rocket Unturned Module.
 - [ ] Keep backward compatibility.
-	- [] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
-	- [] Test with most used Modules:
-		- [] AviRockets.
-		- [] uScript.
-		- [] OpenMod.
+	- [ ] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
+	- [ ] Test with most used Modules:
+		- [ ] AviRockets.
+		- [ ] uScript.
+		- [ ] OpenMod.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Fix UnturnedPlayerComponent is not being added automatically.

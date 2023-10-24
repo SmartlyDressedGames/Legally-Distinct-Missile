@@ -22,8 +22,11 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 	- [ ] Commands fixes:
 		- [ ] Fix /vanish.
 		- [ ] Fix /god.
-		- [ ] Fix /p (not readable at all). 
+		- [ ] Fix /p (not readable at all).
 	- [ ] Perfomance.
+- [ ] New Features:
+	- [ ] Commands:
+		- [ ] /position /pos (current position of the player)
 - [ ] Keep backward compatibility.
 	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.

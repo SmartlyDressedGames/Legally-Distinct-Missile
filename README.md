@@ -15,6 +15,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] Reset changelog.
 - [x] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
 - [x] For versioning use [SemVer][semver_url].
+- [x] Installation guides inside of the Rocket Unturned Module.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)

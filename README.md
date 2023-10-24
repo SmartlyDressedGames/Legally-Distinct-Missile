@@ -11,9 +11,10 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [x] CI/CD and nightly builds with RocketMod .dlls.
 - [x] Automatic Release on Tag creation (with RocketMod Module).
-- [ ] Reset changelog.
-- [ ] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
-- [ ] For versioning use [SemVer][semver_url].
+- [x] Rocket.Unturned NuGet Package.
+- [x] Reset changelog.
+- [x] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
+- [x] For versioning use [SemVer][semver_url].
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
@@ -25,14 +26,17 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
 - [ ] Collect a Team with a direct access to the repo edit without admins help.
 - [ ] Fix UnturnedPlayerComponent is not being added automatically.
+- [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.
 
 ## Installation
 
-The dedicated server includes the latest version, so an external download is not necessary:
-1. Copy the Rocket.Unturned module from the game's Extras directory.
-2. Paste it into the game's Modules directory.
+1. Stop the server (if running).
+1. Install latest RocketModFix Module [here](https://github.com/RocketModFix/RocketModFix/releases).
+2. Open Dropdown button Assets (if its not open).
+3. Click on `Rocket.Unturned.Module-v0.0.0.zip` to download (v - version can be a bit different).
+4. Keep `Readme.txt` instruction file inside of the installed `Rocket.Unturned.Module-v0.0.0.zip` archive.
 
 ## Discord
 

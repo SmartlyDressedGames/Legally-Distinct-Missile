@@ -18,11 +18,12 @@
     </PackageReference>
   </ItemGroup>
 
-  <Target Name="ZipOutputPath" AfterTargets="PostBuildEvent" Condition=" '$(CreateRocketModUnturnedModuleArtifacts)' == 'true' ">
+  <Target Name="RocketModModuleArtifacts" AfterTargets="PostBuildEvent" Condition=" '$(CreateRocketModUnturnedModuleArtifacts)' == 'true' ">
 
     <ItemGroup>
-      <AllRocketModFiles Include="$(OutDir)*Rocket*.dll"/>
-      <AllRocketModModuleFiles Include="Rocket.Unturned/*"/>
+      <RocketModFiles Include="$(OutDir)*Rocket*.dll"/>
+      <RocketModModuleFiles Include="Module/Rocket.Unturned/*"/>
+      <RocketModInstallationGuides Include="Module/InstallationGuides/*.txt"/>
     </ItemGroup>
 
     <PropertyGroup>
@@ -31,12 +32,13 @@
 
     <MakeDir Directories="$(RocketUnturnedOutputDirectory)" />
 
-    <Copy SourceFiles="@(AllRocketModFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
-    <Copy SourceFiles="@(AllRocketModModuleFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
+    <Copy SourceFiles="@(RocketModFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
+    <Copy SourceFiles="@(RocketModModuleFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
+    <Copy SourceFiles="@(RocketModInstallationGuides)" DestinationFolder="$(RocketUnturnedOutputDirectory)\.."/>
 
     <ZipDirectory
       SourceDirectory="$(RocketUnturnedOutputDirectory)\.."
-      DestinationFile="Rocket.Unturned-v$(RocketModVersion).zip"
+      DestinationFile="Rocket.Unturned.Module-v$(RocketModVersion).zip"
       Overwrite="true"/>
   </Target>
 

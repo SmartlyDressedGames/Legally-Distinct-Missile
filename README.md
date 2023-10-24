@@ -2,6 +2,10 @@
 
 The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Unturned plugin devs, this fork don't have plans for any major changes to the RocketMod, only fixes and new features that doesn't break any backward compatibility with API, etc.
 
+## Compatibility
+
+You can still use old RocketMod plugins without any changes/recompilation/updates, however if you want to use new features and bug fixes we recommend to install updated Module and new Rocket. API/Core/Unturned Redistributables (libraries).
+
 ## Our plan
 
 - [x] Create Discord Server Community.
@@ -52,11 +56,20 @@ After plan is finished -> Add new plans, keep coding, and don't forget to accept
 
 Feel free to join our [Discord Server][discordserver_url].
 
-## Contributing
+## How to Contribute
+We're thrilled to have you here! Feel free to create pull requests (PRs) and open issues - your contributions are valuable to us!
 
-PR and issues are feel free to be made and approved.
+### Branching Guidelines
+- Avoid Committing to `master`: Please refrain from committing directly to the `master` branch.
+- Create a Branch from `dev`: Instead, create a new branch from the `dev` branch.
+- Submit PRs to dev: Submit your changes by creating a PR into the `dev` branch. This keeps our master branch stable, ensuring a smooth experience for all users.
 
-We don't commit right into `master` branch, make a branch from `dev`, and then PR inside `dev`. We keep `master` branch stable as possible, the `dev` branch is for development and its allowed to be unstable.
+### Why We Use Issues
+Before you dive into making changes, consider creating an [issue][issues_url] or discussions on our [discord server][discordserver_url] first. Here's why:
+
+- Avoid Duplicate Work: Someone might already be working on a similar update. Checking issues prevents duplication of effort.
+- Collaborative Problem Solving: Other contributors might have valuable insights or alternative solutions. Discussing changes beforehand can lead to better implementations.
+- Save Your Time: Avoid working on updates that might not align with the project's direction. Consult with others to ensure your efforts are fruitful.
 
 ## NuGet Packages
 
@@ -98,6 +111,8 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 [semver_url]: https://semver.org/
 
 [rocketmodfix_logo]: https://raw.githubusercontent.com/RocketModFix/RocketModFix/master/resources/RocketModFix.png
+
+[issues_url]: https://github.com/RocketModFix/RocketModFix/issues
 
 [nuget_package_RocketModFix.Unturned.Redist]: https://www.nuget.org/packages/RocketModFix.Unturned.Redist
 [badge_RocketModFix.Unturned.Redist]: https://img.shields.io/nuget/v/RocketModFix.Unturned.Redist?label=RocketModFix.Unturned.Redist&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Unturned.Redist

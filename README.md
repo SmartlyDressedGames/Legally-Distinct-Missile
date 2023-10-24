@@ -16,6 +16,12 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 - [x] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
 - [x] For versioning use [SemVer][semver_url].
 - [x] Installation guides inside of the Rocket Unturned Module.
+- [ ] Keep backward compatibility.
+	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
+	- [ ] Test with most used Modules:
+		- [ ] AviRockets.
+		- [ ] uScript.
+		- [ ] OpenMod.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
 	- [ ] Fix UnturnedPlayerComponent is not being added automatically.
@@ -29,13 +35,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 	- [ ] Commands:
 		- [ ] /position /pos (current position of the player).
 		- [ ] /tpall (teleport everyone to self or Vector3 point)
-- [ ] Keep backward compatibility.
-	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
-	- [ ] Test with most used Modules:
-		- [ ] AviRockets.
-		- [ ] uScript.
-		- [ ] OpenMod.
-- [ ] Collect a Team with a direct access to the repo edit without admins help.
+- [ ] Gather a Team with a direct access to the repo edit without admins help.
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.

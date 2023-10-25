@@ -26,5 +26,5 @@ jobs:
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: Rocket.Unturned.Module.Build
           path: "./Rocket.Unturned/Rocket.Unturned.Module-v0.0.0-preview.zip"

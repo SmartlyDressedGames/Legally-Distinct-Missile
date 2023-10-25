@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/Rocket.Unturned.Module.PR.yaml'
+      - '.github/workflows/Rocket.Unturned.Module.yaml'
       - 'Rocket/**'
       - 'Rocket.Unturned/**'
 

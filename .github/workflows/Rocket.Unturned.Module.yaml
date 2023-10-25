@@ -26,6 +26,7 @@ jobs:
         with:
           name: build
           path: "./Rocket.Unturned/Rocket.Unturned.Module-v${{ github.ref_name }}.zip"
+          if-no-files-found: error
 
   Release:
     needs: [Build]

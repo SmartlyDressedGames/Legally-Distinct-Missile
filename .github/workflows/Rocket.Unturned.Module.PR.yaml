@@ -23,8 +23,11 @@ jobs:
       - name: Build
         run: dotnet build ./Rocket.Unturned/Rocket.Unturned.csproj /p:RocketModVersion=0.0.0-preview /p:CreateRocketModUnturnedModuleArtifacts=true --configuration Release
 
+      - run: echo "::set-output name=commit_hash::$(git rev-parse --short ${{ github.sha }})"
+        id: commit_hash
+
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
-          name: Rocket.Unturned.Module.Build
+          name: Rocket.Unturned.Module.Build-${{ steps.commit_hash.outputs.commit_hash }}
           path: "./Rocket.Unturned/Rocket.Unturned.Module-v0.0.0-preview.zip"

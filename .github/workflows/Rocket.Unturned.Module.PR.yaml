@@ -23,8 +23,8 @@ jobs:
       - name: Build
         run: dotnet build ./Rocket.Unturned/Rocket.Unturned.csproj /p:RocketModVersion=0.0.0-preview /p:CreateRocketModUnturnedModuleArtifacts=true --configuration Release
 
-      - name: Upload build
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: build
-          path: "./Rocket.Unturned/Rocket.Unturned.Module-v${{ github.ref_name }}.zip"
+          name: Rocket.Unturned.Module-v${{ github.ref_name }}.zip
+          path: "./Rocket.Unturned/"

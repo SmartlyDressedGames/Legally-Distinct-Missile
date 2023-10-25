@@ -26,7 +26,7 @@ jobs:
       - run: echo "::set-output name=commit_hash::$(git rev-parse --short ${{ github.sha }})"
         id: commit_hash
 
-      - name: Upload build
+      - name: Upload Rocket.Unturned.Module Artifacts 
         uses: actions/upload-artifact@v2
         with:
           name: Rocket.Unturned.Module.Build-${{ steps.commit_hash.outputs.commit_hash }}

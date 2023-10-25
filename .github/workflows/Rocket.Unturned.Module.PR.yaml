@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ * ]
     paths:
-      - '.github/workflows/Rocket.Unturned.Module.yaml'
+      - '.github/workflows/Rocket.Unturned.Module.PR.yaml'
       - 'Rocket/**'
       - 'Rocket.Unturned/**'
 

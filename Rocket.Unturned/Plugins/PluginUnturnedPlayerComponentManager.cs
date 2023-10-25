@@ -17,7 +17,7 @@ namespace Rocket.Unturned.Plugins
     {
         private Assembly assembly;
         private List<Type> unturnedPlayerComponents = new List<Type>();
-        
+
         private void OnDisable()
         {
             try
@@ -27,7 +27,12 @@ namespace Rocket.Unturned.Plugins
                 List<Type> playerComponents = RocketHelper.GetTypesFromParentClass(assembly, typeof(UnturnedPlayerComponent));
                 foreach (Type playerComponent in playerComponents)
                 {
-                    //Provider.Players.ForEach(p => p.Player.gameObject.TryRemoveComponent(playerComponent.GetType()));
+                    var clients = Provider.clients;
+                    for (var i = 0; i < clients.Count; i++)
+                    {
+                        var steamPlayer = clients[i];
+                        steamPlayer.player.gameObject.TryRemoveComponent(playerComponent.GetType());
+                    }
                 }
             }
             catch (Exception ex)
@@ -39,7 +44,7 @@ namespace Rocket.Unturned.Plugins
         private void OnEnable()
         {
             try
-            {  
+            {
                 IRocketPlugin plugin = GetComponent<IRocketPlugin>();
                 assembly = plugin.GetType().Assembly;
 

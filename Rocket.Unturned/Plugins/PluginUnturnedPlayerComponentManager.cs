@@ -53,8 +53,13 @@ namespace Rocket.Unturned.Plugins
 
                 foreach (Type playerComponent in unturnedPlayerComponents)
                 {
-                    Core.Logging.Logger.Log("Adding UnturnedPlayerComponent: "+playerComponent.Name);
-                    //Provider.Players.ForEach(p => p.Player.gameObject.TryAddComponent(playerComponent.GetType()));
+                    Core.Logging.Logger.Log("Adding UnturnedPlayerComponent: " + playerComponent.Name);
+                    var clients = Provider.clients;
+                    for (var i = 0; i < clients.Count; i++)
+                    {
+                        var steamPlayer = clients[i];
+                        steamPlayer.player.gameObject.TryAddComponent(playerComponent.GetType());
+                    }
                 }
             }
             catch (Exception ex)

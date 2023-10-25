@@ -30,7 +30,7 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 		- [ ] OpenMod.
 - [ ] RocketMod Fixes:
 	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
-	- [x] Fix UnturnedPlayerComponent is not being added automatically.
+	- [x] Fix UnturnedPlayerComponent is not being added and removed automatically.
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
 	- [ ] Commands fixes:
 		- [ ] Fix /vanish.

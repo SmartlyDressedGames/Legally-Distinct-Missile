@@ -8,7 +8,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 
 You can still use old RocketMod plugins without any changes/recompilation/updates, however if you want to use new features and bug fixes we recommend to install updated Module and new Rocket. API/Core/Unturned Redistributables (libraries).
 
-## Our plan
+## Our plan and what we're done
 
 - [x] Create Discord Server Community.
 - [x] UnityEngine NuGet Package redist.
@@ -17,6 +17,7 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 - [x] RocketMod NuGet Package containing all required libraries for RockeMod API usage.
 - [x] CI/CD and nightly builds with RocketMod .dlls.
 - [x] Automatic Release on Tag creation (with RocketMod Module).
+- [x] Rocket.Unturned.Module Artifacts on PR.
 - [x] Rocket.Unturned NuGet Package.
 - [x] Reset changelog.
 - [x] For changelog use [Keep a Changelog standard][keep_a_changelog_url].

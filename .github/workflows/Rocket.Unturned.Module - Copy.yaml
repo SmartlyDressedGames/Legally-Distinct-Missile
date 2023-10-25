@@ -1,0 +1,31 @@
+name: Artifacts for the RocketMod.Unturned Module on PR
+
+on:
+  pull_request:
+    branches: [ * ]
+    paths:
+      - '.github/workflows/Rocket.Core.yaml'
+      - 'Rocket/**'
+      - 'Rocket.Unturned/**'
+
+jobs:
+  Build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-dotnet@v3
+        name: Setup .NET
+        with:
+          dotnet-version: 7.x
+
+      - name: Build
+        run: dotnet build ./Rocket.Unturned/Rocket.Unturned.csproj /p:RocketModVersion=0.0.0-preview /p:CreateRocketModUnturnedModuleArtifacts=true --configuration Release
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: "./Rocket.Unturned/Rocket.Unturned.Module-v${{ github.ref_name }}.zip"

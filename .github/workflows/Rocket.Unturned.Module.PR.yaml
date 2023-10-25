@@ -2,7 +2,6 @@ name: Artifacts for the RocketMod.Unturned Module on PR
 
 on:
   pull_request:
-    branches: [ * ]
     paths:
       - '.github/workflows/Rocket.Unturned.Module.PR.yaml'
       - 'Rocket/**'

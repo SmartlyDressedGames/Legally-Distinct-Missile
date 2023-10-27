@@ -38,9 +38,9 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 		- [ ] Fix /god.
 		- [ ] Fix /p (not readable at all).
 	- [ ] Perfomance.
-- [ ] New Features:
-	- [ ] Commands:
-		- [ ] /position /pos (current position of the player).
+- [x] New Features:
+	- [x] Commands:
+		- [x] /position /pos (current position of the player).
 		- [ ] /tpall (teleport everyone to self or Vector3 point)
 - [ ] Gather a Team with a direct access to the repo edit without admins help.
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).

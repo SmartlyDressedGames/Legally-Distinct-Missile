@@ -33,6 +33,12 @@ namespace Rocket.Core.Permissions
             return allGroups;
         }
 
+        /// <summary>
+        /// UnturnedPlayer requires Player, so this version of the method does check if you are admined.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="requestedPermissions"></param>
+        /// <returns></returns>
         public bool HasPermission(IRocketPlayer player, List<string> requestedPermissions)
         {
             if (player.IsAdmin) { return true; }
@@ -42,29 +48,52 @@ namespace Rocket.Core.Permissions
             return applyingPermissions.Count != 0;
         }
 
+        /// <summary>
+        /// Separates from the usage of IRocketPlayer because it was causing obvious issues due to UnturnedPlayer reliance on Player. Does not check if you are admined.
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="requestedPermissions"></param>
+        /// <returns></returns>
+        public bool HasPermission(string playerId, List<string> requestedPermissions)
+        {
+            List<Permission> applyingPermissions = this.GetPermissions(playerId, requestedPermissions);
+
+            return applyingPermissions.Count != 0;
+        }
+
         internal RocketPermissionsGroup GetGroup(string groupId) => permissions.Instance.Groups.OrderBy(x => x.Priority)
             .FirstOrDefault(g => string.Equals(g.Id, groupId, StringComparison.CurrentCultureIgnoreCase));
 
         internal RocketPermissionsProviderResult RemovePlayerFromGroup(string groupId, IRocketPlayer player)
         {
+            return RemovePlayerFromGroup(groupId, player.Id);
+        }
+
+        internal RocketPermissionsProviderResult RemovePlayerFromGroup(string groupId, string playerId)
+        {
             RocketPermissionsGroup g = GetGroup(groupId);
             if (g == null) return RocketPermissionsProviderResult.GroupNotFound;
 
-            if (g.Members.FirstOrDefault(m => m == player.Id) == null) return RocketPermissionsProviderResult.PlayerNotFound;
+            if (g.Members.FirstOrDefault(m => m == playerId) == null) return RocketPermissionsProviderResult.PlayerNotFound;
 
-            g.Members.Remove(player.Id);
+            g.Members.Remove(playerId);
             SaveGroup(g);
             return RocketPermissionsProviderResult.Success;
         }
 
         internal RocketPermissionsProviderResult AddPlayerToGroup(string groupId, IRocketPlayer player)
         {
+            return AddPlayerToGroup(groupId, player.Id);
+        }
+
+        internal RocketPermissionsProviderResult AddPlayerToGroup(string groupId, string playerId)
+        {
             RocketPermissionsGroup g = GetGroup(groupId);
             if (g == null) return RocketPermissionsProviderResult.GroupNotFound;
 
-            if (g.Members.FirstOrDefault(m => m == player.Id) != null) return RocketPermissionsProviderResult.DuplicateEntry;
+            if (g.Members.FirstOrDefault(m => m == playerId) != null) return RocketPermissionsProviderResult.DuplicateEntry;
 
-            g.Members.Add(player.Id);
+            g.Members.Add(playerId);
             SaveGroup(g);
             return RocketPermissionsProviderResult.Success;
         }
@@ -100,9 +129,14 @@ namespace Rocket.Core.Permissions
 
         public List<RocketPermissionsGroup> GetGroups(IRocketPlayer player, bool includeParentGroups)
         {
+            return GetGroups(player.Id, includeParentGroups);
+        }
+
+        public List<RocketPermissionsGroup> GetGroups(string playerId, bool includeParentGroups)
+        {
             // get player groups
             List<RocketPermissionsGroup> groups = this.permissions.Instance?.Groups?.OrderBy(x => x.Priority)
-                                                      .Where(g => g.Members.Contains(player.Id))
+                                                      .Where(g => g.Members.Contains(playerId))
                                                       .ToList() ?? new List<RocketPermissionsGroup>();
 
             // get first default group
@@ -125,9 +159,14 @@ namespace Rocket.Core.Permissions
 
         public List<Permission> GetPermissions(IRocketPlayer player)
         {
+            return GetPermissions(player.Id);
+        }
+
+        public List<Permission> GetPermissions(string playerId)
+        {
             var result = new List<Permission>();
 
-            List<RocketPermissionsGroup> playerGroups = this.GetGroups(player, true);
+            List<RocketPermissionsGroup> playerGroups = this.GetGroups(playerId, true);
             playerGroups.Reverse(); // because we need desc ordering
 
             playerGroups.ForEach(group =>
@@ -153,7 +192,12 @@ namespace Rocket.Core.Permissions
 
         public List<Permission> GetPermissions(IRocketPlayer player, List<string> requestedPermissions)
         {
-            List<Permission> playerPermissions = this.GetPermissions(player);
+            return GetPermissions(player.Id, requestedPermissions);
+        }
+
+        public List<Permission> GetPermissions(string playerId, List<string> requestedPermissions)
+        {
+            List<Permission> playerPermissions = this.GetPermissions(playerId);
 
             List<Permission> applyingPermissions = playerPermissions
                 .Where(p => requestedPermissions.Exists(x => string.Equals(x, p.Name, StringComparison.InvariantCultureIgnoreCase)))

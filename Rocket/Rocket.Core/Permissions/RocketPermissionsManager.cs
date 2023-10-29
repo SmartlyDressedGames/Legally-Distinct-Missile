@@ -68,9 +68,19 @@ namespace Rocket.Core.Permissions
             return helper.HasPermission(player, permissions);
         }
 
+        public bool HasPermission(string playerId, List<string> permissions)
+        {
+            return helper.HasPermission(playerId, permissions);
+        }
+
         public List<RocketPermissionsGroup> GetGroups(IRocketPlayer player, bool includeParentGroups)
         {
             return helper.GetGroups(player, includeParentGroups);
+        }
+
+        public List<RocketPermissionsGroup> GetGroups(string playerId, bool includeParentGroups)
+        {
+            return helper.GetGroups(playerId, includeParentGroups);
         }
 
         public List<Permission> GetPermissions(IRocketPlayer player)
@@ -78,19 +88,40 @@ namespace Rocket.Core.Permissions
             return helper.GetPermissions(player);
         }
 
+        public List<Permission> GetPermissions(string playerId)
+        {
+            return helper.GetPermissions(playerId);
+        }
+
         public List<Permission> GetPermissions(IRocketPlayer player,List<string> requestedPermissions)
         {
             return helper.GetPermissions(player, requestedPermissions);
         }
 
-        public RocketPermissionsProviderResult AddPlayerToGroup(string groupId,IRocketPlayer player)
+
+        public List<Permission> GetPermissions(string playerId, List<string> requestedPermissions)
+        {
+            return helper.GetPermissions(playerId, requestedPermissions);
+        }
+
+        public RocketPermissionsProviderResult AddPlayerToGroup(string groupId, IRocketPlayer player)
         {
             return helper.AddPlayerToGroup(groupId,player);
+        }
+
+        public RocketPermissionsProviderResult AddPlayerToGroup(string groupId, string playerId)
+        {
+            return helper.AddPlayerToGroup(groupId, playerId);
         }
 
         public RocketPermissionsProviderResult RemovePlayerFromGroup(string groupId, IRocketPlayer player)
         {
             return helper.RemovePlayerFromGroup(groupId, player);
+        }
+
+        public RocketPermissionsProviderResult RemovePlayerFromGroup(string groupId, string playerId)
+        {
+            return helper.RemovePlayerFromGroup(groupId, playerId);
         }
 
         public RocketPermissionsGroup GetGroup(string groupId)

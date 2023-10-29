@@ -249,14 +249,7 @@ namespace Rocket.Unturned.Player
 
         public SteamPlayer SteamPlayer()
         {
-            foreach (var SteamPlayer in Provider.clients)
-            {
-                if (CSteamID == SteamPlayer.playerID.steamID)
-                {
-                    return SteamPlayer;
-                }
-            }
-            return null;
+            return player.channel.owner;
         }
 
         public PlayerInventory Inventory

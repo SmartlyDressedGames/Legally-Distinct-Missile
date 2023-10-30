@@ -42,9 +42,16 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        private Profile _steamProfile;
+
         public Profile SteamProfile
         {
-            get { return new Profile(ulong.Parse(CSteamID.ToString())); }
+            get
+            {
+                if (_steamProfile == null)
+                    _steamProfile = new Profile(CSteamID.m_SteamID);
+                return _steamProfile;
+            }
         }
 
         private SDG.Unturned.Player player;

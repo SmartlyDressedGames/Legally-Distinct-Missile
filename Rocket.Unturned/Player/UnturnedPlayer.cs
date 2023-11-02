@@ -34,6 +34,14 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        public string FullCharacterName
+        {
+            get
+            {
+                return $"{CharacterName} ({CSteamID.m_SteamID})";
+            }
+        }
+
         public bool IsAdmin
         {
             get
@@ -210,7 +218,7 @@ namespace Rocket.Unturned.Player
             parameters.relevantPlayerID = CSteamID;
             EffectManager.triggerEffect(parameters);
         }
-        
+
         public string IP
         {
             get
@@ -311,7 +319,7 @@ namespace Rocket.Unturned.Player
             {
                 ipToBan = 0;
             }
-            
+
             Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
         }
 

@@ -1,0 +1,39 @@
+name: NuGet Package for Rocket.Core
+
+on:
+  create:
+    tags:
+      - "*"
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/Rocket.Core.yaml'
+      - 'Rocket/Rocket.Core/**'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/Rocket.Core.yaml'
+      - 'Rocket/Rocket.Core/**'
+
+jobs:
+  build:
+    name: "Rocket.Core Build"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - uses: actions/setup-dotnet@v3
+      name: Setup .NET
+      with:
+        dotnet-version: 7.x
+        
+    - uses: ./.github/actions/project-build
+      id: project-build
+      with:
+        project_path: Rocket/Rocket.Core
+        github_token: ${{ secrets.PAT }}
+        nuget_key: ${{ secrets.NUGET_DEPLOY_KEY }}
+        nuget_push: true

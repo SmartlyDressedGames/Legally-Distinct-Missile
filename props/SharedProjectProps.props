@@ -1,0 +1,37 @@
+<Project>
+
+  <PropertyGroup>
+    <PackageId Condition=" '$(PackageId)' == '' ">RocketModFix.$(AssemblyName)</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <Authors>RocketModFix</Authors>
+    <Company>RocketModFix</Company>
+    <RocketModVersion>0.0.0</RocketModVersion>
+    <Version>$(RocketModVersion)</Version>
+    <InformationalVersion>$(RocketModVersion)</InformationalVersion>
+    <Copyright>RocketModFix and their contributors</Copyright>
+    <RepositoryUrl>https://github.com/RocketModFix/RocketModFix</RepositoryUrl>
+    <LangVersion>11</LangVersion>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);NU1701;NU1702;CS0436;CS1591</NoWarn>
+    <CreateRocketModUnturnedModuleArtifacts>true</CreateRocketModUnturnedModuleArtifacts>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>Unturned RocketMod RocketModFix OpenMod Utility Lib Module Rocket Helper</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageProjectUrl>https://github.com/RocketModFix/RocketModFix</PackageProjectUrl>
+    <PackageOwners>RocketModFix;</PackageOwners>
+    <PackageVersion>$(RocketModVersion)</PackageVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>

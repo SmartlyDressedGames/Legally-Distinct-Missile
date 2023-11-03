@@ -34,6 +34,14 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        public string FullCharacterName
+        {
+            get
+            {
+                return $"{CharacterName} ({CSteamID.m_SteamID})";
+            }
+        }
+
         public bool IsAdmin
         {
             get
@@ -42,9 +50,16 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        private Profile _steamProfile;
+
         public Profile SteamProfile
         {
-            get { return new Profile(ulong.Parse(CSteamID.ToString())); }
+            get
+            {
+                if (_steamProfile == null)
+                    _steamProfile = new Profile(CSteamID.m_SteamID);
+                return _steamProfile;
+            }
         }
 
         private SDG.Unturned.Player player;
@@ -203,7 +218,7 @@ namespace Rocket.Unturned.Player
             parameters.relevantPlayerID = CSteamID;
             EffectManager.triggerEffect(parameters);
         }
-        
+
         public string IP
         {
             get
@@ -304,7 +319,7 @@ namespace Rocket.Unturned.Player
             {
                 ipToBan = 0;
             }
-            
+
             Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
         }
 

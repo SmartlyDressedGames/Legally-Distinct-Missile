@@ -445,7 +445,8 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.serverModifyVirus(value);
+                player.life.askDisinfect(100);
+                player.life.askInfect(value);
             }
         }
 
@@ -489,7 +490,8 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.serverModifyFood(value);
+                player.life.askEat(100);
+                player.life.askStarve(value);
             }
         }
 
@@ -501,7 +503,8 @@ namespace Rocket.Unturned.Player
             }
             set
             {
-                player.life.serverModifyWater(value);
+                player.life.askDrink(100);
+                player.life.askDehydrate(value);
             }
         }
 

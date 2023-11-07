@@ -147,10 +147,16 @@ namespace Rocket.Unturned.Player
             return this.CSteamID.GetHashCode();
         }
 
-        public T GetComponent<T>()
+        /// <summary>
+        /// Very slow, not recommended.
+        /// </summary>
+        /// <typeparam name="T">Component type.</typeparam>
+        /// <returns></returns>
+        public T GetComponent<T>() where T : Component
         {
-            return (T)(object)Player.GetComponent(typeof(T));
+            return Player.GetComponent<T>();
         }
+
 
         private UnturnedPlayer(SDG.Unturned.Player p)
         {
@@ -258,14 +264,7 @@ namespace Rocket.Unturned.Player
 
         public SteamPlayer SteamPlayer()
         {
-            foreach (var SteamPlayer in Provider.clients)
-            {
-                if (CSteamID == SteamPlayer.playerID.steamID)
-                {
-                    return SteamPlayer;
-                }
-            }
-            return null;
+            return player.channel.owner;
         }
 
         public PlayerInventory Inventory
@@ -430,6 +429,10 @@ namespace Rocket.Unturned.Player
             get
             {
                 return player.life.stamina;
+            }
+            set
+            {
+                player.life.serverModifyStamina(value);
             }
         }
 

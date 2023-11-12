@@ -30,7 +30,7 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 		- [ ] uScript.
 		- [ ] OpenMod.
 - [ ] RocketMod Fixes:
-	- [ ] Fix UnturnedPlayer.SteamProfile (cause so many lags). 
+	- [x] Fix UnturnedPlayer.SteamProfile, current implementation cause so many lags (fixed, but still requires fixes). 
 	- [x] Fix UnturnedPlayerComponent is not being added and removed automatically.
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
 	- [ ] Commands fixes:
@@ -42,7 +42,7 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 	- [x] Commands:
 		- [x] /position /pos (current position of the player).
 		- [ ] /tpall (teleport everyone to self or Vector3 point)
-- [ ] Gather a Team with a direct access to the repo edit without admins help.
+- [x] Gather a Team with a direct access to the repo edit without admins help. (We still gather a team)
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 
 After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.

@@ -52,8 +52,8 @@ After plan is finished -> Add new plans, keep coding, and don't forget to accept
 1. Stop the server (if running).
 1. Install latest RocketModFix Module [here](https://github.com/RocketModFix/RocketModFix/releases).
 2. Open Dropdown button Assets (if its not open).
-3. Click on `Rocket.Unturned.Module-v0.0.0.zip` to download (v - version can be a bit different).
-4. Keep `Readme.txt` instruction file inside of the installed `Rocket.Unturned.Module-v0.0.0.zip` archive.
+3. Click on `Rocket.Unturned.Module.zip` to download.
+4. Keep `Readme.txt` instruction file inside of the installed `Rocket.Unturned.Module.zip` archive.
 
 ## Discord
 

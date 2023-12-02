@@ -59,6 +59,10 @@ After plan is finished -> Add new plans, keep coding, and don't forget to accept
 
 Feel free to join our [Discord Server][discordserver_url].
 
+## We're used by
+
+- [ALKAD Hosting][hosting_alkad]
+
 ## How to Contribute
 We're thrilled to have you here! Feel free to create pull requests (PRs) and open issues - your contributions are valuable to us!
 
@@ -89,10 +93,6 @@ Before you dive into making changes, consider creating an [issue][issues_url] or
 [![RocketModFix.Rocket.Core][badge_RocketModFix.Rocket.Core]][nuget_package_RocketModFix.Rocket.Core]
 
 [![RocketModFix.Rocket.Unturned][badge_RocketModFix.Rocket.Unturned]][nuget_package_RocketModFix.Rocket.Unturned]
-
-### We're used by
-
-[ALKAD Hosting][hosting_alkad]
 
 ## Resources
 

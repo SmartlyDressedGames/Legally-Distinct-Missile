@@ -90,6 +90,10 @@ Before you dive into making changes, consider creating an [issue][issues_url] or
 
 [![RocketModFix.Rocket.Unturned][badge_RocketModFix.Rocket.Unturned]][nuget_package_RocketModFix.Rocket.Unturned]
 
+### We're used by
+
+[ALKAD Hosting][hosting_alkad]
+
 ## Resources
 
 fr34kyn01535 has listed all of the original plugins in a post to the /r/RocketMod subreddit: [List of plugins from the old repository](https://www.reddit.com/r/rocketmod/comments/ek4i7b/)
@@ -131,6 +135,8 @@ On the 2nd of June 2020 fr34kyn01535 requested the fork be rebranded to help dis
 
 [nuget_package_RocketModFix.Rocket.Unturned]: https://www.nuget.org/packages/RocketModFix.Rocket.Unturned
 [badge_RocketModFix.Rocket.Unturned]: https://img.shields.io/nuget/v/RocketModFix.Rocket.Unturned?label=RocketModFix.Rocket.Unturned&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FRocketModFix.Rocket.Unturned
+
+[hosting_alkad]: https://hosting.alkad.org/
 
 [discordserver_url]: https://discord.gg/z6VM7taWeG 
 

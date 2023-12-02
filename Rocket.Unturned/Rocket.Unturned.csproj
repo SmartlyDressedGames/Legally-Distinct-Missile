@@ -38,7 +38,7 @@
 
     <ZipDirectory
       SourceDirectory="$(RocketUnturnedOutputDirectory)\.."
-      DestinationFile="Rocket.Unturned.Module-v$(RocketModVersion).zip"
+      DestinationFile="Rocket.Unturned.Module.zip"
       Overwrite="true"/>
   </Target>
 

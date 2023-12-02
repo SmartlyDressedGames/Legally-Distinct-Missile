@@ -31,5 +31,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Rocket.Unturned.Module.Build-${{ steps.commit_hash.outputs.commit_hash }}
-          path: "./Rocket.Unturned/Rocket.Unturned.Module-v0.0.0-preview.zip"
+          path: "./Rocket.Unturned/Rocket.Unturned.Module"
           if-no-files-found: error

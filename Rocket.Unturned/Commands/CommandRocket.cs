@@ -50,7 +50,7 @@ namespace Rocket.Unturned.Commands
         {
             if (command.Length == 0)
             {
-                UnturnedChat.Say(caller, "RocketModFix v" + Assembly.GetExecutingAssembly().GetName().Version + " for Unturned v" + Provider.APP_VERSION);
+                UnturnedChat.Say(caller, $"RocketModFix v{Assembly.GetExecutingAssembly().GetName().Version} for Unturned v{Provider.APP_VERSION}");
                 UnturnedChat.Say(caller, "https://github.com/RocketModFix/RocketModFix/");
                 UnturnedChat.Say(caller, "https://discord.gg/z6VM7taWeG");
                 return;

@@ -19,7 +19,11 @@ jobs:
           dotnet-version: 7.x
 
       - name: Build
-        run: dotnet build ./Rocket.Unturned/Rocket.Unturned.csproj /p:RocketModVersion=${{ github.ref_name }} /p:CreateRocketModUnturnedModuleArtifacts=true --configuration Release
+        run: dotnet build ./Rocket.Unturned/Rocket.Unturned.csproj \
+          /p:RocketModVersion=${{ github.ref_name }} \
+          /p:CreateRocketModUnturnedModuleArtifacts=true \
+          -c Release \
+          -f net461
 
       - name: Upload build
         uses: actions/upload-artifact@v2

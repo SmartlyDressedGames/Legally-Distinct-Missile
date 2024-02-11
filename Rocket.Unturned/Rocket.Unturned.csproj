@@ -38,10 +38,7 @@
 
     <Delete Files="Rocket.Unturned.Module.zip"/>
 
-    <ZipDirectory
-      SourceDirectory="$(RocketUnturnedOutputDirectory)\.."
-      DestinationFile="Rocket.Unturned.Module.zip"
-      Overwrite="true"/>
+
   </Target>
 
 </Project>

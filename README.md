@@ -20,15 +20,14 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 - [x] Rocket.Unturned.Module Artifacts on PR.
 - [x] Rocket.Unturned NuGet Package.
 - [x] Reset changelog.
-- [x] For changelog use [Keep a Changelog standard][keep_a_changelog_url].
 - [x] For versioning use [SemVer][semver_url].
 - [x] Installation guides inside of the Rocket Unturned Module.
-- [ ] Keep backward compatibility.
-	- [ ] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
-	- [ ] Test with most used Modules:
-		- [ ] AviRockets.
-		- [ ] uScript.
-		- [ ] OpenMod.
+- [x] Keep backward compatibility.
+	- [x] Test with RocketMod plugins that uses old RocketMod libraries, and make sure current changes doesn't break anything.
+	- [x] Test with most used Modules:
+		- [x] AviRockets.
+		- [x] uScript.
+		- [x] OpenMod.
 - [ ] RocketMod Fixes:
 	- [x] Fix UnturnedPlayer.SteamProfile, current implementation cause so many lags (fixed, but still requires fixes). 
 	- [x] Fix UnturnedPlayerComponent is not being added and removed automatically.
@@ -41,11 +40,10 @@ You can still use old RocketMod plugins without any changes/recompilation/update
 - [x] New Features:
 	- [x] Commands:
 		- [x] /position /pos (current position of the player).
-		- [ ] /tpall (teleport everyone to self or Vector3 point)
 - [x] Gather a Team with a direct access to the repo edit without admins help. (We still gather a team)
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 
-After plan is finished -> Add new plans, keep coding, and don't forget to accept PR or issues.
+After plan is finished -> Add new plans, keep coding, and don't forget to approve PR or issues.
 
 ## Installation
 
@@ -63,13 +61,10 @@ Feel free to join our [Discord Server][discordserver_url].
 
 - [ALKAD Hosting][hosting_alkad]
 
+If you also use RocketModFix, contact us, we will add a link to you!
+
 ## How to Contribute
 We're thrilled to have you here! Feel free to create pull requests (PRs) and open issues - your contributions are valuable to us!
-
-### Branching Guidelines
-- Avoid Committing to `master`: Please refrain from committing directly to the `master` branch.
-- Create a Branch from `dev`: Instead, create a new branch from the `dev` branch.
-- Submit PRs to `dev`: Submit your changes by creating a PR into the `dev` branch. This keeps our `master` branch stable, ensuring a smooth experience for all users.
 
 ### Why We Use Issues
 Before you dive into making changes, consider creating an [issue][issues_url] or discussions on our [discord server][discordserver_url] first. Here's why:

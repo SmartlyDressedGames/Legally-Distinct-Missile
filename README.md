@@ -6,7 +6,7 @@ The **RocketModFix** is a fork of RocketMod for Unturned maintained by the Untur
 
 ## Compatibility
 
-You can still use old RocketMod plugins without any changes/recompilation/updates, however if you want to use new features and bug fixes we recommend to install updated Module and new Rocket. API/Core/Unturned Redistributables (libraries).
+You can still use old plugins without any changes/recompilation/updates.
 
 ## Our plan and what we're done
 

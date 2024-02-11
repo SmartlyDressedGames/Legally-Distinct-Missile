@@ -8,8 +8,8 @@
   <Import Project="$(MSBuildThisFileDirectory)\..\props\SharedProjectProps.props"/>
 
   <ItemGroup>
-    <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.34" />
-    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.9.3.34" />
+    <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.34"/>
+    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.9.3.34"/>
     <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.28.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
@@ -30,11 +30,13 @@
       <RocketUnturnedOutputDirectory>$(OutDir)Rocket.Unturned/Rocket.Unturned</RocketUnturnedOutputDirectory>
     </PropertyGroup>
 
-    <MakeDir Directories="$(RocketUnturnedOutputDirectory)" />
+    <MakeDir Directories="$(RocketUnturnedOutputDirectory)"/>
 
     <Copy SourceFiles="@(RocketModFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
     <Copy SourceFiles="@(RocketModModuleFiles)" DestinationFolder="$(RocketUnturnedOutputDirectory)"/>
     <Copy SourceFiles="@(RocketModInstallationGuides)" DestinationFolder="$(RocketUnturnedOutputDirectory)\.."/>
+
+    <Delete Files="Rocket.Unturned.Module.zip"/>
 
     <ZipDirectory
       SourceDirectory="$(RocketUnturnedOutputDirectory)\.."

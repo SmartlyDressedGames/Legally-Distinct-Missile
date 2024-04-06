@@ -15,12 +15,12 @@
       <_Parameter1>Rocket.Core.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.28.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.23.12.2">
+    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.24.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>

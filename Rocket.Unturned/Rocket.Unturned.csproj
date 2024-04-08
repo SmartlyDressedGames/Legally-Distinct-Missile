@@ -8,12 +8,12 @@
   <Import Project="$(MSBuildThisFileDirectory)\..\props\SharedProjectProps.props"/>
 
   <ItemGroup>
-    <PackageReference Include="RocketModFix.Rocket.API" Version="4.9.3.34"/>
-    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.9.3.34"/>
-    <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.28.1">
+    <PackageReference Include="RocketModFix.Rocket.API" Version="4.17.0"/>
+    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.17.0"/>
+    <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.29.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.23.12.2">
+    <PackageReference Include="RocketModFix.Unturned.Redist" Version="3.24.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
@@ -42,7 +42,7 @@
       SourceDirectory="$(RocketUnturnedOutputDirectory)\.."
       DestinationFile="Rocket.Unturned.Module.zip"
       Overwrite="true"/>
-    
+
   </Target>
 
 </Project>

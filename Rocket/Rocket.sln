@@ -1,23 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core", "Rocket.Core\Rocket.Core.csproj", "{7A9D652F-DC18-45FD-8964-DBAAD6384C3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.API", "Rocket.API\Rocket.API.csproj", "{C362DF2F-1336-4932-AADC-4F2074FEDB64}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev", "dev", "{BF6C67CB-DA13-47BD-8E8D-E335DD457E01}"
-	ProjectSection(SolutionItems) = preProject
-		dev\Mono.Cecil.dll = dev\Mono.Cecil.dll
-		dev\Mono.CompilerServices.SymbolWriter.dll = dev\Mono.CompilerServices.SymbolWriter.dll
-		dev\pdb2mdb.exe = dev\pdb2mdb.exe
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCE572A8-5DD9-4DCA-8B3E-30F428817065}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
-		README = README
+		..\props\SharedProjectProps.props = ..\props\SharedProjectProps.props
+		..\.editorconfig = ..\.editorconfig
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Core.Tests", "Rocket.Core.Tests\Rocket.Core.Tests.csproj", "{5D7EFFCB-0012-4C95-AB57-64BA9D51D378}"

@@ -414,10 +414,10 @@ namespace Rocket.Unturned.Player
 
         public bool Teleport(string nodeName)
         {
-            Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
+            LocationDevkitNode node = LocationDevkitNodeSystem.Get().FindByName(nodeName);
             if (node != null)
             {
-                Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
+                Vector3 c = node.transform.position + new Vector3(0f, 0.5f, 0f);
                 player.sendTeleport(c, MeasurementTool.angleToByte(Rotation));
                 return true;
             }

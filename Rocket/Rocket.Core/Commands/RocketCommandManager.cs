@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -17,9 +17,9 @@ namespace Rocket.Core.Commands
 {
     public class RocketCommandManager : MonoBehaviour
     {
-        private readonly Dictionary<string, RegisteredRocketCommand> commands = new();
+        private readonly List<RegisteredRocketCommand> commands = new List<RegisteredRocketCommand>();
         internal List<RocketCommandCooldown> cooldown = new List<RocketCommandCooldown>();
-        public IReadOnlyDictionary<string, RegisteredRocketCommand> Commands { get; internal set; }
+        public ReadOnlyCollection<RegisteredRocketCommand> Commands { get; internal set; }
         private XMLFileAsset<RocketCommands> commandMappings;
 
         public delegate void ExecuteCommand(IRocketPlayer player, IRocketCommand command, ref bool cancel);
@@ -27,14 +27,13 @@ namespace Rocket.Core.Commands
 
         internal void Reload()
         {
-            
             commandMappings.Load();
             checkCommandMappings();
         }
 
         private void Awake()
         {
-            Commands = commands;
+            Commands = commands.AsReadOnly();
             commandMappings = new XMLFileAsset<RocketCommands>(Environment.CommandsFile);
             checkCommandMappings();
             R.Plugins.OnPluginsLoaded += Plugins_OnPluginsLoaded;
@@ -81,9 +80,9 @@ namespace Rocket.Core.Commands
 
         public IRocketCommand GetCommand(string command)
         {
-            if (!commands.ContainsKey(command.ToLower()))
-                return null;
-            return commands[command.ToLower()];
+            IRocketCommand foundCommand = commands.Where(c => c.Name.ToLower() == command.ToLower()).FirstOrDefault();
+            if(foundCommand == null) commands.Where(c => c.Aliases.Select(a => a.ToLower()).Contains(command.ToLower())).FirstOrDefault();
+            return foundCommand;
         }
 
         private static string getCommandIdentity(IRocketCommand command,string name)
@@ -158,20 +157,14 @@ namespace Rocket.Core.Commands
 
             foreach(CommandMapping mapping in commandMappings.Instance.CommandMappings.Where(m => m.Class == className && m.Enabled))
             {
-                commands.Add(mapping.Name.ToLower(), new RegisteredRocketCommand(mapping.Name.ToLower(), command));
+                commands.Add(new RegisteredRocketCommand(mapping.Name.ToLower(), command));
                 Logging.Logger.Log("[registered] /" + mapping.Name.ToLower() + " (" + mapping.Class + ")", ConsoleColor.Green);
             }
         }
 
         public void DeregisterFromAssembly(Assembly assembly)
         {
-            List<string> toRemove = new();
-            foreach (var pair in commands)
-            {
-                if (getCommandType(pair.Value.Command).Assembly == assembly)
-                    toRemove.Add(pair.Key);
-            }
-            toRemove.ForEach((string str) => commands.Remove(str));
+            commands.RemoveAll(rc => getCommandType(rc.Command).Assembly == assembly);
         }
 
         public double GetCooldown(IRocketPlayer player, IRocketCommand command)

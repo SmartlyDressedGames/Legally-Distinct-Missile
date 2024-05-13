@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -331,7 +331,7 @@ namespace Rocket.Core.Commands
                 }
             }
         }
-        
+
         public class RegisteredRocketCommand : IRocketCommand
         {
             public Type Type;

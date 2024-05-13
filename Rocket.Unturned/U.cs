@@ -56,6 +56,7 @@ namespace Rocket.Unturned
                 { "command_i_giving_private","Giving you item {0}x {1} ({2})"},
                 { "command_z_giving_console","Spawning {1} zombies near {0}"},
                 { "command_z_giving_private","Spawning {0} zombies nearby"},
+                { "command_position_get","Current position: {0}"},
                 { "command_i_giving_failed_private","Failed giving you item {0}x {1} ({2})"},
                 { "command_v_giving_console","Giving {0} vehicle {1}"},
                 { "command_v_blacklisted","This vehicle is restricted!" },

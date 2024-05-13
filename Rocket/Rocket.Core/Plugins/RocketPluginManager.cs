@@ -7,6 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using System.Linq;
 using Rocket.Core.Extensions;
+using SDG.Framework.Modules;
 
 namespace Rocket.Core.Plugins
 {
@@ -18,7 +19,7 @@ namespace Rocket.Core.Plugins
         private static List<Assembly> pluginAssemblies;
         private static List<GameObject> plugins = new List<GameObject>();
         internal static List<IRocketPlugin> Plugins { get { return plugins.Select(g => g.GetComponent<IRocketPlugin>()).Where(p => p != null).ToList<IRocketPlugin>(); } }
-        
+
         /// <summary>
         /// Maps assembly name to .dll file path.
         /// </summary>
@@ -61,7 +62,7 @@ namespace Rocket.Core.Plugins
 
         private void Awake() {
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
-            SDG.Framework.Modules.ModuleHook.PreVanillaAssemblyResolvePostRedirects += OnAssemblyResolve;
+            ModuleHook.PreVanillaAssemblyResolvePostRedirects += OnAssemblyResolve;
         }
 
         private void Start()

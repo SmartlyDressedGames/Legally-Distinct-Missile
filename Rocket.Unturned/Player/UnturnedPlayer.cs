@@ -34,6 +34,14 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        public string FullCharacterName
+        {
+            get
+            {
+                return $"{CharacterName} ({CSteamID.m_SteamID})";
+            }
+        }
+
         public bool IsAdmin
         {
             get
@@ -42,9 +50,16 @@ namespace Rocket.Unturned.Player
             }
         }
 
+        private Profile _steamProfile;
+
         public Profile SteamProfile
         {
-            get { return new Profile(ulong.Parse(CSteamID.ToString())); }
+            get
+            {
+                if (_steamProfile == null)
+                    _steamProfile = new Profile(CSteamID.m_SteamID);
+                return _steamProfile;
+            }
         }
 
         private SDG.Unturned.Player player;
@@ -132,10 +147,16 @@ namespace Rocket.Unturned.Player
             return this.CSteamID.GetHashCode();
         }
 
-        public T GetComponent<T>()
+        /// <summary>
+        /// Very slow, not recommended.
+        /// </summary>
+        /// <typeparam name="T">Component type.</typeparam>
+        /// <returns></returns>
+        public T GetComponent<T>() where T : Component
         {
-            return (T)(object)Player.GetComponent(typeof(T));
+            return Player.GetComponent<T>();
         }
+
 
         private UnturnedPlayer(SDG.Unturned.Player p)
         {
@@ -203,7 +224,7 @@ namespace Rocket.Unturned.Player
             parameters.relevantPlayerID = CSteamID;
             EffectManager.triggerEffect(parameters);
         }
-        
+
         public string IP
         {
             get
@@ -243,14 +264,7 @@ namespace Rocket.Unturned.Player
 
         public SteamPlayer SteamPlayer()
         {
-            foreach (var SteamPlayer in Provider.clients)
-            {
-                if (CSteamID == SteamPlayer.playerID.steamID)
-                {
-                    return SteamPlayer;
-                }
-            }
-            return null;
+            return player.channel.owner;
         }
 
         public PlayerInventory Inventory
@@ -304,7 +318,7 @@ namespace Rocket.Unturned.Player
             {
                 ipToBan = 0;
             }
-            
+
             Provider.requestBanPlayer(instigator, steamIdToBan, ipToBan, reason, duration);
         }
 
@@ -400,10 +414,10 @@ namespace Rocket.Unturned.Player
 
         public bool Teleport(string nodeName)
         {
-            Node node = LevelNodes.nodes.Where(n => n.type == ENodeType.LOCATION && ((LocationNode)n).name.ToLower().Contains(nodeName)).FirstOrDefault();
+            LocationDevkitNode node = LocationDevkitNodeSystem.Get().FindByName(nodeName);
             if (node != null)
             {
-                Vector3 c = node.point + new Vector3(0f, 0.5f, 0f);
+                Vector3 c = node.transform.position + new Vector3(0f, 0.5f, 0f);
                 player.sendTeleport(c, MeasurementTool.angleToByte(Rotation));
                 return true;
             }
@@ -415,6 +429,10 @@ namespace Rocket.Unturned.Player
             get
             {
                 return player.life.stamina;
+            }
+            set
+            {
+                player.life.serverModifyStamina(value);
             }
         }
 

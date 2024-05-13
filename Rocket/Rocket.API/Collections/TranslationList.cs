@@ -8,6 +8,8 @@ namespace Rocket.API.Collections
 {
     [Serializable]
     [XmlType(AnonymousType = false, IncludeInSchema = true, TypeName = "Translation")]
+
+
     public class TranslationListEntry
     {
         [XmlAttribute]
@@ -22,6 +24,12 @@ namespace Rocket.API.Collections
         }
         public TranslationListEntry() { }
     }
+
+
+
+
+
+
 
     public static class TranslationListExtension{
         public static void AddUnknownEntries(this TranslationList defaultTranslations, IAsset<TranslationList> translations)
@@ -42,20 +50,33 @@ namespace Rocket.API.Collections
     [XmlRoot("Translations")]
     [XmlType(AnonymousType = false, IncludeInSchema = true, TypeName = "Translation")]
     [Serializable]
-    public class TranslationList : IDefaultable, IEnumerable<TranslationListEntry>
+
+
+    public class TranslationList : IDefaultable, ICollection<TranslationListEntry>
     {
         public TranslationList() { }
+
         protected List<TranslationListEntry> translations = new List<TranslationListEntry>();
 
-        public IEnumerator<TranslationListEntry> GetEnumerator()
-        {
-            return translations.GetEnumerator();
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return translations.GetEnumerator();
-        }
+        public int Count => translations.Count;
 
+        public bool IsReadOnly => false;
+
+        public string Translate(string translationKey, params object[] placeholder)
+        {
+            string value = this[translationKey];
+            if (String.IsNullOrEmpty(value)) return translationKey;
+
+            if (value.Contains("{") && value.Contains("}") && placeholder != null && placeholder.Length != 0)
+            {
+                for (int i = 0; i < placeholder.Length; i++)
+                {
+                    if (placeholder[i] == null) placeholder[i] = "NULL";
+                }
+                value = String.Format(value, placeholder);
+            }
+            return value;
+        }
         public void Add(Object o)
         {
             translations.Add((TranslationListEntry)o);
@@ -64,16 +85,6 @@ namespace Rocket.API.Collections
         public void Add(string key, string value)
         {
             translations.Add(new TranslationListEntry(key, value));
-        }
-
-        public void AddRange(IEnumerable<TranslationListEntry> collection)
-        {
-            translations.AddRange(collection);
-        }
-
-        public void AddRange(TranslationList collection)
-        {
-            translations.AddRange(collection.translations);
         }
 
         public string this[string key]
@@ -87,26 +98,45 @@ namespace Rocket.API.Collections
                 translations.ForEach(k => { if (k.Id == key) k.Value = value; });
             }
         }
-
-        public string Translate(string translationKey, params object[] placeholder)
-        {
-            string value = this[translationKey];
-            if (String.IsNullOrEmpty(value)) return translationKey;
-                
-            if (value.Contains("{") && value.Contains("}") && placeholder != null && placeholder.Length != 0)
-            {
-                for (int i = 0; i < placeholder.Length; i++)
-                {
-                    if (placeholder[i] == null) placeholder[i] = "NULL";
-                }
-                value = String.Format(value, placeholder);
-            }
-            return value;
-        }
-
         public virtual void LoadDefaults()
         {
-            
+
+        }
+        public IEnumerator<TranslationListEntry> GetEnumerator()
+        {
+            return translations.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return translations.GetEnumerator();
+        }
+
+        public void Add(TranslationListEntry item)
+        {
+            translations.Add(item);
+        }
+
+        public void Clear()
+        {
+            translations.Clear();
+        }
+
+        public bool Contains(TranslationListEntry item)
+        {
+            return translations.Contains(item);
+        }
+
+        public void CopyTo(TranslationListEntry[] array, int arrayIndex)
+        {
+            translations.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(TranslationListEntry item)
+        {
+            return translations.Remove(item);
         }
     }
+
+
+
 }

@@ -34,7 +34,7 @@ You can still use old plugins without any changes/recompilation/updates.
 	- [ ] Assembly Resolve fixes (don't spam with not found library or make a option to disable it, load all libraries at rocketmod start instead of searching for them only on OnAssemblyResolve)
 	- [ ] Commands fixes:
 		- [ ] Fix /vanish.
-		- [ ] Fix /god.
+		- [x] Fix /god. (oxygen isn't fixed)
 		- [ ] Fix /p (not readable at all).
 	- [ ] Perfomance.
 - [x] New Features:

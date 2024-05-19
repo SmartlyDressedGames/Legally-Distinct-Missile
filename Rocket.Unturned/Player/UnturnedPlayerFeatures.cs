@@ -18,7 +18,6 @@ namespace Rocket.Unturned.Player
             set { color = value; }
         }
 
-
         private bool vanishMode = false;
         public bool VanishMode
         {
@@ -43,19 +42,32 @@ namespace Rocket.Unturned.Player
         {
             set
             {
+                Player.Bleeding = false;
+                Player.Broken = false;
+                Player.Infection = 0;
+                Player.Hunger = 0;
+                Player.Thirst = 0;
+                Player.Heal(100);
+                Player.Stamina = 100;
                 if (value)
                 {
                     Player.Events.OnUpdateHealth += e_OnPlayerUpdateHealth;
+                    Player.Events.OnUpdateBleeding += e_OnPlayerUpdateBleeding;
+                    Player.Events.OnUpdateBroken += e_OnPlayerUpdateBroken;
                     Player.Events.OnUpdateWater += e_OnPlayerUpdateWater;
                     Player.Events.OnUpdateFood += e_OnPlayerUpdateFood;
                     Player.Events.OnUpdateVirus += e_OnPlayerUpdateVirus;
+                    Player.Events.OnUpdateStamina += e_OnPlayerUpdateStamina;
                 }
                 else
                 {
                     Player.Events.OnUpdateHealth -= e_OnPlayerUpdateHealth;
+                    Player.Events.OnUpdateBleeding -= e_OnPlayerUpdateBleeding;
+                    Player.Events.OnUpdateBroken -= e_OnPlayerUpdateBroken;
                     Player.Events.OnUpdateWater -= e_OnPlayerUpdateWater;
                     Player.Events.OnUpdateFood -= e_OnPlayerUpdateFood;
                     Player.Events.OnUpdateVirus -= e_OnPlayerUpdateVirus;
+                    Player.Events.OnUpdateStamina -= e_OnPlayerUpdateStamina;
                 }
                 godMode = value;
             }
@@ -85,7 +97,7 @@ namespace Rocket.Unturned.Player
         private void Check()
         {
             initialCheck = true;
-           
+
             if (U.Settings.Instance.CharacterNameValidation)
             {
                 string username = Player.CharacterName;
@@ -107,13 +119,15 @@ namespace Rocket.Unturned.Player
 
         protected override void Load()
         {
-
             if (godMode)
             {
                 Player.Events.OnUpdateHealth += e_OnPlayerUpdateHealth;
+                Player.Events.OnUpdateBleeding += e_OnPlayerUpdateBleeding;
+                Player.Events.OnUpdateBroken += e_OnPlayerUpdateBroken;
                 Player.Events.OnUpdateWater += e_OnPlayerUpdateWater;
                 Player.Events.OnUpdateFood += e_OnPlayerUpdateFood;
                 Player.Events.OnUpdateVirus += e_OnPlayerUpdateVirus;
+                Player.Events.OnUpdateStamina += e_OnPlayerUpdateStamina;
                 Player.Heal(100);
                 Player.Infection = 0;
                 Player.Hunger = 0;
@@ -125,27 +139,36 @@ namespace Rocket.Unturned.Player
 
         private void e_OnPlayerUpdateVirus(UnturnedPlayer player, byte virus)
         {
-            if (virus < 95) Player.Infection = 0;
+            if (virus < 100) Player.Infection = 0;
         }
 
         private void e_OnPlayerUpdateFood(UnturnedPlayer player, byte food)
         {
-            if (food < 95) Player.Hunger = 0;
+            if (food < 100) Player.Hunger = 0;
         }
 
         private void e_OnPlayerUpdateWater(UnturnedPlayer player, byte water)
         {
-            if (water < 95) Player.Thirst = 0;
+            if (water < 100) Player.Thirst = 0;
+        }
+
+        private void e_OnPlayerUpdateBroken(UnturnedPlayer player, bool broken)
+        {
+            if (broken) Player.Broken = false;
+        }
+
+        private void e_OnPlayerUpdateBleeding(UnturnedPlayer player, bool bleeding)
+        {
+            if (bleeding) Player.Bleeding = false;
         }
 
         private void e_OnPlayerUpdateHealth(UnturnedPlayer player, byte health)
         {
-            if (health < 95)
-            {
-                Player.Heal(100);
-                Player.Bleeding = false;
-                Player.Broken = false;
-            }
+            if (health < 100) Player.Heal(100);
+        }
+        private void e_OnPlayerUpdateStamina(UnturnedPlayer player, byte stamina)
+        {
+            if (stamina < 100) Player.Stamina = 100;
         }
     }
 }

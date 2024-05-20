@@ -48,7 +48,7 @@ namespace Rocket.Core.Serialization
     {
         [XmlAttribute]
         public bool Enabled = false;
-        [XmlAttribute]  
+        [XmlAttribute]
         public string Url = "";
     }
 
@@ -98,9 +98,13 @@ namespace Rocket.Core.Serialization
 
         [XmlElement("MaxFrames")]
         public int MaxFrames = 60;
-        
+
+        [XmlElement("UseJsonForPlugins")]
+        public bool UseJsonForPlugins = false;
+
         public void LoadDefaults()
         {
+            UseJsonForPlugins = false;
             RCON = new RemoteConsole();
             AutomaticShutdown = new AutomaticShutdown();
             WebConfigurations = new WebConfigurations();

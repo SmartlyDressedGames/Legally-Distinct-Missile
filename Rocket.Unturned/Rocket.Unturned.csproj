@@ -8,8 +8,11 @@
   <Import Project="$(MSBuildThisFileDirectory)\..\props\SharedProjectProps.props"/>
 
   <ItemGroup>
-    <PackageReference Include="RocketModFix.Rocket.API" Version="4.17.0"/>
-    <PackageReference Include="RocketModFix.Rocket.Core" Version="4.17.0"/>
+    <ProjectReference Include="..\Rocket\Rocket.API\Rocket.API.csproj" />
+    <ProjectReference Include="..\Rocket\Rocket.Core\Rocket.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="RocketModFix.UnityEngine.Redist" Version="2021.3.29.1">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

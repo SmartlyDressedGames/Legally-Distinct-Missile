@@ -52,9 +52,7 @@ namespace Rocket.Unturned.Commands
                 UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
                 throw new WrongUsageOfCommandException(caller, this);
             }
-
             ushort? id = command.GetUInt16Parameter(0);
-
             if (!id.HasValue)
             {
                 string itemString = command.GetStringParameter(0);
@@ -65,8 +63,8 @@ namespace Rocket.Unturned.Commands
                     throw new WrongUsageOfCommandException(caller, this);
                 }
 
-                Asset[] assets = SDG.Unturned.Assets.find(EAssetType.VEHICLE);
-                foreach (VehicleAsset ia in assets)
+                Asset[] assets = Assets.find(EAssetType.VEHICLE);
+                foreach (VehicleAsset ia in assets.Cast<VehicleAsset>())
                 {
                     if (ia != null && ia.vehicleName != null && ia.vehicleName.ToLower().Contains(itemString.ToLower()))
                     {
@@ -81,10 +79,15 @@ namespace Rocket.Unturned.Commands
                 }
             }
 
-            Asset a = SDG.Unturned.Assets.find(EAssetType.VEHICLE, id.Value);
+            Asset a = Assets.find(EAssetType.VEHICLE, id.Value);
+            if (a == null)
+            {
+                UnturnedChat.Say(caller, U.Translate("command_generic_invalid_parameter"));
+                throw new WrongUsageOfCommandException(caller, this);
+            }
             string assetName = ((VehicleAsset)a).vehicleName;
 
-            if(U.Settings.Instance.EnableVehicleBlacklist && !player.HasPermission("vehicleblacklist.bypass"))
+            if (U.Settings.Instance.EnableVehicleBlacklist && !player.HasPermission("vehicleblacklist.bypass"))
             {
                 if(player.HasPermission("vehicle." + id))
                 {

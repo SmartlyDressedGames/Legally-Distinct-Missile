@@ -81,10 +81,17 @@ namespace Rocket.API.Collections
         {
             translations.Add((TranslationListEntry)o);
         }
-
         public void Add(string key, string value)
         {
             translations.Add(new TranslationListEntry(key, value));
+        }
+        public void AddRange(IEnumerable<TranslationListEntry> collection)
+        {
+            translations.AddRange(collection);
+        }
+        public void AddRange(TranslationList collection)
+        {
+            translations.AddRange(collection.translations);
         }
 
         public string this[string key]

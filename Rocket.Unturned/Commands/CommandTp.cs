@@ -1,4 +1,4 @@
-﻿using SDG.Unturned;
+﻿    using SDG.Unturned;
 using UnityEngine;
 using System.Linq;
 using Rocket.Core.Logging;
@@ -54,11 +54,11 @@ namespace Rocket.Unturned.Commands
                 throw new WrongUsageOfCommandException(caller, this);
             }
 
-            if (player.Stance == EPlayerStance.DRIVING || player.Stance == EPlayerStance.SITTING)
-            {
-                UnturnedChat.Say(player, U.Translate("command_generic_teleport_while_driving_error"));
-                throw new WrongUsageOfCommandException(caller, this);
-            }
+            //if (player.Stance == EPlayerStance.DRIVING || player.Stance == EPlayerStance.SITTING)
+            //{
+            //    UnturnedChat.Say(player, U.Translate("command_generic_teleport_while_driving_error"));
+            //    throw new WrongUsageOfCommandException(caller, this);
+            //}
 
             float? x = null;
             float? y = null;
@@ -72,16 +72,16 @@ namespace Rocket.Unturned.Commands
             }
             if (x != null && y != null && z != null)
             {
-                player.Teleport(new Vector3((float)x, (float)y, (float)z), MeasurementTool.angleToByte(player.Rotation));
+                player.Player.teleportToLocationUnsafe(new Vector3((float)x, (float)y, (float)z), MeasurementTool.angleToByte(player.Rotation));
                 Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, (float)x + "," + (float)y + "," + (float)z));
                 UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", (float)x + "," + (float)y + "," + (float)z));
             }
             else
             {
                 UnturnedPlayer otherplayer = UnturnedPlayer.FromName(command[0]);
-                if (otherplayer != null && otherplayer != player)
+                if (otherplayer != null /*&& otherplayer != player*/)
                 {
-                    player.Teleport(otherplayer);
+                    player.Player.teleportToLocationUnsafe(otherplayer.Position, player.Rotation);
                     Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, otherplayer.CharacterName));
                     UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", otherplayer.CharacterName));
                 }
@@ -90,8 +90,8 @@ namespace Rocket.Unturned.Commands
                     LocationDevkitNode item = LocationDevkitNodeSystem.Get().GetAllNodes().Where(n => n.locationName.IndexOf(command[0]) != -1).FirstOrDefault();
                     if (item != null)
                     {
-                        Vector3 c = item.transform.position + new Vector3(0f, 0.5f, 0f);
-                        player.Teleport(c, MeasurementTool.angleToByte(player.Rotation));
+                        Vector3 LocationPosition = item.transform.position + new Vector3(0f, 0.5f, 0f);
+                        player.Player.teleportToLocationUnsafe(LocationPosition, player.Rotation);
                         Core.Logging.Logger.Log(U.Translate("command_tp_teleport_console", player.CharacterName, item.locationName));
                         UnturnedChat.Say(player, U.Translate("command_tp_teleport_private", item.locationName));
                     }

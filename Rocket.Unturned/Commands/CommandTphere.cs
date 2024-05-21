@@ -51,14 +51,18 @@ namespace Rocket.Unturned.Commands
                 throw new WrongUsageOfCommandException(caller, this);
             }
             UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[0]);
-            if (otherPlayer!=null && otherPlayer != caller)
+            if (otherPlayer != null /* && otherPlayer != caller*/)
             {
-            	if(otherPlayer.IsInVehicle)
-            	{
-            		UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
-            		return;
-            	}
-                otherPlayer.Teleport(player);
+            	//if(otherPlayer.IsInVehicle)
+            	//{
+            	//	UnturnedChat.Say(caller, U.Translate("command_tphere_vehicle"));
+            	//	return;
+            	//}
+
+                //otherPlayer.Teleport(player);
+
+                otherPlayer.Player.teleportToLocationUnsafe(player.Position, player.Rotation);
+
                 Logger.Log(U.Translate("command_tphere_teleport_console", otherPlayer.CharacterName, player.CharacterName));
                 UnturnedChat.Say(caller, U.Translate("command_tphere_teleport_from_private", otherPlayer.CharacterName));
                 UnturnedChat.Say(otherPlayer, U.Translate("command_tphere_teleport_to_private", player.CharacterName));

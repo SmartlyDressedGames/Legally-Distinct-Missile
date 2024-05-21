@@ -40,6 +40,7 @@ You can still use old plugins without any changes/recompilation/updates.
 - [x] New Features:
 	- [x] Commands:
 		- [x] /position /pos (current position of the player).
+		- [x] /tpwp (improved version of /tp wp).
 - [x] Gather a Team with a direct access to the repo edit without admins help. (We still gather a team)
 - [ ] RocketModFix Video Installation Guide (could be uploaded on YouTube).
 

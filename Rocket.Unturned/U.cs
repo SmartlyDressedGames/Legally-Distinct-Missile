@@ -74,6 +74,8 @@ namespace Rocket.Unturned
                 { "command_tphere_teleport_console","{0} was teleported to {1}"},
                 { "command_tphere_teleport_from_private","Teleported {0} to you"},
                 { "command_tphere_teleport_to_private","You were teleported to {0}"},
+                { "command_tpwp_marker_not_set","Your waypoint is not set"},
+                { "command_tpwp_failed_raycast","Failed to find ground"},
                 { "command_clear_error","There was an error clearing {0} inventory."},
                 { "command_clear_private","Your inventory was cleared!"},
                 { "command_clear_other","Your inventory was cleared by {0}!"},

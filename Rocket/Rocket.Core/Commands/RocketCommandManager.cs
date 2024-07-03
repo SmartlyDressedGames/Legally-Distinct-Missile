@@ -164,7 +164,7 @@ namespace Rocket.Core.Commands
 
         public void DeregisterFromAssembly(Assembly assembly)
         {
-            commands.RemoveAll(rc => rc.Command.GetType().Assembly == assembly);
+            commands.RemoveAll(rc => getCommandType(rc.Command).Assembly == assembly);
         }
 
         public double GetCooldown(IRocketPlayer player, IRocketCommand command)

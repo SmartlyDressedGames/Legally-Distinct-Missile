@@ -66,9 +66,9 @@ namespace Rocket.Unturned.Commands
                 }
 
                 Asset[] assets = SDG.Unturned.Assets.find(EAssetType.VEHICLE);
-                foreach (VehicleAsset ia in assets)
+                foreach (Asset ia in assets)
                 {
-                    if (ia != null && ia.vehicleName != null && ia.vehicleName.ToLower().Contains(itemString.ToLower()))
+                    if (ia != null && ia.FriendlyName != null && ia.FriendlyName.ToLower().Contains(itemString.ToLower()))
                     {
                         id = ia.id;
                         break;
@@ -82,7 +82,7 @@ namespace Rocket.Unturned.Commands
             }
 
             Asset a = SDG.Unturned.Assets.find(EAssetType.VEHICLE, id.Value);
-            string assetName = ((VehicleAsset)a).vehicleName;
+            string assetName = a.FriendlyName; // Nelson 2024-07-03: Didn't previously check for null either.
 
             if(U.Settings.Instance.EnableVehicleBlacklist && !player.HasPermission("vehicleblacklist.bypass"))
             {

@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 4.9.3.17 - 2024-07-03
+
+### Fixed
+- V command expecting `VehicleAsset` throwing an exception when encountering `VehicleRedirectorAsset`. Thanks @ItsRodrigoAl in issue #75.
+
 ## 4.9.3.16 - 2023-10-13
 
 ### Changed

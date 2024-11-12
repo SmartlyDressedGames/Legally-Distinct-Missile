@@ -172,33 +172,19 @@ namespace Rocket.Unturned.Chat
             Say(CSteamID, message, color, false);
         }
 
-         public static List<string> wrapMessage(string text)
-         {
-             if (text.Length == 0) return new List<string>();
-             string[] words = text.Split(' ');
-             List<string> lines = new List<string>();
-             string currentLine = "";
-             int maxLength = 90;
-             foreach (var currentWord in words)
-             {
-  
-                 if ((currentLine.Length > maxLength) ||
-                     ((currentLine.Length + currentWord.Length) > maxLength))
-                 {
-                     lines.Add(currentLine);
-                     currentLine = "";
-                 }
-  
-                 if (currentLine.Length > 0)
-                     currentLine += " " + currentWord;
-                 else
-                     currentLine += currentWord;
-  
-             }
-  
-             if (currentLine.Length > 0)
-                 lines.Add(currentLine);
-                 return lines;
+        public static List<string> wrapMessage(string text)
+        {
+            List<string> result = new List<string>();
+
+            if (text.Length == 0)
+            {
+                return result;
             }
+
+            for (int i = 0; i < text.Length; i += ChatManager.MAX_MESSAGE_LENGTH)
+                result.Add(text.Substring(i, Math.Min(ChatManager.MAX_MESSAGE_LENGTH, text.Length - i)));
+
+            return result;
+        }
     }
 }

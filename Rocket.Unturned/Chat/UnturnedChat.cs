@@ -174,17 +174,35 @@ namespace Rocket.Unturned.Chat
 
         public static List<string> wrapMessage(string text)
         {
-            List<string> result = new List<string>();
+            if (text.Length == 0) 
+                return new List<string>();
 
-            if (text.Length == 0)
+            string[] words = text.Split(' ');
+            List<string> lines = new List<string>();
+            string currentLine = "";
+            int maxLength = ChatManager.MAX_MESSAGE_LENGTH;
+
+            foreach (var currentWord in words)
             {
-                return result;
+
+                if ((currentLine.Length > maxLength) ||
+                    ((currentLine.Length + currentWord.Length) > maxLength))
+                {
+                    lines.Add(currentLine);
+                    currentLine = "";
+                }
+
+                if (currentLine.Length > 0)
+                    currentLine += " " + currentWord;
+                else
+                    currentLine += currentWord;
+
             }
 
-            for (int i = 0; i < text.Length; i += ChatManager.MAX_MESSAGE_LENGTH)
-                result.Add(text.Substring(i, Math.Min(ChatManager.MAX_MESSAGE_LENGTH, text.Length - i)));
+            if (currentLine.Length > 0)
+                lines.Add(currentLine);
 
-            return result;
+            return lines;
         }
     }
 }

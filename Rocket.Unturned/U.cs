@@ -320,7 +320,7 @@ namespace Rocket.Unturned
 
         public void Shutdown()
         {
-
+            Provider.shutdown();
         }
 
         public string InstanceId

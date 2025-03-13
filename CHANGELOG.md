@@ -2,6 +2,11 @@
 
 All notable changes should be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## Unreleased
+
+### Fixed
+- Implement automatic shutdown. Thanks to @RestoreMonarchy in PR #83!
+
 ## 4.9.3.18 - 2024-12-13
 
 ### Changed

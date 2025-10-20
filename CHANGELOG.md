@@ -6,6 +6,7 @@ All notable changes should be documented in this file. The format is based on [K
 
 ### Fixed
 - Implement automatic shutdown. Thanks to @RestoreMonarchy in PR #83!
+- Handle assemblies with null version. Thanks to @Senior-S and @DanielWillett in issue #84!
 
 ## 4.9.3.18 - 2024-12-13
 

@@ -44,7 +44,15 @@ namespace Rocket.Core.Plugins
             try
             {
                 AssemblyName requestedName = new AssemblyName(args.Name);
-                var bestMatch = libraries.Where(lib => string.Equals(lib.Key.Name, requestedName.Name)).OrderByDescending(lib => lib.Key.Version).FirstOrDefault();
+                var matchesByName = libraries.Where(lib => string.Equals(lib.Key.Name, requestedName.Name));
+                
+                // Prefer exactly-matching version if possible.
+                var bestMatch = matchesByName.FirstOrDefault(lib => lib.Key.Version == requestedName.Version);
+                if (string.IsNullOrEmpty(bestMatch.Value))
+                {
+                    // Otherwise, fallback to highest version.
+                    bestMatch = matchesByName.OrderByDescending(lib => lib.Key.Version).FirstOrDefault();
+                }
                 if (!string.IsNullOrEmpty(bestMatch.Value))
                 {
                     // https://github.com/SmartlyDressedGames/Legally-Distinct-Missile/issues/84
